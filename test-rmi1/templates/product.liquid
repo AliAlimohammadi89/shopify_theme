@@ -1,0 +1,1640 @@
+ 
+ 
+
+<style>
+   figure {
+                min-height: 100%;
+            }
+        * {box-sizing: border-box}
+
+        .mySlides_detaile {display: none}
+  .mySlides_detaile1 {display: none}
+  .mySlides_detaile2 {display: none}
+  .mySlides_detaile3 {display: none}
+  .mySlides_detaile4 {display: none}
+        .img_detaile {vertical-align: middle;}
+
+        /* Slideshow container */
+        .slideshow-container_detaile {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+        /* next_detaile & prev_detaileious buttons */
+        .prev_detaile, .next_detaile {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        /* Position the "next_detaile button" to the right */
+        .next_detaile {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev_detaile , .next_detaile {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Caption text_detaile */
+        .text_detaile {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text_detaile-align: center;
+        }
+
+        /* Number text_detaile (1/3 etc) */
+        .numbertext_detaile {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        /* The dot_detailes/bullets/indicators */
+        .dot_detaile {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active_detaile, .dot_detaile:hover {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade_detaile {
+            -webkit-animation-name: fade_detaile;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade_detaile;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade_detaile {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        @keyframes fade_detaile {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text_detaile size */
+        @media only screen and (max-width: 300px) {
+            .prev_detaile, .next_detaile,.text_detaile {font-size: 11px}
+        }
+    </style>
+
+    <script>
+        var slideIndex = 1;
+       var divname = 'mySlides_detaile';
+        showSlides(slideIndex,divname);
+        function plusSlides(n,divname) {
+            showSlides(slideIndex += n,divname);
+        }
+        function currentSlide(n,divname) {
+            showSlides(slideIndex = n,divname);
+        }
+        function showSlides(n,divname) {
+            var i;
+            var slides = document.getElementsByClassName(divname);
+            var dot_detailes = document.getElementsByClassName(divname);
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dot_detailes.length; i++) {
+                dot_detailes[i].className = dot_detailes[i].className.replace(" active_detaile", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dot_detailes[slideIndex-1].className += " active_detaile";
+        }
+    </script>
+<style>
+        * {box-sizing: border-box}
+        
+
+        /* Style the sub_tab */
+        .sub_tab {
+            float: left;
+/*             border: 1px solid #ccc; */
+            background-color: #f1f1f1;
+            width: 30%;
+            height: 100%;
+            overflow:auto;
+        }
+
+        /* Style the buttons inside the sub_tab */
+        .sub_tab button {
+            display: block;
+            background-color: inherit;
+            color: black;
+            padding: 22px 16px;
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .sub_tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current "sub_tab button" class */
+        .sub_tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the sub_tab content */
+        .sub_tabcontent {
+            float: left;
+            padding: 0px 12px;
+/*             border: 1px solid #ccc; */
+            width: 70%;
+            border-left: none;
+            height: 100%;
+            background-color: #ccc;
+          	overflow:auto;
+
+          
+        }
+    </style>
+<script>
+    function openCity(evt, cityName) {
+        var i, sub_tabcontent, sub_tablinks;
+        sub_tabcontent = document.getElementsByClassName("sub_tabcontent");
+        for (i = 0; i < sub_tabcontent.length; i++) {
+                      sub_tabcontent[i].style.display = "none";
+
+         }
+        sub_tablinks = document.getElementsByClassName("sub_tablinks");
+        for (i = 0; i < sub_tablinks.length; i++) {
+            sub_tablinks[i].className = sub_tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+   
+  
+   function opentab2(evt, cityName) {
+        var i, sub_tabcontent, sub_tablinks;
+        sub_tabcontent = document.getElementsByClassName("sub_tabcontent_tab2");
+        for (i = 0; i < sub_tabcontent.length; i++) {
+            sub_tabcontent[i].style.display = "none";
+        }
+        sub_tablinks = document.getElementsByClassName("sub_tablinks_tab2");
+        for (i = 0; i < sub_tablinks.length; i++) {
+            sub_tablinks[i].className = sub_tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+  
+</script>
+{%include "aa"%}
+{%include "list_item"%}
+  {{ 'test.js' | asset_url | script_tag }}
+
+ 
+
+
+
+
+ <div class="detail-page-all-all">
+  <div class="detail-page-all">
+      <div class="detail-page-top">
+          <div class="detail-page-top-img">
+              <div class="detail-page-top-img-small">
+                
+                  <div class="detail-page-top-img-small-img">
+                      <img src="{{ "lo.gif" | asset_url }}"/>
+                  </div>
+                  
+              </div>
+              <div class="detail-page-top-img-big"style=' ;background-repeat: no-repeat;background-size: 50%;background-position: top;   cursor:zoom-in;background-image: url("{{ "lo.gif" | asset_url }}");' >
+                 
+                        <figure class='focus-img '  id="detail-page-top-img-big" ></figure>
+
+                
+                
+ 
+                 
+              </div>
+          </div>
+          <div class="detail-page-top-tabs">
+              <div class="tabs">
+                  <div class="tab">
+                      <input type="radio" id="tab-1" name="tab-group-1" checked>
+                      <label for="tab-1">PRODUCT DETAIL</label>
+                      <div class="content tab-detail">
+                          <div class="tab-detail-name">{{product.title}}</div>
+                          <div class="tab-detail-color">
+                              <div class="tab-detail-color-name">Color:</div>
+                              <div class="tab-detail-color-img">
+                                
+                                {% for product_option in product.options_with_values %}
+                            {%if product_option.name == "colorName"%}
+     					  {% for value in product_option.values %}
+                        		  <div class="tab-detail-color-img-items color option_t" id="{{ value }}" data-id="{{ value }}" >
+                                      <img class"img_url1 option_t" data-id="{{ value }}" src="{{ "lo.gif" | asset_url }}"/>
+                                                                   {{ value }}
+                                  </div>
+                           {% endfor %}
+                        {% endif %}
+           				 {% endfor %}
+                            
+                              </div>
+                          </div>
+                          <div class="tab-detail-size">
+                              <div class="tab-detail-s
+
+1
+
+ ize-name">Size:</div>
+                              <div class="tab-detail-size-icon ">
+                                 {% for product_option in product.options_with_values %}
+                            {%if product_option.name == "shapeSize"%}
+     					  {% for value in product_option.values %}
+ 										{% assign size = value | replace: '"' , '-'  %} 
+                                   <div class="tab-detail-size-icon-items sizes option_t" id="{{ size | replace: "'", "*"   }}"  data-id="{{ size | replace: "'", "*"   }}"   >
+                                                                   {{ value }}
+                                   </div>
+                           {% endfor %}
+                        {% endif %}
+           				 {% endfor %}
+                              </div>
+                          </div>
+                          <div class="tab-detail-add-all">
+                            <form action="/cart/add" method="post"  enctype="multipart/form-data" id="AddToCartForm">
+                                     <div  style="display:flex;optionlist">
+          <select name="id" id="productSelect" class="product-single__variants">
+            {% for variant in product.variants %}
+              {% if variant.available %}
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+              {% else %}
+                <option disabled="disabled">
+                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                </option>
+              {% endif %}
+            {% endfor %}
+          </select>
+      </div>    
+          {% assign instructions = current_variant.metafields.specifications %}
+            {% assign key = 'all' %}
+            
+          {% if product.compare_at_price_max > product.price %}
+           
+	<div class="tab-detail-add-left">
+ 
+      <del>  <p id="ComparePrice">
+ 				{% comment %}
+              {{ current_variant.compare_at_price | money | remove "Compare at" }}
+                {% endcomment %}                                             
+            </p>
+</del>
+        
+        <p id="ProductPrice">
+ 			                                            
+            </p>
+	</div>
+          {% endif %}
+                              <div class="tab-detail-add-right">
+                                  <div class="tab-detail-add-right-qty">
+        								   <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+                                  </div>
+                                  <div class="tab-detail-add-right-add">
+ <button type="submit" name="add" id="AddToCart" style="border: none;background: none;width: 100%;height: 100%;">
+            <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+          </button>
+                                </div>
+                              </div>                   
+                   
+        </form>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="tab">
+                      <input type="radio" id="tab-2" name="tab-group-1">
+                      <label for="tab-2">DESCRIPTION</label>
+
+                      <div class="content DESCRIPTION">
+                         {{product.description}}
+                      </div>
+                  </div>
+                <div class="tab">
+                      <input type="radio" id="tab-3" name="tab-group-1">
+                      <label for="tab-3">Product Information</label>
+
+                      <div class="content Product_Information" style="overflow: auto;">
+                        <div class="Product_Information_u" >
+                         
+                           info
+                          
+                          
+                      </div>
+                  </div>
+                </div>
+                 <div class="tab">
+                      <input type="radio" id="tab-6" name="tab-group-1">
+                      <label for="tab-6">Removing Stains</label>
+
+                      <div class="content">
+<div class="sub_tab">
+    <button class="sub_tablinks active" onclick="openCity(event, 'Sauce')" id="defaultOpen">Sauce</button>
+    <button class="sub_tablinks" onclick="openCity(event, 'Cake')">Cake</button>
+    <button class="sub_tablinks" onclick="openCity(event, 'Tea')">Tea</button>
+    <button class="sub_tablinks" onclick="openCity(event, 'Crayon')">Crayon</button>
+    <button class="sub_tablinks" onclick="openCity(event, 'Coffee')">Coffee</button>
+    <button class="sub_tablinks" onclick="openCity(event, 'Tea')">Blood</button>
+</div>
+
+<div id="Sauce" class="sub_tabcontent" style="display: block;">
+    <h3>Stain Removal Guide</h3>
+                <h2>Sauce</h2>
+                <ol>
+                    <li>Carpet shampoo or detergent solution (1 teaspoon clear dish liquid in 1 cup warm (not hot) water. Always rinse well. Blot dry immediately.</li>
+                    <li>1 Tablespooon household ammonia in 1/2 cup water (You must follow this treatment with neutralizing vinegar solution. See below.)</li>
+                    <li>1/3 cup white household vinegar in 2/3 cup water</li>
+                    <li>Enzyme detergent solution mixed according to box &amp; rinsed</li>
+                    <li>Small amount of dry cleaning solvent</li>
+                </ol>
+</div>
+<div id="Cake" class="sub_tabcontent" style="display: none;">
+                <h3>Stain Removal Guide</h3>
+                <h2>Cake</h2>
+                <ol>
+                    <li>Carpet shampoo or detergent solution (1 teaspoon clear dish liquid in 1 cup warm (not hot) water. Always rinse well. Blot dry immediately.</li>
+                    <li>1 Tablespooon household ammonia in 1/2 cup water (You must follow this treatment with neutralizing vinegar solution. See below.)</li>
+                    <li>1/3 cup white household vinegar in 2/3 cup water</li>
+                    <li>Enzyme detergent solution mixed according to box &amp; rinsed</li>
+                </ol>
+</div>
+<div id="Tea" class="sub_tabcontent" style="display: none;">
+  <h3>Stain Removal Guide</h3>
+  <h2>Tea</h2>
+  <ol>
+    <li>Cold water, carefully following instructions above (“Spills”).</li>
+    <li>Carpet shampoo or detergent solution (1 teaspoon clear dish liquid in 1 cup warm (not hot) water. Always rinse well. Blot dry immediately.</li>
+    <li>1/3 cup white household vinegar in 2/3 cup water</li>
+    <li>Enzyme detergent solution mixed according to box &amp; rinsed</li>
+    <li>Small amount of dry cleaning solvent</li>
+  </ol>
+</div>
+<div id="Crayon" class="sub_tabcontent" style="display: none;">
+ 
+  
+  
+  
+  <h3>Stain Removal Guide</h3>
+  <h2>Crayon</h2>
+  <ol>
+    <li>Dampen a clean towel with isopropyl alcohol and blot stain. Allow to dry. Brush lightly with a solution of water and vinegar.</li>
+  </ol>
+
+
+ </div>
+<div id="Coffee" class="sub_tabcontent" style="display: none;">
+ 
+  
+  
+                <h3>Stain Removal Guide</h3>
+                <h2>Coffee</h2>
+                <ol>
+                    <li>Cold water, carefully following instructions above (“Spills”).</li>
+                    <li>Carpet shampoo or detergent solution (1 teaspoon clear dish liquid in 1 cup warm (not hot) water. Always rinse well. Blot dry immediately.</li>
+                    <li>1/3 cup white household vinegar in 2/3 cup water</li>
+                    <li>Enzyme detergent solution mixed according to box &amp; rinsed</li>
+                    <li>Small amount of dry cleaning solvent</li>
+                </ol>
+
+            
+  
+</div>
+<div id="Blood" class="sub_tabcontent" style="display: none;">
+ 
+  
+                <h3>Stain Removal Guide</h3>
+                <h2>Blood</h2>
+                <ol>
+                    <li>Cold water, carefully following instructions above (“Spills”).</li>
+                    <li>Carpet shampoo or detergent solution (1 teaspoon clear dish liquid in 1 cup warm (not hot) water. Always rinse well. Blot dry immediately.</li>
+                    <li>1 Tablespooon household ammonia in 1/2 cup water (You must follow this treatment with neutralizing vinegar solution. See below.)</li>
+                    <li>Enzyme detergent solution mixed according to box &amp; rinsed</li>
+                </ol>
+            
+  
+  
+</div>
+
+           
+
+                        
+                        
+                      </div>
+                  </div>
+                  <div class="tab">
+                      <input type="radio" id="tab-4" name="tab-group-1">
+                      <label for="tab-4">Design Tips</label>
+
+                      <div class="content">
+                           
+                        
+                        
+                      <div class="content">
+<div class="sub_tab">
+    <button class="sub_tablinks_tab2 active" onclick="opentab2(event, 'living room')" id="defaultOpen">living room</button>
+    <button class="sub_tablinks_tab2" onclick="opentab2(event, 'bedroom')">bedroom</button>
+    <button class="sub_tablinks_tab2" onclick="opentab2(event, 'hallway')">hallway</button>
+    <button class="sub_tablinks_tab2" onclick="opentab2(event, 'kitchen')">kitchen</button>
+    <button class="sub_tablinks_tab2" onclick="opentab2(event, 'dining room')">dining room</button>
+
+    
+</div>
+
+<div id="living room" class="sub_tabcontent_tab2" style="display: block;width: 70%;overflow: hidden;">
+ <div class="slideshow-container_detaile1">
+    <div class="mySlides_detaile1 fade_detaile" style="display: block;">
+        <img class="img_detaile" src="{{ 'livingroom1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   <div class="mySlides_detaile1 fade_detaile">
+        <img class="img_detaile" src="{{ 'livingroom2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   <div class="mySlides_detaile1 fade_detaile">
+        <img class="img_detaile" src="{{ 'livingroom3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <a class="prev_detaile" onclick="plusSlides(-1,'mySlides_detaile1')">&#10094;</a>
+    <a class="next_detaile" onclick="plusSlides(1,'mySlides_detaile1')">&#10095;</a>
+</div>
+</div>
+
+ 
+ 
+<div id="bedroom" class="sub_tabcontent_tab2" style="display: none;width: 70%;overflow: hidden;">
+ <div class="slideshow-container_detaile">
+    <div class="mySlides_detaile fade_detaile" style="display: block;">
+        <img class="img_detaile" src="{{ 'bedroom1-1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom1-2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom1-3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom1-4.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom1-5.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom1-6.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-4.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-5.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile fade_detaile">
+        <img class="img_detaile" src="{{ 'bedroom2-6.jpg' | asset_url  }}" style="width:100%">
+    </div>
+  </div>
+    <a class="prev_detaile" onclick="plusSlides(-1,'mySlides_detaile')">&#10094;</a>
+    <a class="next_detaile" onclick="plusSlides(1,'mySlides_detaile')">&#10095;</a>
+</div>                
+<div id="hallway" class="sub_tabcontent_tab2" style="display: none;width: 70%;overflow: hidden;">
+ <div class="slideshow-container_detaile">
+    <div class="mySlides_detaile2 fade_detaile" style="display: block;">
+        <img class="img_detaile" src="{{ 'hallway1-1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile2 fade_detaile">
+        <img class="img_detaile" src="{{ 'hallway1-2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile2 fade_detaile">
+        <img class="img_detaile" src="{{ 'hallway1-3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile2 fade_detaile">
+        <img class="img_detaile" src="{{ 'hallway1-4.jpg' | asset_url  }}" style="width:100%">
+    </div>
+   
+  </div>
+    <a class="prev_detaile" onclick="plusSlides(-1,'mySlides_detaile2')">&#10094;</a>
+    <a class="next_detaile" onclick="plusSlides(1,'mySlides_detaile2')">&#10095;</a>
+</div>
+<div id="kitchen" class="sub_tabcontent_tab2" style="display: none;width: 70%;overflow: hidden;">
+ <div class="slideshow-container_detaile">
+   
+    <div class="mySlides_detaile3 fade_detaile"  style="display: block;">
+        <img class="img_detaile" src="{{ 'hallway2-1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile3   fade_detaile" style="display: none;">
+        <img class="img_detaile" src="{{ 'hallway2-2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    <div class="mySlides_detaile3 fade_detaile" style="display: none;">
+        <img class="img_detaile" src="{{ 'hallway2-3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+  </div>
+    <a class="prev_detaile" onclick="plusSlides(-1,'mySlides_detaile3')">&#10094;</a>
+    <a class="next_detaile" onclick="plusSlides(1,'mySlides_detaile3')">&#10095;</a>
+</div>                        
+                        
+<div id="dining room" class="sub_tabcontent_tab2" style="display: none;width: 70%;overflow: hidden;">
+ <div class="slideshow-container_detaile">
+   
+    <div class="mySlides_detaile4 fade_detaile"  style="display: block;">
+        <img class="img_detaile" src="{{ 'diningroom1.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"   >
+        <img class="img_detaile" src="{{ 'diningroom2.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"  >
+        <img class="img_detaile" src="{{ 'diningroom3.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"   >
+        <img class="img_detaile" src="{{ 'diningroom4.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"   >
+        <img class="img_detaile" src="{{ 'diningroom5.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"  >
+        <img class="img_detaile" src="{{ 'diningroom6.jpg' | asset_url  }}" style="width:100%">
+    </div>
+      <div class="mySlides_detaile4 fade_detaile"   >
+        <img class="img_detaile" src="{{ 'diningroom7.jpg' | asset_url  }}" style="width:100%">
+    </div>
+    
+    
+     
+  </div>
+    <a class="prev_detaile" onclick="plusSlides(-1,'mySlides_detaile4')">&#10094;</a>
+    <a class="next_detaile" onclick="plusSlides(1,'mySlides_detaile4')">&#10095;</a>
+</div>                                
+                        
+                        
+                        
+</div>    
+                        
+</div>
+                  </div>
+                  <div class="tab">
+                      <input type="radio" id="tab-5" name="tab-group-1">
+                      <label for="tab-5" style="display:none;">E-BOOK</label>
+
+                      <div class="content">
+                          E-BOOK1
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+ 
+
+
+
+
+
+<div itemscope itemtype="http://schema.org/Product">
+ {{ 'focus.min.js' | asset_url | script_tag }}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  {% section 'related_product'%}    
+</div>
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+<script>
+   var color_img = new Array();
+    var all_metafild = new Array();
+    var all_metafild1 = new Array();
+    var all_images = new Array();
+//  {% for variant in product.variants %}
+         var all_images1 = [];
+       subvariant1={};
+  //console.log(' ');
+  			{%if variant.metafields.images.all %}
+              {%assign images = variant.metafields.images.all | split : "," | reverse  %}
+  			{%else%}
+              {%assign images = variant.metafields.images.all | split : "," | reverse  %}
+    		{%endif	%}
+				var i=0;
+			{%	for image in  images %}
+             	all_images1[i]='{{image | remove :".jpg"}}';
+  			i=i+1;
+             {%endfor%}
+  			 all_images['{{variant.id}}']=all_images1;
+     	   {% for metafild in variant.metafields.specifications %}
+  subvariant1['{{ metafild | first }}']  ='{{ metafild | last | remove :"'" | remove :'"' | remove :'/' }}';
+                 {% endfor %}
+              all_metafild[{{variant.id}}]= subvariant1 ;
+  
+  
+  
+                       
+  {% assign img = variant.metafields.images.all | split: "," |reverse  %}
+  
+  
+   if ( color_img['{{ variant.metafields.specifications.colorName }}'] == undefined ){
+    color_img['{{ variant.metafields.specifications.colorName }}'] = "{{ img[0] }}";
+                 }
+  
+  
+          //   console.log(color_img);
+          //  console.log('{{ variant.metafields.specifications.colorName }}');   
+         //   console.log('{{ img[0] }}');   
+
+
+                       
+ //            //  $("#foo").attr("src", "bar2.jpg");   	
+// {% endfor %}
+                          
+                         
+                     console.log(color_img);
+                        console.log('22');
+            jQuery('.color').each(function(index, currentElement) {
+             var id1=jQuery(this).attr("id");
+               if( color_img['nocolor']){
+                 var color2=color_img['nocolor'] ;
+             // console.log('variant.metafields.specifications.colorGroupName+NO');
+                           jQuery(this).find('img').attr('src',"11");    
+              }
+              else
+              {         
+  var color2=color_img[id1].replace('.jpg','_T.jpg') ;
+            //  console.log(color2);
+             // console.log('variant.metafields.specifications.colorGroupName');
+                       jQuery(this).find('img').attr('src',color2);   
+              } 
+});
+  var selectCallback = function(variant, selector) {
+    
+    
+  
+timber.productPage({
+  
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector,
+    });
+    
+     
+    
+    		jQuery(".color").removeClass("images_active");
+    
+    
+    
+     var element1 = document.getElementById(variant.option1);
+   
+    			element1.classList.add("images_active");
+    
+           
+    
+    
+    
+            var size = variant.option2;
+      
+    		var size1= size.replace('"', '-');
+    			size1=size1.replace("'", "*");
+    			size1= size1.replace('"', '-');
+    			size1=size1.replace("'", "*");
+    
+    
+        jQuery(".sizes").removeClass("size_active");
+    var element = document.getElementById(size1);
+  element.classList.add("size_active");
+    
+ 
+    
+             
+ 
+    
+            
+                                    
+    
+    
+    
+    
+    
+   
+            //$(".Product_Information").html(variant.id);
+    var detalepage_filds_value= new Array();
+    var detalepage_filds_title= new Array();
+    var detalepage_filds_title_style= new Array();
+    var detalepage_filds_value_style= new Array();
+    
+      {{detalepage_filds_value | replace :"*","'" }}
+      {{detalepage_filds_title | replace :"*","'"}}
+      {{detalepage_filds_title_style | replace :"*","'"}}
+      {{detalepage_filds_value_style | replace :"*","'"}}
+
+    // console.log(detalepage_filds_value);
+    var admin_Class=  detalepage_filds_value['{{product.metafields.adminClassOwner_text.all}}'];
+    var admin_Class_title=  detalepage_filds_title['{{product.metafields.adminClassOwner_text.all}}'];
+ 	var detalepage_filds_title_style_a=  detalepage_filds_title_style['{{product.metafields.adminClassOwner_text.all}}'];
+    var detalepage_filds_value_style_a=  detalepage_filds_value_style['{{product.metafields.adminClassOwner_text.all}}'];
+    		var value_info="<div class='row'>";
+              $.each(admin_Class, function( index12, value12 ) {
+                      //  console.log(all_metafild[variant.id][value12]);
+                   if(typeof all_metafild[variant.id][value12] === 'undefined') {
+                       //console.log('no');
+                    }
+                    else {
+                       // console.log(index);
+                                  value_info=value_info+"<ul class='ul_info'><li class='li_info' style='"+detalepage_filds_title_style_a[index12]+"'>"+admin_Class_title[index12]+"</li><li class='li_info_r'style='"+detalepage_filds_value_style_a[index12]+"' >"+all_metafild[variant.id][value12]+"</li></ul>";
+                    }
+              });
+  				value_info=value_info+"</div>";
+  
+                jQuery(".Product_Information").html(value_info);
+           	//console.log(all_images[variant.id]); 
+      // jQuery('#detail-page-top-img-big').attr('src',all_images[variant.id][0]+"_S.jpg"); 
+  
+ 
+  
+  
+             
+   
+                      $("#detail-page-top-img-big").css({"background-color": "{{ "lo.gif" | asset_url }}"});
+
+  
+  
+                     //  $("#detail-page-top-img-big").css({"background-image":url( all_images[variant.id][0]+"_S.jpg")});
+              	 $('#detail-page-top-img-big').css('backgroundImage',"url("+all_images[variant.id][0]+".jpg)");
+  
+
+  
+  
+
+
+
+  
+  
+     var images_T="";
+     $.each(all_images[variant.id], function( index, value ) {
+      images_T+=" <div class='detail-page-top-img-small-img'><img class='img_T' src='"+value+"_T.jpg'/></div>"; 
+       
+     // console.log(all_images);
+       
+            });
+    $('.detail-page-top-img-small').html(images_T);
+  
+    $('.img_T').click(function(){
+   				var img_src_b=$(this).attr('src');
+      var img_src_B1=img_src_b.replace('_T.jpg', '' );
+       	 	jQuery("#detail-page-top-img-big").attr('src',img_src_B1+".jpg");
+      
+
+
+                   $("#detail-page-top-img-big").css({"background-color": "{{ "lo.gif" | asset_url }}"});
+      
+      
+ 
+                    //  $("#detail-page-top-img-big").css({"background-image":url( all_images[variant.id][0]+"_S.jpg")});
+                                                      
+              	 $('#detail-page-top-img-big').css('backgroundImage',"url("+img_src_B1+".jpg)");
+                                                      
+
+      
+      	 
+      
+ });
+  
+  };
+   var color =jQuery(".color").attr("data-id");
+         jQuery('.color').click(function(){
+           // jQuery(".color").removeClass("images_active");
+          // jQuery(this).addClass('images_active');
+         var color =jQuery(this).attr("data-id");
+          jQuery("select[id='productSelect-option-0'] ").val(color).trigger("change");
+		});
+         jQuery('.sizes').click(function(){
+         var size =jQuery(this).attr("data-id");
+            var res = size.replace("*", "'");
+            var res = res.replace("*", "'");
+            var res = res.replace("-", '"');
+            var res = res.replace("-", '"');
+           jQuery("select[id='productSelect-option-1'] ").val(res).trigger("change");
+            jQuery(".sizes").removeClass("size_active");
+           jQuery(this).addClass('size_active');
+		});  
+    
+     $('.img_T').click(function(){
+   				var img_src_b=$(this).attr('src');
+      var img_src_B1=img_src_b.replace('_T.jpg', '' );
+ 
+                    $("#detail-page-top-img-big").css({"background-color": "{{ "lo.gif" | asset_url }}" });
+
+       
+       //   $("#detail-page-top-img-big").css({"background-image":url( img_src_B1+"S.jpg")});
+            	 $('#detail-page-top-img-big').css('backgroundImage',"url("+img_src_B1+".jpg)");
+
+ 
+       
+       
+   
+        
+       
+ });
+  
+  
+  
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+  $(document).ready(function(){
+   
+    
+   
+    
+    
+    		$('#AddToCart').click(function(){
+              setTimeout(function(){
+              jQuery.getJSON('/cart.js', function(cart) {
+   // now have access to Shopify cart object
+   //alert('There are now ' + cart.item_count + ' items in the cart.');
+                 jQuery("#item_count").html(cart.item_count );
+               // alert(cart.item_count);
+} );
+              }, 300)
+            });
+    $('.img_T').click(function(){
+   				var img_src_b=$(this).attr('src');
+      var img_src_B1=img_src_b.replace('_T.jpg', '' );
+       	 	jQuery("#detail-page-top-img-big").attr('src',img_src_B1+".jpg");
+                   $("#detail-page-top-img-big").css({"background-color": "{{ "lo.gif" | asset_url }}"});
+                                                      
+                 
+                                                      
+
+      
+      
+       
+      		
+         //$("#detail-page-top-img-big").css({"background-image":url( img_src_B1+"S.jpg")});
+     	// $('#detail-page-top-img-big').css('backgroundImage',"url("+img_src_B1+"S.jpg)");
+      
+      
+           	 $('#detail-page-top-img-big').css('backgroundImage',"url("+img_src_B1+".jpg)");
+
+      
+      
+      
+ 
+      
+      
+       
+ 
+      
+      
+      
+             
+  
+  });
+    
+    
+     
+   // jQuery('.tab-detail-color-img').children(":first").addClass('images_active');
+     //jQuery('.tab-detail-size-icon').children(":first").addClass('size_active');
+    
+     
+   // alert(1);
+    
+  });
+</script>
+
+<style>
+  del {
+    color: red;
+    margin-right: 5%;
+}
+    .row {
+
+        width: 100%;
+
+    }
+    .Product_Information .ul_info:nth-of-type( odd  ) {
+        background: #d8d5d5;
+
+    }
+    .Product_Information .ul_info:nth-of-type(even) {
+        background: #ececec;
+
+    }
+    .images_active{
+        border: 5px solid #e5bf44 !important;
+    }
+    .size_active{
+        background-color:#e5bf44;
+    }
+    html, body {
+        margin: 0;
+        height: auto;
+        font-family: Lato;
+    }
+    .detail-page-all-all {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .detail-page-all {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .detail-page-top {
+        width: 100%;
+        height: 650px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+    }
+    .detail-page-top-img {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .detail-page-top-img-small {
+        width: 15%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .detail-page-top-img-small-img {
+        width: 100%;
+        height: calc(25% - 50px);
+        margin: 25px 0;
+        cursor: pointer;
+    }
+    .detail-page-top-img-small-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .detail-page-top-img-big {
+        width: 80%;
+        height: 100%;
+    }
+    .detail-page-top-img-big img {
+        
+      
+      width: 100%;
+      max-height: 630px;
+
+float: left;
+    }
+    .detail-page-top-tabs {
+        width: 55%;
+        height: 100%;
+    }
+    .detail-page-carousel-top {
+        width: 85%;
+        height: 585px;
+        overflow:hidden;
+        margin: 50px auto;
+    }
+    .detail-page-carousel-bottom {
+        width: 85%;
+        height: 585px;
+        margin-bottom: 50px;
+    }
+    /*tabs*/
+    .tabs {
+        position: relative;
+        height: 100%;
+        clear: both;
+    }
+    .tab {
+        float: left;
+    }
+    .tab label {
+        background: #eee;
+        padding: 12px;
+        border: 1px solid #ccc;
+        margin-left: -1px;
+        position: relative;
+        left: 1px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    .tab [type=radio] {
+        display: none;
+    }
+    .content {
+        width: 100%;
+        position: absolute;
+        top: 28px;
+        left: 0;
+        background: white;
+        right: 0;
+        bottom: 0;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 0 0 10px 10px;
+        height: calc(100% - 70px);
+        display: flex;
+        justify-content: space-between;
+        overflow:auto;
+    }
+    [type=radio]:checked ~ label {
+        background: white;
+        border-bottom: 1px solid lightgrey;
+        z-index: 2;
+        box-shadow: 1px 0 4px -1px rgba(0, 0, 0, 0.16);
+        cursor: default;
+        font-weight: bold;
+    }
+    [type=radio]:checked ~ label ~ .content {
+        z-index: 1;
+    }
+    /*tabs*/
+  
+  
+    .tab-detail {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .tab-detail-name {
+        width: 100%;
+        display: flex;
+        font-weight: bold;
+        font-size: 17px;
+    }
+    .tab-detail-color {
+        width: 100%;
+        max-height: calc(50% - 35px);
+        display: flex;
+        flex-direction: column;
+    }
+    .tab-detail-color-name {
+        width: 100%;
+        display: flex;
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+    .tab-detail-color-img {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tab-detail-color-img-items {
+        width: 70px;
+        height: 95px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        border: 5px solid transparent;
+        cursor: pointer;
+        text-align: center
+    }
+    .tab-detail-color-img-items img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .tab-detail-size {
+        width: 100%;
+    //max-height: calc(50% - 100px);
+        display: flex;
+        flex-direction: column;
+    }
+    .tab-detail-size-name {
+        width: 100%;
+        display: flex;
+        font-weight: bold;
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+    .tab-detail-size-icon {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tab-detail-size-icon-items {
+        width: 115px;
+        height: 55px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        border: 1px solid lightgrey;
+        color: black;
+        font-size: 13px;
+        padding: 5px 10px;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+    .tab-detail-size-icon-items span {
+        font-weight: bold;
+    }
+    .tab-detail-add-all {
+        width: 100%;
+    // height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .tab-detail-add-left {
+        width: 200px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        color: #e5bf44;
+        font-weight: bold;
+        font-size: 32px;
+        float:left;
+    }
+    .tab-detail-add-right {
+        width: 285px;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .tab-detail-add-right-qty {
+        display: flex;
+        align-items: center;
+    }
+    .tab-detail-add-right-qty span {
+        font-weight: bold;
+        font-size: 15px;
+        margin-right: 10px;
+    }
+    .tab-detail-add-right-qty input {
+        width: 55px;
+
+        height: 30px;
+
+        background-color: white;
+
+        border: 1px solid lightgrey;
+
+        padding-left: 5px;
+
+        font-size: 20px;
+    }
+    .tab-detail-add-right-add {
+        width: 155px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+        font-weight: bold;
+        font-size: 16px;
+        background-color: #e5bf44;
+        cursor: pointer;
+    }
+    .detail-page-carousel {
+        width: 100%;
+        height: 100%;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    .js-flickity-carousel-name {
+        color: black;
+        font-weight: bold;
+        font-size: 19px;
+        text-align: center;
+    }
+    .js-flickity-carousel-price {
+        width: 100%;
+        padding: 0 25px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: #deb335;
+        font-weight: bold;
+        font-size: 19px;
+    }
+    .detail-page-carousel-view {
+        color: black;
+        width: 110px;
+        height: 30px;
+        background-color: #f3f3f3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 0;
+        top: 45px;
+        cursor: pointer;
+    }
+    .detail-page-carousel-header {
+        text-align: center;
+        font-size: 25px;
+        color: black;
+        margin: 25px 0;
+    }
+    .detail-page-img {
+        width: 50%;
+        min-width: 50%;
+        height: 700px;
+    }
+    .detail-page-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .gallery .flickity-viewport {
+        height: 100% !important;
+    }
+
+    @media only screen and (max-width: 1024px) {
+        .detail-page-top {
+            height: 475px;
+        }
+        .tab-detail-color {
+            max-height: unset;
+            height: 185px;
+        }
+        .tab-detail-size {
+            max-height: unset;
+            height: 270px;
+        }
+        .tab-detail-name {
+            margin-bottom: 15px;
+        }
+        .tab-detail-size-name {
+            margin-bottom: 5px;
+        }
+        .tab-detail-color-name {
+            margin-bottom: 5px;
+        }
+        .tab-detail-color-img {
+            height: 140px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .tab-detail-size-icon {
+            height: 195px;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .tab-detail-add-right-add {
+            width: 145px;
+            height: 35px;
+        }
+        .tab-detail-add-right-qty input {
+            width: 45px;
+            height: 35px;
+        }
+        .detail-page-top-img-small-img {
+            height: calc(25% - 40px);
+            margin: 20px 0;
+        }
+        .tab label {
+            padding: 13px 10px;
+            font-size: 12px;
+        }
+        .detail-page-carousel-top {
+            height: 450px;
+        }
+        .detail-page-carousel-bottom {
+            height: 450px;
+        }
+    }
+    @media only screen and (max-width: 768px) {
+        /*.detail-page-carousel-top {*/
+        /*height: 375px;*/
+        /*}*/
+        /*.detail-page-carousel-bottom {*/
+        /*height: 375px;*/
+        /*}*/
+        .detail-page-top {
+            flex-direction: column;
+            height: unset;
+        }
+        .detail-page-top-img {
+            width: 100%;
+            height: 475px;
+            margin-bottom: 25px;
+        }
+        .detail-page-top-tabs {
+            width: 100%;
+            height: 475px;
+        }
+        .detail-page-top-img-big img {
+            object-fit: contain;
+        }
+        .detail-page-top-img-small-img img {
+            object-fit: contain;
+        }
+        .size {
+            width: calc(50% - 10px) !important;
+        }
+    }
+    @media only screen and (max-width: 425px) {
+        .detail-page-top-img {
+            height: 375px;
+        }
+        .detail-page-top-tabs {
+            height: 375px;
+        }
+        .detail-page-top-img-small {
+            width: 20%;
+        }
+        .detail-page-top-img-big {
+            width: 75%;
+        }
+        .detail-page-top-img-small-img {
+            height: calc(25% - 20px);
+            margin: 10px 0;
+        }
+        .tab label {
+            padding: 9px 4px;
+            font-size: 9px;
+            top: 8px;
+        }
+        .size {
+            width: 100% !important;
+        }
+        .detail-page-carousel-header {
+            font-size: 19px;
+            margin: 0 0 10px 0;
+        }
+        .detail-page-carousel-top {
+            height: 375px;
+            margin: 25px 0;
+        }
+        .detail-page-carousel-bottom {
+            height: 375px;
+            margin-bottom: 25px;
+        }
+        .tab-detail-color-img {
+            height: 90px;
+        }
+        .tab-detail-color-img-items {
+            width: 50px;
+            height: 63px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .tab-detail-size-icon {
+            height: 70px;
+            margin-bottom: 10px;
+            padding-top: 5px;
+        }
+        .tab-detail-size-icon-items {
+            width: 105px;
+            height: 50px;
+            font-size: 12px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .tab-detail-size {
+            height: 175px;
+        }
+        .tab-detail-add-all {
+            height: 135px;
+        }
+        .tab-detail-add-all {
+            flex-direction: column;
+            align-items: center;
+        }
+        .tab-detail-add-left {
+            width: 100%;
+            justify-content: center;
+            font-size: 27px;
+        }
+        .detail-page-carousel {
+            padding: 0;
+            overflow:hidden;
+        }
+        .detail-page-top {
+            margin-top: 25px;
+        }
+        .js-flickity-detail-carousel {
+            height: calc(100% - 35px) !important;
+        }
+        .js-flickity-detail-carousel-bottom {
+            height: calc(100% - 35px) !important;
+        }
+    }
+</style>
+<style>
+
+
+    .js-qty{
+        width:65px
+    }
+
+    .ul_info{
+
+
+        background: gainsboro;
+        padding: 8px;
+        padding: 9px;
+        border-radius: 6px;
+        margin: 5px;
+
+
+    }
+    .li_info{
+        float: left;
+        width: 30%;
+        overflow: hidden;
+        list-style: none;
+    }
+    .li_info{
+        float: left;
+        width: 30%;
+        overflow: hidden;
+        list-style: none;
+    }
+    .li_info_r{
+        overflow: hidden;
+        list-style: none;
+    }
+</style>
+
+<script type="text/javascript">
+  
+   Focus.init({
+            elementID: '',
+            zoomFactor: '250%'
+        });
+  
+  
+    function htmlFlow() {
+        $('html').css({
+            'overflow': 'inherit',
+        })
+    }
+    function goScrollUp() {
+        $(function () {
+            const scroll_pos = (0);
+            $('html, body').animate({scrollTop: (scroll_pos)}, 'slow');
+        });
+    }
+
+  function openMenuToggle() {
+      if ($('.header-bottom-menu').css('left') === '0px') {
+          $('.header-bottom-menu').css('left', '-250px');
+          $('.menu-overlay').css('left', '-100%');
+          $('.filter-toggle').css('z-index', '99');
+          if ($('.list-page-filter-all').css('left') === '-50px') {
+              $('html, body').css({
+                  'overflow-y': 'hidden',
+                  'height': '100%'
+              });
+          } else {
+              $('html, body').css({
+                  'overflow-y': 'auto',
+                  'overflow-x': 'hidden',
+                  'height': 'auto'
+              });
+          }
+      } else {
+          $('.header-bottom-menu').css('left', '0px');
+          $('.menu-overlay').css('left', '0px');
+          $('.filter-toggle').css('z-index', '9');
+          $('html, body').css({
+              'overflow-y': 'hidden',
+              'height': '100%'
+          });
+      }
+      htmlFlow();
+  }
+
+    function khazaiDetailCarousels() {
+        setTimeout(() => {
+            new Flickity(document.querySelector('.js-flickity-detail-carousel'), {
+                freeScroll: false,
+                contain: true,
+                percentPosition: false,
+                resize: false,
+                initialIndex: 2,
+                accessibility: false,
+                wrapAround: true,
+                cellAlign: 'center',
+                pageDots: false,
+                prevNextButtons: true,
+            });
+    }, 100);
+    }
+    function setFlickityDetailCarousel() {
+        var flkty = $('.js-flickity-detail-carousel').flickity();
+        if (!flkty) {
+            flkty.flickity();
+        } else {
+            flkty.flickity('destroy');
+            setTimeout(() => {
+                flkty.flickity();
+        }, 300);
+            khazaiDetailCarousels();
+        }
+    }
+    function khazaiDetailBottomCarousels() {
+        setTimeout(() => {
+            new Flickity(document.querySelector('.js-flickity-detail-carousel-bottom'), {
+                freeScroll: false,
+                contain: true,
+                percentPosition: false,
+                resize: false,
+                initialIndex: 2,
+                accessibility: false,
+                wrapAround: true,
+                cellAlign: 'center',
+                pageDots: false,
+                prevNextButtons: true,
+            });
+    }, 100);
+    }
+    function setFlickityDetailBottomCarousel() {
+        var flkty = $('.js-flickity-detail-carousel-bottom').flickity();
+        if (!flkty) {
+            flkty.flickity();
+        } else {
+            flkty.flickity('destroy');
+            setTimeout(() => {
+                flkty.flickity();
+        }, 300);
+            khazaiDetailBottomCarousels();
+        }
+    }
+
+  htmlFlow();
+  goScrollUp();
+  setFlickityDetailCarousel();
+  setFlickityDetailBottomCarousel();
+
+ 
+
+
+</script>
+
+
+
+

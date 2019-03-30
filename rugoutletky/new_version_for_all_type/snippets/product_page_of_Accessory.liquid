@@ -1,0 +1,664 @@
+{%include "aa"%}
+{%include "list_item"%}
+{% assign display = 'fix' %}
+{% if product.type == 'rug'  or product.variants.size < 2 %}
+{% assign display = 'none' %}
+{% endif %}
+{{ 'test.js' | asset_url | script_tag }}
+{%assign images = product.metafields.images.all | split : "," | reverse  %}
+<link rel='stylesheet' href='https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.carousel.min.css'>
+<link rel='stylesheet' href='https://owlcarousel2.github.io/OwlCarousel2/assets/owlcarousel/assets/owl.theme.default.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
+  <!-- ///////////////////////////// -->
+ <div class='container product-details-page'>
+    <div class='row'>
+        <div class="col-md-4">
+            <h2>{{ product.title}}</h2>
+            <h5>{{ product.description }}</h5>
+            <div class="price">
+                <p style="float: left;" id="ProductPrice">$ 2000.00</p> <del id="ComparePrice">$ 1900.00 </del>
+            </div>
+            <hr />
+            <div class="product-info">
+                <div class='row'>
+                        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                          
+                                             {% if product.options.size > 1 and product.options.first != 'Title' %}
+
+                          <div class="col-md-12">
+                            <div class="select">
+                                <select name="id" id="productSelect" class="product-single__variants">
+                                    {% for variant in product.variants %}
+                                    {% if variant.available %}
+                                    <option style="background: rgb{{ variant.id }};" {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                                    {% else %}
+                                    <option disabled="disabled">
+                                        {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                                    </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                          </div>
+                          {% endif %}
+                    {% assign instructions = current_variant.metafields.specifications %}
+                    {% assign key = 'all' %}
+                    <div class="tab-detail-add-right">
+                        <div class="col-md-6">
+                            <div class="tab-detail-add-right-qty">
+                                <span class="input-number-decrement">–</span><input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+                                <span class="input-number-increment">+</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="tab-detail-add-right-add">
+                                <button type="submit" name="add" id="AddToCart" class="button button--wapasha button--round-s">
+                                  <i class="fas fa-shopping-cart"></i> <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+
+                </div>
+                <hr />
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <p class="title">Available Colors:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="colors">
+                            <li class="red"> </li>
+                            <li class="blue active"> </li>
+                            <li class="green"> </li>
+                            <li class="yellow"> </li>
+                        </ul>
+                    </div>
+                </div> -->
+                <!-- <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Wishlist:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="sizes">
+                            <li><a href="#">S</a></li>
+                            <li class="active"><a href="#">M</a></li>
+                            <li><a href="#">L</a></li>
+                            <li><a href="#">XL</a></li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+
+          
+
+            <div class="product-info">
+                <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Collection:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.collectionName}}</p>
+                    </div>
+                </div>
+                 <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Design:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.designName}}</p>
+                    </div>
+                </div>
+                   <div class='row'>
+                    <div class="col-md-6">
+                    	<p class="title">Country:</p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.originCountryName}}</p>
+                    </div>
+                </div>
+                   <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">vendor:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.vendorUniqueId}}</p>
+                    </div>
+                </div>
+                 
+               
+              
+              
+            </div>
+            <hr />
+            <div class="product-info">
+                <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Favourites:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"><i class="far fa-heart"></i> Add to favourites</p>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Wishlist:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"><i class="far fa-eye"></i> Add to Watch list</p>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">collection:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"><i class="far fa-star"></i> Add to collection</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="owl-carousel owl-theme">
+
+
+
+                {% for image in images  %}
+
+                <div class="item" style="justify-content: center;display: flex;">
+                    <img style="max-width:400px" src="{{ image | replace : ".jpg" ,"_S.jpg" }}" />
+                </div>
+
+                {% endfor %}
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+  #ComparePrice {
+  	color :red ;
+    margin-left : 10px;
+   }
+.tab-detail-add-right{
+  width: 100% !important;
+}
+    .select {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance:none;
+      margin: 0;
+    }
+    .select select {
+      display: inline-block;
+      width: 100%;
+      cursor: pointer;
+      padding: 10px 10px;
+      outline: 0;
+      border: 0;
+      border-radius: 5px;
+      background: #e6e6e6;
+      color: #7b7b7b;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    .select select::-ms-expand {
+        display: none;
+    }
+.selector-wrapper{
+  position: relative;
+  margin-bottom: 20px;
+}
+    .select .selector-wrapper select:hover,
+    .select .selector-wrapper select:focus {
+        color: #000;
+        background: #ccc;
+    }
+
+    .select .selector-wrapper:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .select .selector-wrapper:before {
+        content: "";
+        position: absolute;
+        top: 44px;
+        right: 15px;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        border-style: solid;
+        border-width: 8px 5px 0 5px;
+        border-color: #7b7b7b transparent transparent transparent;
+    }
+
+    .select .selector-wrapper:hover:before,
+    .select .selector-wrapper:focus:before {
+        border-top-color: #000;
+    }
+
+    .select .selector-wrapper:disabled:before {
+        border-top-color: #ccc;
+    }
+
+    .product-details-page {
+        padding: 20px;
+    }
+
+    .product-details-page h2 {
+        font-weight: bold;
+    }
+
+    .product-details-page .price {
+        margin-top: 30px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .product-details-page .price del {
+        font-weight: 100;
+        font-size: 17px;
+        margin-left: 3px;
+    }
+
+    .product-details-page .product-info {
+        text-align: left;
+    }
+
+    .product-details-page .product-info .title,
+    .selector-wrapper label {
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 20px;
+    }
+
+    .product-details-page .product-info .data {
+        font-size: 16px;
+    }
+
+    .product-details-page .product-info .colors {
+        list-style: none;
+    }
+
+    .product-details-page .product-info .colors li {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        border: 2px solid white;
+    }
+
+    .product-details-page .product-info .colors li.active {
+        border: 2px solid black;
+    }
+
+    .product-details-page .product-info .colors .red {
+        background-color: red;
+    }
+
+    .product-details-page .product-info .colors .blue {
+        background-color: blue;
+    }
+
+    .product-details-page .product-info .colors .green {
+        background-color: green;
+    }
+
+    .product-details-page .product-info .colors .yellow {
+        background-color: yellow;
+    }
+
+    .product-details-page .product-info .sizes {
+        list-style: none;
+    }
+
+    .product-details-page .product-info .sizes li {
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-block;
+        line-height: 25px;
+        width: 25px;
+        height: 25px;
+        background: BlanchedAlmond;
+        text-align: center;
+        border: 2px solid white;
+    }
+
+    .product-details-page .product-info .sizes li.active {
+        border: 2px solid black;
+    }
+
+    .product-details-page .product-info .sizes li a {
+        color: #333;
+    }
+
+    .owl-carousel .owl-nav button.owl-next,
+    .owl-carousel .owl-nav button.owl-prev {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        font-size: 40px;
+        padding-bottom: 5px !important;
+        line-height: 0;
+    }
+
+    .owl-theme .owl-nav [class*=owl-]:hover {
+        opacity: .5;
+    }
+
+    .owl-nav button.owl-next {
+        right: 10px;
+    }
+
+    .owl-nav button.owl-prev {
+        left: 10px;
+    }
+
+    .quantity-selector {
+        width: 80px;
+        padding: 0;
+        vertical-align: top;
+        text-align: center;
+        outline: none;
+    }
+
+    .quantity-selector,
+    .input-number-decrement,
+    .input-number-increment {
+        border: 1px solid #ccc;
+        height: 40px;
+        user-select: none;
+    }
+
+    .input-number-decrement,
+    .input-number-increment {
+        display: inline-block;
+        width: 30px;
+        line-height: 38px;
+        background: #f1f1f1;
+        color: #444;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .input-number-decrement:active,
+    .input-number-increment:active {
+        background: #ddd;
+    }
+
+    .input-number-decrement {
+        border-right: none;
+        border-radius: 4px 0 0 4px;
+    }
+
+    .input-number-increment {
+        border-left: none;
+        border-radius: 0 4px 4px 0;
+        margin-left: -3px;
+    }
+    /* Wapasha */
+    .button.button--wapasha {
+      background: #deb335;
+      color: #fff;
+      -webkit-transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s;
+      width: 100%;
+      display: block;
+      padding: 9px 1em;
+      border: none;
+      vertical-align: middle;
+      position: relative;
+      z-index: 1;
+      -webkit-backface-visibility: hidden;
+      border-radius: 5px;
+    }
+
+    .button--wapasha::before {
+    	content: '';
+    	position: absolute;
+    	top: 0;
+    	left: 0;
+    	width: 100%;
+    	height: 100%;
+    	border: 2px solid #deb335;
+    	z-index: -1;
+    	border-radius: inherit;
+    	opacity: 0;
+    	-webkit-transform: scale3d(0.6, 0.6, 1);
+    	transform: scale3d(0.6, 0.6, 1);
+    	-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+    	transition: transform 0.3s, opacity 0.3s;
+    	-webkit-transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+    	transition-timing-function: cubic-bezier(0.75, 0, 0.125, 1);
+    }
+
+    .button--wapasha:hover {
+    	background-color: #fff;
+    	color: #deb335;
+    }
+
+    .button--wapasha:hover::before {
+    	-webkit-transform: scale3d(1, 1, 1);
+    	transform: scale3d(1, 1, 1);
+    	opacity: 1;
+    }
+</style>
+
+
+<script type="text/javascript">
+    (function() {
+        window.inputNumber = function(el) {
+
+            var min = el.attr('min') || false;
+            var max = el.attr('max') || false;
+
+            var els = {};
+
+            els.dec = el.prev();
+            els.inc = el.next();
+
+            el.each(function() {
+                init($(this));
+            });
+
+            function init(el) {
+
+                els.dec.on('click', decrement);
+                els.inc.on('click', increment);
+
+                function decrement() {
+                    var value = el[0].value;
+                    value--;
+                    if (!min || value >= min) {
+                        el[0].value = value;
+                    }
+                }
+
+                function increment() {
+                    var value = el[0].value;
+                    value++;
+                    if (!max || value <= max) {
+                        el[0].value = value++;
+                    }
+                }
+            }
+        }
+    })();
+
+    inputNumber($('.quantity-selector'));
+
+    jQuery(document).ready(function() {
+
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            items: 1,
+            dots: true,
+            nav: true,
+            navSpeed: 1000
+        })
+
+    });
+</script>
+<!-- ////////////////////////////////////// -->
+
+<div itemscope itemtype="http://schema.org/Product">
+    {{ 'focus.min.js' | asset_url | script_tag }}
+    {% assign current_variant = product.selected_or_first_available_variant %}
+  {% section 'related_product'%}    
+
+</div>
+  
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+<script>
+    var color_img = new Array();
+    var all_metafild = new Array();
+    var all_metafild1 = new Array();
+    var all_images = new Array();
+
+
+
+
+
+    var selectCallback = function(variant, selector) {
+
+
+
+        timber.productPage({
+
+            money_format: "{{ shop.money_format }}",
+            variant: variant,
+            selector: selector,
+        });
+
+
+
+
+
+
+
+
+        //jQuery(".Product_Information").html(variant.id);
+        var detalepage_filds_value = new Array();
+        var detalepage_filds_title = new Array();
+        var detalepage_filds_title_style = new Array();
+        var detalepage_filds_value_style = new Array();
+
+        {{detalepage_filds_value | replace: "*", "'"}}
+        {{detalepage_filds_title | replace: "*", "'"}}
+        {{detalepage_filds_title_style | replace: "*", "'"}}
+        {{detalepage_filds_value_style | replace: "*", "'"}}
+
+        // console.log(detalepage_filds_value);
+        var admin_Class = detalepage_filds_value['{{product.metafields.adminClassOwner_text.all}}'];
+        var admin_Class_title = detalepage_filds_title['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_title_style_a = detalepage_filds_title_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_value_style_a = detalepage_filds_value_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var value_info = "<div class='row'>";
+
+        value_info = value_info + "</div>";
+
+        jQuery(".Product_Information").html(value_info);
+        jQuery("#detail-page-top-img-big").css({
+            "background-color": "{{ "lo.gif " | asset_url }}"
+        });
+        jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + all_images[variant.id][0] + ".jpg)");
+        var images_T = "";
+        jQuery.each(all_images[variant.id], function(index, value) {
+            images_T += " <div class='detail-page-top-img-small-img'><img class='img_T' src='" + value + "_T.jpg'/></div>";
+
+            // console.log(all_images);
+
+        });
+        jQuery('.detail-page-top-img-small').html(images_T);
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+
+
+
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+
+            //  jQuery("#detail-page-top-img-big").css({"background-image":url( all_images[variant.id][0]+"_S.jpg")});
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+
+
+
+
+
+        });
+
+    };
+    var color = jQuery(".color").attr("data-id");
+
+
+    jQuery(function($) {
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{product | json}},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+        // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+        jQuery('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>'); {% endif %}
+
+        // Hide selectors if we only have 1 variant and its title contains 'Default'.
+        {%    if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+        jQuery('.selector-wrapper').hide(); {% endif %}
+    });
+    jQuery(document).ready(function() {
+        jQuery('#AddToCart').click(function() {
+            setTimeout(function() {
+                jQuery.getJSON('/cart.js', function(cart) {
+                    // now have access to Shopify cart object
+                    //alert('There are now ' + cart.item_count + ' items in the cart.');
+                    jQuery("#item_count").html(cart.item_count);
+                    // alert(cart.item_count);
+                });
+            }, 300)
+        });
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+        });
+
+
+
+    });
+</script>

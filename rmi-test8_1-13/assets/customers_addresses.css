@@ -1,0 +1,270 @@
+  .create-button-btn .btn {
+
+    color: black;
+
+}
+
+  html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+        .acc-address-all-all {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .acc-address-all {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .acc-address-header {
+            font-size: 36px;
+            margin: 50px 0 25px 0;
+        }
+        .acc-address-main {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .acc-address-main-address {
+            width: calc(33.33% - 105px);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            margin: 0 11px 22px 11px;
+            position: relative;
+            border: 1px solid darkgrey;
+        }
+        .acc-address-main-address-header {
+            font-weight: bold;
+            font-size: 23px;
+            margin-bottom: 25px;
+        }
+        .acc-address-main-address-mail {
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+        .acc-address-main-address-address {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .acc-address-main-address-address div {
+            margin-bottom: 5px;
+        }
+        .acc-address-main-address-phone {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        .acc-address-main-actions {
+            width: 100%;
+            height: 35px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .acc-address-main-actions-edit {
+            margin-right: 25px;
+            color: #e5bf44;
+            cursor: pointer;
+        }
+		.acc-address-main-actions-edit a {
+          text-decoration: none;
+          color: #e5bf44;
+        }
+        .acc-address-main-actions-delete {
+            margin-right: 25px;
+            color: red;
+            cursor: pointer;
+        }
+		.acc-address-main-actions-delete a {
+          text-decoration: none;
+          color: red;
+        }
+        .bt-submit {
+          display: flex;
+          flex-direction: column;
+            width: 100%;
+        }
+        .acc-address-main-add {
+            width: calc(33.33% - 105px);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            margin: 0 11px 22px 11px;
+            position: relative;
+        }
+        .acc-address-main-add-btn {
+            width: 160px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 1024px) {
+            .acc-address-main-add {
+                height: 325px;
+            }
+            .acc-address-main-address {
+                height: 325px;
+            }
+        }
+        @media only screen and (max-width: 768px) {
+            .acc-address-main-add {
+                width: calc(50% - 105px);
+            }
+            .acc-address-main-address {
+                width: calc(50% - 105px);
+            }
+        }
+        @media only screen and (max-width: 425px) {
+            .acc-address-main-add {
+                width: 96%;
+                height: 40px;
+                padding: 0;
+                margin: 0;
+                flex-direction: row;
+                justify-content: flex-end;
+            }
+            .acc-address-main-address {
+                width: calc(100% - 105px);
+                height: 275px;
+            }
+            .acc-address-header {
+                font-size: 32px;
+                margin: 25px 0 15px 0;
+            }
+        }
+
+ html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+        .create-all-all {
+            width: 100%;
+            min-height: calc(100vh - 535px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+/*             margin: 25px 0; */
+        }
+		.acc-address-main-address h4 {
+          	margin-top: 0;
+        }
+        .create-all {
+            width: 450px;
+            height: 800px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .create-header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+        }
+        .create-email-all {
+            width: 100%;
+             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          margin-top: 5px;
+        }
+        .create-email-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+		.create-email-text label {
+          display: flex;
+    		align-items: center;
+        }
+		.create-email-text label input {
+          width: 15px;
+          height: 15px !important;
+          border: none;
+          box-shadow: none;
+          cursor: pointer;
+        }
+		.create-email-all select {
+          height: 40px;
+    		width: 101%;
+        }
+        .create-email-all input {
+            width: calc(100% - 15px);
+            height: 35px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+        }
+        .create-password-all {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .create-password-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+        .create-password-all input {
+            width: calc(100% - 15px);
+            height: 35px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+        }
+        .create-button {
+            width: 100%;
+            display: flex;
+        }
+        .create-button-btn {
+            width: 145px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5bf44;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 8px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .create-all-all {
+                min-height: calc(100vh - 430px);
+            }
+        }
+        @media only screen and (max-width: 425px) {
+            .create-all {
+                width: 300px;
+            }
+        }

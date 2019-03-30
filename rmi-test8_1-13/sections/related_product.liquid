@@ -1,0 +1,252 @@
+{% if section.settings.show_related_products == true %}
+
+ 
+
+{% assign number_of_related_products_per_row = section.settings.related_grid_num %}
+{% assign number_of_rows = section.settings.related_grid_row %}
+
+
+{% assign heading = section.settings.related_title %}
+
+
+{% assign same_vendor = false %}
+{% assign same_type = false %}
+
+
+{% assign exclusions = 'frontpage,all' | split: ',' %}
+
+
+
+{% if product.metafields.c_f['Related Products'] %}
+  {% assign collection = collections[product.metafields.c_f['Related Products']] %}
+{% endif %}
+
+{% assign found_a_collection = false %}
+{% if collection and collection.all_products_count > 1 %}
+  {% unless exclusions contains collection.handle %}
+    {% assign found_a_collection = true %}
+  {% endunless %}
+{% endif %}
+{% unless found_a_collection %}
+  {% for c in product.collections %}
+    {% unless exclusions contains c.handle or c.all_products_count < 2 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+      {% break %}
+    {% endunless %}
+  {% endfor %}
+{% endunless %}
+
+ 
+{% if found_a_collection %}
+  {% assign counter = 0 %}
+  {% assign break_at = number_of_rows | times: number_of_related_products_per_row %}
+  {% assign current_product = product %}
+
+
+<div class="detail-page-carousel-top">
+        <div class="detail-page-carousel">
+          
+            <div class="detail-page-carousel-header"><strong>{{section.settings.related_title}}</strong></div>
+            <div class="gallery js-flickity-detail-carousel" style="height: calc(100% - 75px)">
+
+
+               
+           
+
+     {% for product in collection.products limit: section.settings.count_in_slider %}
+      {% unless product.handle == current_product.handle %}
+         {% unless same_vendor and current_product.vendor != product.vendor %}
+           {% unless same_type and current_product.type != product.type %}
+  
+    				
+              
+              
+               <div class="size" style="height: 100%;width: calc(33% - 10px);display: flex;flex-direction: column;align-items: center">
+                    <img class="mySlides" src="{% if product.metafields.images.all %}
+         					 {% assign images = product.metafields.images.all | split: "," | reverse  %}
+                                        
+                                          {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_S.jpg  
+                                         {%else%}
+                                         {{ product.featured_image | product_img_url: 'medium' }}
+                                         {% endif %}" style="width:100%;height: calc(100% - 55px);object-fit: contain">
+                 <div class="js-flickity-carousel-name"><a href={{product.url}}>{{product.title}}</a></div>
+                    <div class="js-flickity-carousel-price">
+                 {%- if product.price_min  == product.price_max  -%}                
+                	 {{ product.price_min | money }}
+                {% else %}
+               		 {{ product.price_min | money }} - {{product.price_max | money }}
+                {% endif %}
+                 
+                 </div>
+                </div>
+
+              
+              
+             {% assign counter = counter | plus: 1 %}
+             {% if counter == break_at %}
+               {% break %}
+             {% endif %}
+           {% endunless %}
+        {% endunless %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+       
+
+ </div>
+    </div>
+
+ 
+  
+     
+{% endif %}
+  
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Enable Section",
+      "default": false
+    },
+    {
+      "id": "related_title",
+      "type": "text",
+      "label": "Section title",
+      "default": "Related Products"
+    },
+		{
+            "type":      "range",
+            "id":        "count_in_slider",
+            "min":       2,
+            "max":        100,
+            "step":       1,
+            "unit":       "px",
+            "label":     "Count In Slider",
+            "default":   4
+}
+  ]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+
+ 
+
+    function htmlFlow() {
+        $('html').css({
+            'overflow': 'inherit',
+        })
+    }
+    function goScrollUp() {
+        $(function () {
+            const scroll_pos = (0);
+            $('html, body').animate({scrollTop: (scroll_pos)}, 'slow');
+        });
+    }
+
+  function openMenuToggle() {
+      if ($('.header-bottom-menu').css('left') === '0px') {
+          $('.header-bottom-menu').css('left', '-250px');
+          $('.menu-overlay').css('left', '-100%');
+          $('.filter-toggle').css('z-index', '99');
+          if ($('.list-page-filter-all').css('left') === '-50px') {
+              $('html, body').css({
+                  'overflow-y': 'hidden',
+                  'height': '100%'
+              });
+          } else {
+              $('html, body').css({
+                  'overflow-y': 'auto',
+                  'overflow-x': 'hidden',
+                  'height': 'auto'
+              });
+          }
+      } else {
+          $('.header-bottom-menu').css('left', '0px');
+          $('.menu-overlay').css('left', '0px');
+          $('.filter-toggle').css('z-index', '9');
+          $('html, body').css({
+              'overflow-y': 'hidden',
+              'height': '100%'
+          });
+      }
+      htmlFlow();
+  }
+
+    function khazaiDetailCarousels() {
+        setTimeout(() => {
+            new Flickity(document.querySelector('.js-flickity-detail-carousel'), {
+                freeScroll: false,
+                contain: true,
+                percentPosition: false,
+                resize: false,
+                initialIndex: 2,
+                accessibility: false,
+                wrapAround: true,
+                cellAlign: 'center',
+                pageDots: false,
+                prevNextButtons: true,
+            });
+    }, 100);
+    }
+    function setFlickityDetailCarousel() {
+        var flkty = $('.js-flickity-detail-carousel').flickity();
+        if (!flkty) {
+            flkty.flickity();
+        } else {
+            flkty.flickity('destroy');
+            setTimeout(() => {
+                flkty.flickity();
+        }, 300);
+            khazaiDetailCarousels();
+        }
+    }
+    function khazaiDetailBottomCarousels() {
+        setTimeout(() => {
+            new Flickity(document.querySelector('.js-flickity-detail-carousel-bottom'), {
+                freeScroll: false,
+                contain: true,
+                percentPosition: false,
+                resize: false,
+                initialIndex: 2,
+                accessibility: false,
+                wrapAround: true,
+                cellAlign: 'center',
+                pageDots: false,
+                prevNextButtons: true,
+            });
+    }, 100);
+    }
+    function setFlickityDetailBottomCarousel() {
+        var flkty = $('.js-flickity-detail-carousel-bottom').flickity();
+        if (!flkty) {
+            flkty.flickity();
+        } else {
+            flkty.flickity('destroy');
+            setTimeout(() => {
+                flkty.flickity();
+        }, 300);
+            khazaiDetailBottomCarousels();
+        }
+    }
+
+  htmlFlow();
+  goScrollUp();
+  setFlickityDetailCarousel();
+  setFlickityDetailBottomCarousel();
+
+ 
+
+
+{% endjavascript %}

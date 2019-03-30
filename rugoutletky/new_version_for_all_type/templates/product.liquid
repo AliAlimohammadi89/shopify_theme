@@ -1,0 +1,20 @@
+
+
+
+{% case product.type %}
+{% when 'rug' %}
+{% include "product_page_of_Rug"%}
+
+{% when 'accessory' %}
+{% include "product_page_of_Accessory"%}
+
+
+{% when 'lighting' %}
+{% include "product_page_of_Lighting"%}
+
+{% else %}
+{% include "product_page_of_Lighting"%}
+{% endcase %}
+
+
+ 

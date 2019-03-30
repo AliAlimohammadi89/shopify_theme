@@ -1,0 +1,103 @@
+<div class="footer-all-all" style="overflow: hidden;">
+    <div class="footer-all-img">
+        {% section 'footer_images' %}   
+    </div>
+    <div class="footer-all">
+        <div class="footer-all-items">
+           {% section 'footer_1' %}         
+        </div>
+        <div class="footer-all-items footer-all-items-mobile" style="width: 30%">
+            {% section 'footer_2' %}
+
+        </div>
+        <div class="footer-all-items footer-all-items-mobile" style="width: 30%;justify-content: flex-start">
+           {% section 'footer_3' %}
+        </div>
+    </div>
+</div>
+{% section 'footer_top_text'%}
+
+<style>
+  #shopify-section-footer_1 {
+    width: 100%;
+    height: 100%;
+  }
+  #shopify-section-footer_2 {
+    width: 100%;
+    height: 100%;
+  }
+  #shopify-section-footer_3 {
+    width: 100%;
+    height: 100%;
+  }
+.footer-all-bottom {
+width: 100%;
+height: 35px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: black;
+color: grey;
+}
+   .footer-all-all {
+ height: 250px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+/* padding: 0 125px 0 250px; */
+position: relative;
+background-color: #efefef;
+}
+.footer-all {
+width: 100%;
+height: 100%;
+display: flex;
+  align-items: center;
+flex-direction: row;
+justify-content: center;
+padding: 35px 0;
+  margin: 0 150px 0 250px;
+}
+.footer-all-items {
+width: 40%;
+height: 75%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+color: black;
+}
+.footer-all-items-header {
+width: 100%;
+margin-bottom: 25px;
+display: flex;
+align-items: center;
+font-size: 23px;
+}
+.footer-all-items-text {
+width: 100%;
+display: flex;
+align-items: center;
+font-size: 15px;
+}
+.footer-all-items-text i {
+font-size: 21px;
+}
+.footer-all-img {
+position: absolute;
+left: 75px;
+height: 100%;
+display: flex;
+align-items: center;
+}
+.footer-all-img img {
+width: 100px;
+}
+
+
+ </Style>
+
+
+
+
+
+

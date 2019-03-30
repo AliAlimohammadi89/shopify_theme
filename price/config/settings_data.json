@@ -1,0 +1,408 @@
+{
+  "current": {
+    "color_primary": "#204a80",
+    "color_secondary": "#dcdcdc",
+    "color_borders": "#e5e5e5",
+    "color_body_bg": "#ffffff",
+    "color_body_text": "#333333",
+    "color_footer_bg": "#f2f2f2",
+    "color_footer_text": "#636363",
+    "color_footer_social_link": "#bbbbbb",
+    "logo_use_image": false,
+    "logo_max_width": "450",
+    "favicon_enable": false,
+    "footer_social_enable": false,
+    "footer_newsletter_enable": false,
+    "newsletter_form_action": "",
+    "cart_notes_enable": false,
+    "cart_vendor_enable": false,
+    "ajax_cart_method": "drawer",
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "checkout_header_image": "",
+    "checkout_use_storefront_logo": true,
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "large",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#fcfcfc",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "Arvo",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
+    "sections": {
+      "header_menu": {
+        "type": "header_menu",
+        "settings": {
+          "images": ""
+        }
+      },
+      "footer_1": {
+        "type": "footer_1",
+        "blocks": {
+          "1544278855173": {
+            "type": "select",
+            "settings": {
+              "link": "shopify:\/\/pages\/aboutus",
+              "linktext": "AboutUs"
+            }
+          },
+          "1544273057961": {
+            "type": "select",
+            "settings": {
+              "link": "",
+              "linktext": "502-219-6959"
+            }
+          },
+          "1544347260761": {
+            "type": "select",
+            "settings": {
+              "link": "shopify:\/\/products\/autism-navy-designer-legging",
+              "linktext": "test"
+            }
+          },
+          "1544273032281": {
+            "type": "select",
+            "settings": {
+              "link": "shopify:\/\/pages\/adress",
+              "linktext": "11300 Decimal Dr. Suite C Louisville, KY 40299"
+            }
+          },
+          "1544273032284": {
+            "type": "select",
+            "settings": {
+              "link": "shopify:\/\/pages\/adress",
+              "linktext": "11300 Decimal11111111111111"
+            }
+          }
+        },
+        "block_order": [
+          "1544278855173",
+          "1544273057961",
+          "1544347260761",
+          "1544273032281",
+          "1544273032284"
+        ],
+        "settings": {
+          "text-title": "Visit  <b>Us<\/b>"
+        }
+      },
+      "footer_2": {
+        "type": "footer_2",
+        "blocks": {
+          "1544273104362": {
+            "type": "select",
+            "settings": {
+              "link": "",
+              "linktext": "2051 Richmond Rd. Suite#125 Lexington, KY 40502"
+            }
+          }
+        },
+        "block_order": [
+          "1544273104362"
+        ],
+        "settings": {
+          "text-title": "Why KORO?"
+        }
+      },
+      "footer_3": {
+        "type": "footer_3",
+        "blocks": {
+          "1544273163856": {
+            "type": "select",
+            "settings": {
+              "link": "",
+              "linktext": "My Wishlist"
+            }
+          },
+          "1544273185128": {
+            "type": "select",
+            "settings": {
+              "link": "",
+              "linktext": "Track My Order"
+            }
+          }
+        },
+        "block_order": [
+          "1544273163856",
+          "1544273185128"
+        ],
+        "settings": {
+          "text-title": "KORO  Company"
+        }
+      },
+      "footer_images": {
+        "type": "footer_images",
+        "settings": {
+          "images": ""
+        }
+      },
+      "images_header": {
+        "type": "images_header",
+        "settings": {
+          "images": "shopify:\/\/shop_images\/logo_kro.png"
+        }
+      },
+      "footer_top_text": {
+        "type": "footer_top_text",
+        "settings": {
+          "text": "<p><em><strong>Copyright &copy; 2018 Oriental Weavers. All Right Reserved | Powered By RM Datalink a Product of RM Innovation<\/strong><\/em><\/p>"
+        }
+      },
+      "slider_main_index": {
+        "type": "slider_main_index",
+        "blocks": {
+          "4356546": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/slide1.jpg"
+            }
+          },
+          "1544423254149": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/slide2.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "4356546",
+          "1544423254149"
+        ],
+        "settings": {
+          "image_slider": "Title"
+        }
+      },
+      "index_multy": {
+        "type": "index_multy",
+        "blocks": {
+          "1544531919390": {
+            "type": "collection_box",
+            "settings": {
+              "url": "shopify:\/\/collections\/all",
+              "title": "Title",
+              "count_in_slider": 3,
+              "Theme": "0"
+            }
+          },
+          "1544532190045": {
+            "type": "image-picker",
+            "settings": {
+              "promo-image": ""
+            }
+          },
+          "1544532207275": {
+            "type": "collection_box",
+            "settings": {
+              "url": "shopify:\/\/collections\/all",
+              "title": "All",
+              "count_in_slider": 5,
+              "Theme": "1"
+            }
+          },
+          "1544532276516": {
+            "type": "weekly_Box",
+            "settings": {
+              "promo-image": "",
+              "url": "shopify:\/\/products\/hri-anatolian-141",
+              "title": "Rizzy Adana"
+            }
+          }
+        },
+        "block_order": [
+          "1544531919390",
+          "1544532190045",
+          "1544532207275",
+          "1544532276516"
+        ],
+        "settings": {}
+      },
+      "black-line": {
+        "type": "black-line",
+        "blocks": {
+          "1544427431393": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/Delivery.png",
+              "black-line_title": "Free Delivery",
+              "black-line_body": "<p>On hundredsof Digital<\/p>\n<p>appliances Excludes<\/p>\n<p>Sunday Delivery<\/p>\n<p><\/p>"
+            }
+          },
+          "1544427629188": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/Protection.png",
+              "black-line_title": "Free Delivery",
+              "black-line_body": "<p>On hundreds of Digital<\/p>\n<p>appliances<\/p>\n<p>Excludes Sunday Delivery<\/p>"
+            }
+          },
+          "1544427690398": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/Exchange.png",
+              "black-line_title": "Free Delivery",
+              "black-line_body": "<p>&nbsp; On hundreds of Digital<\/p>\n<p>appliances<\/p>\n<p>Excludes Sunday Delivery<\/p>\n<p><\/p>"
+            }
+          },
+          "1544427728889": {
+            "type": "select",
+            "settings": {
+              "images": "shopify:\/\/shop_images\/Support.png",
+              "black-line_title": "Free Delivery",
+              "black-line_body": "<p>On hundreds of Digita<\/p>\n<p>appliances<\/p>\n<p>Excludes Sunday Delivery<\/p>\n<p><\/p>"
+            }
+          }
+        },
+        "block_order": [
+          "1544427431393",
+          "1544427629188",
+          "1544427690398",
+          "1544427728889"
+        ],
+        "settings": {}
+      },
+      "search_index": {
+        "type": "search_index",
+        "settings": {}
+      },
+      "clean-repair": {
+        "type": "clean-repair",
+        "blocks": {
+          "1544540912549": {
+            "type": "select",
+            "settings": {
+              "images": "",
+              "title": "Rug Appraisal",
+              "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-appraisal\/"
+            }
+          },
+          "1544541264767": {
+            "type": "select",
+            "settings": {
+              "images": "",
+              "title": "Rug Cleaning",
+              "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-cleaning-services\/"
+            }
+          },
+          "1544541313015": {
+            "type": "select",
+            "settings": {
+              "images": "",
+              "title": "Rug Storage",
+              "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-storage\/"
+            }
+          },
+          "1544541612519": {
+            "type": "select",
+            "settings": {
+              "images": "",
+              "title": "Rug Padding",
+              "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-cleaning-services\/"
+            }
+          }
+        },
+        "block_order": [
+          "1544540912549",
+          "1544541264767",
+          "1544541313015",
+          "1544541612519"
+        ],
+        "settings": {
+          "title": "<p>KRO Cleaning &amp; Repair<\/p>",
+          "images_left": ""
+        }
+      },
+      "blogs": {
+        "type": "blogs",
+        "settings": {
+          "title": "<p>KORO&nbsp;<strong>Blog<\/strong><\/p>",
+          "images_left": "",
+          "url": "shopify:\/\/blogs\/news"
+        }
+      },
+      "about_us": {
+        "type": "about_us",
+        "settings": {
+          "title": "<p>About&nbsp;<strong>Us<\/strong><\/p>",
+          "images": "",
+          "body": "<p><a href=\"\/blogs\/about-us\/about-us\" title=\"About-Us\"><strong>Khazai Rug Outlet- A leader in our industry since the 1860&rsquo;s.<\/strong><\/a><\/p>\n<p>Khazai Rug Outlet offers rugs from all over the globe at the lowest prices around. These low prices aren't just a marketing gimmick, but rather a reflection of the way we choose to do business. Here at Khazai Rug Outlet, we have always had the business model in place to eliminate the middleman; thus, we can offer you the highest quality rugs at the lowest possible price. Some of the rugs we have would be at other stores for almost twice the amount. In fact, we are so confident in our rates if you find your rug for less ANYWHERE else we can offer a 120% price-match guarantee.<\/p>"
+        }
+      },
+      "Follow-Us": {
+        "type": "Follow-Us",
+        "blocks": {
+          "1544621539715": {
+            "type": "select",
+            "settings": {
+              "url": "#",
+              "icon": "<i class=\"fab fa-facebook-f\"><\/i>"
+            }
+          },
+          "1544622020044": {
+            "type": "select",
+            "settings": {
+              "url": "#",
+              "icon": "<i class=\"fab fa-twitter\"><\/i>"
+            }
+          },
+          "1544622035547": {
+            "type": "select",
+            "settings": {
+              "url": "#",
+              "icon": "<i class=\"fab fa-linkedin-in\"><\/i>"
+            }
+          },
+          "1544622045132": {
+            "type": "select",
+            "settings": {
+              "url": "#",
+              "icon": "<i class=\"fab fa-instagram\"><\/i>"
+            }
+          }
+        },
+        "block_order": [
+          "1544621539715",
+          "1544622020044",
+          "1544622035547",
+          "1544622045132"
+        ],
+        "settings": {
+          "title": "Follow Us"
+        }
+      },
+      "related_product": {
+        "type": "related_product",
+        "settings": {
+          "show_related_products": true,
+          "related_title": "Related Product",
+          "count_in_slider": 14
+        }
+      }
+    },
+    "content_for_index": []
+  },
+  "presets": {
+    "Default": {
+      "ajax_cart_method": "drawer",
+      "cart_notes_enable": true,
+      "color_body_bg": "#fff",
+      "color_body_text": "#333333",
+      "color_borders": "#e5e5e5",
+      "color_footer_bg": "#f2f2f2",
+      "color_footer_social_link": "#bbbbbb",
+      "color_footer_text": "#636363",
+      "color_primary": "#747474",
+      "color_secondary": "#bbb",
+      "favicon_enable": false,
+      "footer_newsletter_enable": true,
+      "footer_social_enable": true,
+      "logo_use_image": false,
+      "social_facebook_link": "",
+      "social_twitter_link": ""
+    }
+  }
+}

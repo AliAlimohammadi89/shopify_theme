@@ -1,0 +1,123 @@
+<!-- /templates/customers/account.liquid -->
+
+    {{ 'customers_account.css' | asset_url | stylesheet_tag }}
+
+
+{% comment %}
+
+  For all available customer liquid tags:
+    - http://docs.shopify.com/themes/liquid-variables/customer
+{% endcomment %}
+<h1>{{ 'customer.account.title' | t }}</h1>
+<hr class="hr--small">
+<div class="acc-detail-all-all">
+    <div class="acc-detail-all">
+        <div class="acc-detail-header">{{ 'customer.orders.title' | t }}</div>
+        <div class="acc-detail-main">
+           {% paginate customer.orders by 20 %}
+      {% if customer.orders.size != 0 %}
+            <div class="acc-detail-main-table">
+                <table>
+                    <thead>
+                   <tr>
+                    <th>{{ 'customer.orders.order_number' | t }}</th>
+                    <th>{{ 'customer.orders.date' | t }}</th>
+                    <th>{{ 'customer.orders.payment_status' | t }}</th>
+                    <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                    <th>{{ 'customer.orders.total' | t }}</th>
+                  </tr>
+                    </thead>
+                 <tbody>
+              {% for order in customer.orders %}
+                <tr>
+                  <td>{{ order.name | link_to: order.customer_url }}</td>
+                  <td>{{ order.created_at | date: format: 'month_day_year' }}</td>
+                  <td>{{ order.financial_status_label }}</td>
+                  <td>{{ order.fulfillment_status_label }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+                  
+                </table>
+            </div>
+          
+          {% else %}
+
+        <p>{{ 'customer.orders.none' | t }}</p>
+
+      {% endif %}
+      {% if paginate.pages > 1 %}
+        <hr>
+        <div class="pagination">
+          {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+            <div class="acc-detail-main-address">
+                <div class="acc-detail-main-address-top">
+                    <div class="acc-detail-main-address-header">{{ customer.name }}</div>
+                    <div class="acc-detail-main-address-mail">sample@sample.com</div>
+                    <div class="acc-detail-main-address-address">
+                        {% if customer.default_address != nil %}
+                                          <div class="acc-detail-main-address-mail">{% if customer.default_address.address2 != "" %}
+        {{ customer.default_address.address2 }} 
+      {% endif %}
+                      
+                      </div>
+
+        <div class="acc-detail-main-address-mail">
+      {{ customer.default_address.address1 }} 
+        </div>
+        <div class="acc-detail-main-address-mail">
+
+
+      {% if customer.default_address.address2 != "" %}
+        {{ customer.default_address.address2 }} 
+      {% endif %}
+		 </div>
+        <div class="acc-detail-main-address-mail">
+      {% if customer.default_address.city != "" %}
+        {{ customer.default_address.city }} 
+      {% endif %}
+ </div>
+        <div class="acc-detail-main-address-mail">
+      {% if customer.default_address.province_code != "" %}
+        {{ customer.default_address.province_code | upcase }} 
+      {% endif %}
+ </div>
+        <div class="acc-detail-main-address-mail">
+      {% if customer.default_address.zip != "" %}
+        {{ customer.default_address.zip | upcase }} 
+      {% endif %}
+ </div>
+        <div class="acc-detail-main-address-mail">
+      {% if customer.default_address.country != "" %}
+        {{ customer.default_address.country }} 
+      {% endif %}
+ </div>
+        <div class="acc-detail-main-address-mail">
+      {% if customer.default_address.phone != "" %}
+        {{ customer.default_address.phone }}
+      {% endif %}
+      </div>
+ 
+    {% endif %}
+                    </div>
+                </div>
+                <div class="acc-detail-main-address-bottom">
+                    <div class="acc-detail-main-address-bottom-btn">
+                       <a href="/account/addresses">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<style>
+</style>

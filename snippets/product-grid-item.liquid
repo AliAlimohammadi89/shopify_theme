@@ -1,0 +1,164 @@
+{% comment %}
+
+	This snippet is used to showcase each product during the loop,
+	'for product in collection.products' in collection.liquid.
+
+	A liquid variable (grid_item_width) is set just before the this
+	snippet is included to change the size of the container.
+	Once the variable is set on a page, all future instances of this
+	snippet will use that width. Overwrite the variable to adjust this.
+
+	Example
+		- assign grid_item_width = 'large--one-quarter medium--one-half'
+
+{% endcomment %}
+
+{% comment %}
+	Set the default grid_item_width if no variable is set
+{% endcomment %}
+{% unless grid_item_width %}
+	{% assign grid_item_width = 'large--one-quarter medium--one-half' %}
+{% endunless %}
+
+{% comment %}
+	Check if the product is on sale and set a variable to be used below.
+{% endcomment %}
+{% assign on_sale = true %}
+{% if product.compare_at_price > product.price %}
+	{% assign on_sale = true %}
+{% endif %}
+
+{% comment %}
+	Check if the product is sold out and set a variable to be used below.
+{% endcomment %}
+{% assign sold_out = true %}
+{% if product.available	%}
+	{% assign sold_out = false %}
+{% endif %}
+
+{% comment %}
+	Set a class for sold-out and on-sale items
+{% endcomment %}
+<div class="grid-item {{grid_item_width}}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}">
+	<div class="product-wrapper">
+		{% comment %}
+			Link to your product with the 'within: collection' filter for the link to be aware of the collection.
+			This allows you to create collection-based navigation on the product page.
+
+			Results of using 'within: collection':
+			- Instead of a URL with /products/product-handle
+				you would get /collections/collection-handle/products/product-handle
+
+			For more info on navigation within a collection
+				- http://docs.shopify.com/support/your-store/collections/how-to-navigate-within-a-collection
+
+		{% endcomment %}
+		{% if sold_out %}
+		<span class="grid-item-label soldout">Sold Out</span>
+		{% endif %}
+		{% if on_sale %}
+			<span class="grid-item-label sale">{% if product.compare_at_price > product.price %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0'}}%{% endif %} OFF</span>
+		{% endif %}
+      			<a class="product-title" href="{{ product.url | within: collection }}"> 
+
+		<div class="product-grid-images">
+          {% if   product.featured_image.src %}
+
+
+
+			<img class="featured-image" src="{{ product.featured_image.src | product_img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+			{% assign index = 1 %}
+			{% for image in product.images limit:2 %}
+			{% if index == 2 %}
+			<img class="first-image" src="{{ image.src | product_img_url: 'large' }}">
+			{% endif %}
+			{% assign index = index | plus: 1 %}
+			{% endfor %}
+
+			{% assign idx = 1 %}
+			{% for image in product.images %}
+			{% if idx == 1 %}
+				<a href="{{ image.src | product_img_url: '1024x1024' }}" rel="{{ product.handle }}" class="fancybox zoom-icon" title="View all images"><i class="fa fa-image"></i></a>
+			{% else %}
+				<a rel="{{ product.handle }}" class="fancybox" href="{{ image.src | product_img_url: '1024x1024' }}"></a>
+			{% endif %}
+			{% assign idx = idx | plus: 1 %}
+			{% endfor %}
+
+			<a href="#" class="quick-view" rel="{{ product.handle }}" title="Quick view"><i class="fa fa-eye"></i></a>
+
+
+          {% else %}
+          {% if product.metafields.images.all %}
+          {% assign images = product.metafields.images.all | split: "," | reverse  %}
+
+
+
+			<img class="featured-image" src="{{ images[0]}}" alt="{{ images[0]  }}">
+			{% assign index = 1 %}
+			{% for image in images limit:2 %}
+			{% if index == 2 %}
+			<img class="first-image" src="{{image}}">
+			{% endif %}
+			{% assign index = index | plus: 1 %}
+			{% endfor %}
+
+			{% assign idx = 1 %}
+			{% for image in images %}
+			{% if idx == 1 %}
+				<a href="{{ image}}" rel="{{ product.handle }}" class="fancybox zoom-icon" title="View all images"><i class="fa fa-image"></i></a>
+			{% else %}
+				<a rel="{{ product.handle }}" class="fancybox" href="{{image}}"></a>
+			{% endif %}
+			{% assign idx = idx | plus: 1 %}
+			{% endfor %}
+          {% comment %}
+
+			<a href="#" class="quick-view" rel="{{ product.handle}}" title="Quick view"><i class="fa fa-eye"></i></a>
+	{% endcomment %}
+
+
+          {% else %}
+
+          <img class="featured-image" src="{{ product.featured_image.src | product_img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+			{% assign index = 1 %}
+			{% for image in product.images limit:2 %}
+			{% if index == 2 %}
+			<img class="first-image" src="{{ image.src | product_img_url: 'large' }}">
+			{% endif %}
+			{% assign index = index | plus: 1 %}
+			{% endfor %}
+
+			{% assign idx = 1 %}
+			{% for image in product.images %}
+			{% if idx == 1 %}
+				<a href="{{ image.src | product_img_url: '1024x1024' }}" rel="{{ product.handle }}" class="fancybox zoom-icon" title="View all images"><i class="fa fa-image"></i></a>
+			{% else %}
+				<a rel="{{ product.handle }}" class="fancybox" href="{{ image.src | product_img_url: '1024x1024' }}"></a>
+			{% endif %}
+			{% assign idx = idx | plus: 1 %}
+			{% endfor %}
+			{% comment %}
+ 
+			`	<a href="#" class="quick-view" rel="{{ product.handle }}" title="Quick view"><i class="fa fa-eye"></i></a>
+		   {% endcomment %}
+        {% endif %}
+            {% endif %}
+
+		</div>
+                  </a>
+		<div class="product-grid-info">
+			<a class="product-title" href="{{ product.url | within: collection }}">{{ product.title }}</a>
+			<p class="product-price">
+              <FONT COLOR="ff3333"><strong>{{ product.price_min | money }} - {{product.price_max | money }}</strong></FONT>
+				{% if on_sale %}
+
+				{% endif %}
+			</p>
+			<p class="product-link text-center">
+				<a href="{{ product.url | within: collection }}"><i class="fa fa-shopping-cart"></i>{% if product.price_varies %}Select Options{% else %}View Details{% endif %}</a>
+			<span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+          </p>
+		</div>
+	</div>
+</div>

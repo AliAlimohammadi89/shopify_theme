@@ -1,0 +1,46 @@
+
+       
+        <ul >
+                                <li class='attribute_name' >
+             Primary Material :
+                                </li>
+                                 </li>                                                        
+                               <li id='primaryMaterial' >                               
+                               {% if product.metafields.specifications.primaryMaterial %}
+                               {% for key_value in product.metafields.specifications.primaryMaterial %}{{ key_value}}{% endfor %}
+                                {% else %}                                
+                                 -                                                                
+                                {% endif %}                                                                                                                            
+                               </li>
+                              </ul>
+                             
+       
+        <ul >
+                                <li class='attribute_name' >
+             Secodary Material :
+                                </li>
+                                 </li>                                                        
+                               <li id='secondaryMaterial' >                               
+                               {% if product.metafields.specifications.secondaryMaterial %}
+                               {% for key_value in product.metafields.specifications.secondaryMaterial %}{{ key_value}}{% endfor %}
+                                {% else %}                                
+                                 -                                                                
+                                {% endif %}                                                                                                                            
+                               </li>
+                              </ul>
+                             
+       
+        <ul >
+                                <li class='attribute_name' >
+             Gender :
+                                </li>
+                                 </li>                                                        
+                               <li id='gender' >                               
+                               {% if product.metafields.specifications.gender %}
+                               {% for key_value in product.metafields.specifications.gender %}{{ key_value}}{% endfor %}
+                                {% else %}                                
+                                 -                                                                
+                                {% endif %}                                                                                                                            
+                               </li>
+                              </ul>
+                             

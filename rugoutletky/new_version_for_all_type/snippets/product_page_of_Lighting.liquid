@@ -1,0 +1,546 @@
+{%include "aa"%}
+{%include "list_item"%}
+{% assign display = 'fix' %}
+{% if product.type == 'rug'  or product.variants.size < 2 %}
+{% assign display = 'none' %}
+{% endif %}
+{{ 'test.js' | asset_url | script_tag }}
+{%assign images = product.metafields.images.all | split : "," | reverse  %}
+{% assign metafields = product.metafields.specifications %}
+
+
+      {{ 'lightslider.css' | asset_url | stylesheet_tag }}
+
+
+<div class="product-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="demo">
+          <ul id="lightSlider">
+             {%  for  image in images %}
+             <li data-thumb="{{ image | replace : '.jpg' , '_T.jpg' }}">
+              <img src="{{ image | replace : '.jpg' , '_S.jpg'}}" /> </li>
+            {% endfor %}
+           </ul>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+        <div class="product-info">
+
+
+
+
+          <h1>{{ product.title}}</h1>
+             <div class="price">
+                <p style="float: left;" id="ProductPrice">$ 2000.00</p> <del id="ComparePrice">$ 1900.00 </del>
+            </div>
+
+           <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+             <div class="row">
+           <div class="col-md-12">
+             <div class="styled-select">
+             
+                   {% if product.options.size > 1 and product.options.first != 'Title' %}
+
+               <select name="id" id="productSelect" class="product-single__variants">
+                 {% for variant in product.variants  %}
+                 {% if variant.available %}
+                 <option style="background: rgb{{ variant.id }};" {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                 {% else %}
+                 <option disabled="disabled">
+                   {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                 </option>
+                 {% endif %}
+                 {% endfor %}
+               </select>
+                 {% endif %}
+
+             </div>
+           </div>
+</div>
+
+                <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Collection:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.collectionName}}</p>
+                    </div>
+                </div>
+                 <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">Design:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.designName}}</p>
+                    </div>
+                </div>
+                   <div class='row'>
+                    <div class="col-md-6">
+                    	<p class="title">Country:</p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.originCountryName}}</p>
+                    </div>
+                </div>
+                   <div class='row'>
+                    <div class="col-md-6">
+                        <p class="title">vendor:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.vendorUniqueId}}</p>
+                    </div>
+                </div>
+
+
+
+<!--           <p>color | <span> Neavy</span></p>
+          <ul class="colors">
+            <li class="red"></li>
+            <li class="blue"></li>
+            <li class="green"></li>
+          </ul>
+          <p>Size | <span> Large</span></p>
+          <ul class="sizes">
+            <li>Small</li>
+            <li>Medium</li>
+            <li>Large</li>
+          </ul> -->
+          <div class="row">
+          <div class="col-md-12">
+
+          <p>Quantity</p>
+        <div class="quantity">
+            <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+            <input type="number" id="number" value="0" />
+            <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+        </div>
+        </div>
+        </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-6">
+              <button type="submit" name="add" id="AddToCart" class=" btn btn-addtc">
+                                  <i class="fas fa-shopping-cart"></i> <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+               </button>
+            </div>
+            <div class="col-md-6">
+              <a class="btn btn-wish">Send to Wishlist</a>
+            </div>
+          </div>
+
+
+
+
+        </form>
+        </div>
+        <div class="usp">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="usp-item">
+                <img src="https://image.flaticon.com/icons/svg/411/411763.svg" width="60" height="60" alt="Shipped free icon">
+                <p>free <br> Delivery</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="usp-item">
+                <img src="https://image.flaticon.com/icons/svg/1391/1391974.svg" width="60" height="60" alt="Shipped free icon">
+                <p>Secure <br> CheckOut</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="usp-item">
+                <img src="https://image.flaticon.com/icons/svg/1179/1179931.svg" width="60" height="60" alt="Shipped free icon">
+                <p>30 Days <br> Return</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <br/>
+        <div class="description rte" itemprop="description">
+          <meta charset="utf-8">
+          <p><span>A small splash can make a big wave.</span></p>
+          <ul>
+            <li>100% supersoft ringspun cotton</li>
+            <li>Black shirt with waterbased print</li>
+            <li>Manufactured and printed in the USA</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+   {{ 'lightslider.js' | asset_url | script_tag }}
+
+
+  <style >
+.js-qty button{
+display: none;
+ }
+ .js-qty {
+      width: auto !important;
+     display: inline-block;
+ }
+    .product-page {
+      margin: 20px 0;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+
+    .product-info {
+      padding: 20px;
+      background-color: #dadada;
+      margin-bottom: 20px;
+    }
+    .product-info p:not(.data){
+font-size: 20px;
+font-weight: bold;
+    }
+    .product-info h1 {
+      margin-top: 0;
+      font-size: 1.75em;
+      font-weight: 400;
+      letter-spacing: -1px;
+    }
+    .product-info .price {
+      font-size: 1.125em;
+      font-weight: 600;
+      color: #209a9a;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+      .product-info .price del {
+margin-left: 10px;
+        color : red;
+font-size:16px
+      }
+    .product-info .colors {
+      list-style: none;
+      padding: 0;
+    }
+    .product-info .colors li {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .product-info .colors li.red {
+      background-color: #e74c3c;
+    }
+    .product-info .colors li.blue {
+      background-color: #3498db;
+    }
+    .product-info .colors li.green {
+      background-color: #2ecc71;
+    }
+    .product-info .colors li:hover {
+      -webkit-box-shadow: 0px 0px 10px -2px #0f0f0f;
+      -moz-box-shadow: 0px 0px 10px -2px #0f0f0f;
+      box-shadow: 0px 0px 10px -2px #0f0f0f;
+    }
+    .product-info .sizes {
+      list-style: none;
+      padding: 0;
+    }
+    .product-info .sizes li {
+      display: inline-block;
+      padding: 10px;
+      border: 3px solid #b8b8b8;
+      margin-right: 10px;
+    }
+    .product-info .sizes li:hover {
+      color: #606060;
+      border-color: #606060;
+    }
+    .product-info .btn-addtc {
+      width: 100%;
+      padding: 10px 30px;
+      font-size: 20px;
+      border: 3px solid #209a9a;
+      color: #209a9a;
+      border-radius: 0;
+    }
+    .product-info .btn-addtc:hover {
+      color: #fff;
+      background-color: #209a9a;
+    }
+    .product-info .btn-wish {
+      width: 100%;
+      padding: 10px 10px;
+      font-size: 20px;
+      border: 3px solid #209a9a;
+      color: #fff;
+      background-color: #209a9a;
+      border-radius: 0;
+    }
+    .product-info .btn-wish:hover {
+      color: #209a9a;
+      background-color: transparent;
+    }
+
+    #lightSlider ul {
+      list-style: none outside none;
+      padding-left: 0;
+      margin-bottom: 0;
+      overflow: hidden;
+    }
+    #lightSlider li {
+      display: block;
+      float: left;
+      margin-right: 6px;
+      cursor: pointer;
+    }
+    #lightSlider img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      margin : auto;
+    }
+
+    .value-button {
+      text-align: center;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      height: 30px;
+      width: 30px;
+      border: 3px solid #b8b8b8;
+      font-family: "IBM Plex Sans",sans-serif;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      background: transparent;
+      display: inline-block;
+    }
+
+    .value-button:hover {
+      cursor: pointer;
+    }
+
+    form #decrease {
+      margin-right: 10px;
+    }
+
+    form #increase {
+      margin-left: 10px;
+    }
+
+    form #input-wrap {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .quantity #number {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      height: 30px;
+      border: 0px;
+      border: 3px solid #b8b8b8;
+      font-family: "IBM Plex Sans",sans-serif;
+      font-size: 0.75em;
+      text-transform: uppercase;
+      background: transparent;
+      text-align: center;
+    }
+    .quantity #number:focus {
+      outline: none;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .usp .usp-item p {
+      display: inline-block;
+      float: right;
+      line-height: 25px;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .usp .usp-item img {
+      float: left;
+    }
+    .styled-select{
+      margin-top: 20px;
+    }
+.styled-select .selector-wrapper select{
+  width: 100%;
+  background: #cecece;
+  padding: 6px;
+  margin-bottom: 20px;
+}
+  </style>
+
+    <script type="text/javascript">
+        $('#lightSlider').lightSlider({
+            gallery: true,
+            item: 1,
+            loop:true,
+            slideMargin: 20,
+            thumbItem: 9,
+            autowidth:true
+        });
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+         function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById('number').value = value;
+        }
+     </script>
+
+
+<!-- ////////////////////////////////////// -->
+<div itemscope itemtype="http://schema.org/Product">
+    {{ 'focus.min.js' | asset_url | script_tag }}
+    {% assign current_variant = product.selected_or_first_available_variant %}
+  {% section 'related_product'%}
+
+</div>
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+<script>
+    var color_img = new Array();
+    var all_metafild = new Array();
+    var all_metafild1 = new Array();
+    var all_images = new Array();
+
+
+
+
+
+    var selectCallback = function(variant, selector) {
+
+
+
+        timber.productPage({
+
+            money_format: "{{ shop.money_format }}",
+            variant: variant,
+            selector: selector,
+        });
+
+
+
+
+
+
+
+
+        //jQuery(".Product_Information").html(variant.id);
+        var detalepage_filds_value = new Array();
+        var detalepage_filds_title = new Array();
+        var detalepage_filds_title_style = new Array();
+        var detalepage_filds_value_style = new Array();
+
+        {{detalepage_filds_value | replace: "*", "'"}}
+        {{detalepage_filds_title | replace: "*", "'"}}
+        {{detalepage_filds_title_style | replace: "*", "'"}}
+        {{detalepage_filds_value_style | replace: "*", "'"}}
+
+        // console.log(detalepage_filds_value);
+        var admin_Class = detalepage_filds_value['{{product.metafields.adminClassOwner_text.all}}'];
+        var admin_Class_title = detalepage_filds_title['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_title_style_a = detalepage_filds_title_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_value_style_a = detalepage_filds_value_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var value_info = "<div class='row'>";
+
+        value_info = value_info + "</div>";
+
+        jQuery(".Product_Information").html(value_info);
+        jQuery("#detail-page-top-img-big").css({
+            "background-color": "{{ "lo.gif " | asset_url }}"
+        });
+        jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + all_images[variant.id][0] + ".jpg)");
+        var images_T = "";
+        jQuery.each(all_images[variant.id], function(index, value) {
+            images_T += " <div class='detail-page-top-img-small-img'><img class='img_T' src='" + value + "_T.jpg'/></div>";
+
+            // console.log(all_images);
+
+        });
+        jQuery('.detail-page-top-img-small').html(images_T);
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+
+
+
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+
+            //  jQuery("#detail-page-top-img-big").css({"background-image":url( all_images[variant.id][0]+"_S.jpg")});
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+
+
+
+
+
+        });
+
+    };
+    var color = jQuery(".color").attr("data-id");
+
+
+    jQuery(function($) {
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{product | json}},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+        // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+        jQuery('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>'); {% endif %}
+
+        // Hide selectors if we only have 1 variant and its title contains 'Default'.
+        {%    if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+        jQuery('.selector-wrapper').hide(); {% endif %}
+    });
+    jQuery(document).ready(function() {
+        jQuery('#AddToCart').click(function() {
+            setTimeout(function() {
+                jQuery.getJSON('/cart.js', function(cart) {
+                    // now have access to Shopify cart object
+                    //alert('There are now ' + cart.item_count + ' items in the cart.');
+                    jQuery("#item_count").html(cart.item_count);
+                    // alert(cart.item_count);
+                });
+            }, 300)
+        });
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+        });
+
+
+
+    });
+</script>

@@ -1,0 +1,71 @@
+
+ <div class="black-line-all">
+   {% for block in section.blocks%}
+
+    <div class="black-line-items">
+      <div class="black-line-items-icon">
+         <img src="{{ block.settings.images | img_url: '800x' }}" alt="{{ block.settings.images.alt }}" />
+      </div>
+      <div class="black-line-items-text">
+        <div class="black-line-items-text-top">{{ block.settings.black-line_title }}</div>
+        <div class="black-line-items-text-bottom">
+          {{ block.settings.black-line_body }}
+        </div>
+      </div>
+    </div>
+   {% endfor %}
+  </div>
+  {% schema %}
+ {
+  "name": "black-line",
+	"max_blocks": 10,
+
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add Button",
+      "settings": [
+       {
+        "id": "images",
+        "type": "image_picker",
+        "label": "images"
+},
+ {
+      "id": "black-line_title",
+      "type": "text",
+      "label": "Title",
+      "default": "Title"
+    }
+,
+ {
+      "id": "black-line_body",
+      "type": "richtext",
+      "label": "body",
+      "default": "<p>body<p>"
+    }
+
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "slider home page",
+      "category": "index",
+      "blocks": [
+        {
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

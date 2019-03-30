@@ -1,0 +1,164 @@
+
+  {{ 'swiper.min.js' | asset_url | script_tag }}
+  {{ 'swiper.min.css' | asset_url | stylesheet_tag }}
+
+
+{% if section.settings.show_related_products == true %}
+
+
+
+{% assign number_of_related_products_per_row = section.settings.related_grid_num %}
+{% assign number_of_rows = section.settings.related_grid_row %}
+
+
+{% assign heading = section.settings.related_title %}
+
+
+{% assign same_vendor = false %}
+{% assign same_type = false %}
+
+
+{% assign exclusions = 'frontpage,all' | split: ',' %}
+
+
+
+{% if product.metafields.c_f['Related Products'] %}
+  {% assign collection = collections[product.metafields.c_f['Related Products']] %}
+{% endif %}
+
+{% assign found_a_collection = false %}
+{% if collection and collection.all_products_count > 1 %}
+  {% unless exclusions contains collection.handle %}
+    {% assign found_a_collection = true %}
+  {% endunless %}
+{% endif %}
+{% unless found_a_collection %}
+  {% for c in product.collections %}
+    {% unless exclusions contains c.handle or c.all_products_count < 2 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+      {% break %}
+    {% endunless %}
+  {% endfor %}
+{% endunless %}
+
+
+{% if found_a_collection %}
+  {% assign counter = 0 %}
+  {% assign break_at = number_of_rows | times: number_of_related_products_per_row %}
+  {% assign current_product = product %}
+
+    <div class="detail-page-carousel-header" style="justify-content: center;display: flex;margin: 10px; font-size:20px;"><strong>{{section.settings.related_title}}</strong></div>
+    <hr/>
+
+<div class=" swiper-container">
+        <div class="swiper-wrapper" style ="margin-bottom:70px ;cursor: grab;">
+
+
+
+
+
+
+
+
+     {% for product in collection.products limit: section.settings.count_in_slider %}
+      {% unless product.handle == current_product.handle %}
+         {% unless same_vendor and current_product.vendor != product.vendor %}
+           {% unless same_type and current_product.type != product.type %}
+
+
+
+
+               <div class="size swiper-slide" style="height: 400px;width: calc(20% - 10px);display: flex;flex-direction: column;align-items: center ">
+                    <img class="mySlides" src="{% if product.metafields.images.all %}
+         					 {% assign images = product.metafields.images.all | split: "," | reverse  %}
+
+                                          {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_S.jpg
+                                         {%else%}
+                                         {{ product.featured_image | product_img_url: 'medium' }}
+                                         {% endif %}" style="width:100%;height: calc(100% - 55px);object-fit: contain">
+                 <div class="js-flickity-carousel-name"><a href={{product.url}}>{{product.title}}</a></div>
+                    <div class="js-flickity-carousel-price">
+                 {%- if product.price_min  == product.price_max  -%}
+                	 {{ product.price_min | money }}
+                {% else %}
+               		 {{ product.price_min | money }} - {{product.price_max | money }}
+                {% endif %}
+
+                 </div>
+                </div>
+
+
+
+             {% assign counter = counter | plus: 1 %}
+             {% if counter == break_at %}
+               {% break %}
+             {% endif %}
+           {% endunless %}
+        {% endunless %}
+      {% endunless %}
+    {% endfor %}
+
+
+
+ </div>
+
+   <div class="swiper-pagination"></div>
+    </div>
+
+
+
+
+{% endif %}
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Related products",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Enable Section",
+      "default": false
+    },
+    {
+      "id": "related_title",
+      "type": "text",
+      "label": "Section title",
+      "default": "Related Products"
+    },
+		{
+            "type":      "range",
+            "id":        "count_in_slider",
+            "min":       2,
+            "max":        100,
+            "step":       1,
+            "unit":       "px",
+            "label":     "Count In Slider",
+            "default":   4
+
+}
+  ]
+}
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+    var swiper = new Swiper('.swiper-container', {
+ autoplay: {
+    delay: 4000,
+  },
+      slidesPerView: 5,
+      spaceBetween: 10,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+
+      },
+    });
+{% endjavascript %}

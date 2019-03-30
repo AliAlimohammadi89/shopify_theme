@@ -1,0 +1,70 @@
+
+
+
+<div class="footer-all-items footer-all-items-mobile" style="width: 100%">
+            <div class="footer-all-items-header">{{ section.settings.text-title }}</div>
+    {% for block in section.blocks  %}
+
+
+
+
+              {{ block.settings.text }}
+
+
+
+    {% endfor %}
+     </div>
+
+
+
+
+{% schema %}
+{
+  "name": "footer_section1",
+	"max_blocks": 7,
+  "settings": [
+    {
+      "id": "text-title",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add Button",
+      "settings": [
+
+
+			{ "id": "text",
+      "type": "text",
+          "label": "text OR link",
+      "default": "NEW TEXT"}
+
+
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Call to Action Blocks",
+      "category": "index",
+      "blocks": [
+        {
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

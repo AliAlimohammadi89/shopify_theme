@@ -1,0 +1,82 @@
+<div class="carousel-title">NEW PRODUCT</div>
+<div class="app-product-container">
+<div class="product-container">
+  
+  
+  
+  
+{% for product in collections.all.products limit:4 %}
+ 			 
+  
+         					  {% assign images = product.metafields.images.all | split: "," | reverse  %} 
+      <div class="products">
+      <div class="prd">
+      <img src="{{ images[0] }}"    height="100%" alt="">
+      </div>
+      <div class="product-title">{{ product.title }}</div>
+      <div style="text-align: center; font-size: 19px; color: red;"><div class="product-price">
+									{{ product.selected_or_first_available_variant.compare_at_price | money }}
+								</div>
+
+								<div class="product-description rte" itemprop="description">
+									{{ product.description }}
+								</div></div>
+      <div class="product-hover">
+        <a href="{{ product.url | within: collection }}">
+      <button style="top: 150px; position: relative" class="button-key">
+        <i class="fa fa-shopping-cart"></i>
+        				{% if product.price_varies %}Select Options{% else %}SHOP NOW{% endif %}
+
+        
+        </button>
+          </a>
+      </div>
+      </div>						 
+	{% endfor %}  
+  
+  
+    
+</div>
+</div>
+ 
+
+<div class="carousel-title">BEST SELLER</div>
+<div class="app-product-container">
+<div class="product-container">
+
+{% for product in collections.all.products limit:4  offset:4 %}
+ 			 
+  
+         					  {% assign images = product.metafields.images.all | split: "," | reverse  %} 
+      <div class="products">
+      <div class="prd">
+      <img src="{{ images[0] }}"    height="100%" alt="">
+      </div>
+      <div class="product-title">{{ product.title }}</div>
+      <div style="text-align: center; font-size: 19px; color: red;"><div class="product-price">
+									{{ product.selected_or_first_available_variant.compare_at_price | money }}
+								</div>
+
+								<div class="product-description rte" itemprop="description">
+									{{ product.description }}
+								</div></div>
+      <div class="product-hover">
+      
+        
+         <a href="{{ product.url | within: collection }}">
+      <button style="top: 150px; position: relative" class="button-key">
+        <i class="fa fa-shopping-cart"></i>
+        				{% if product.price_varies %}Select Options{% else %}SHOP NOW{% endif %}
+
+        
+        </button>
+          </a>
+        
+      </div>
+      </div>						 
+	{% endfor %}  
+
+    
+</div>
+</div>
+ 

@@ -1,0 +1,90 @@
+   
+<div class="clean-repair">
+    <div class="clean-repair-img">
+      <img src="{{section.settings.images_left | img_url :'800x'}}"/>
+    </div>
+    <div class="clean-repair-items">
+      <div class="clean-repair-items-header">{{section.settings.title}}</div>
+      <div class="clean-repair-items-items">
+        
+        {% for block in section.blocks %}  
+   
+        
+        <div class="clean-repair-items-items-item">
+          <div class="clean-repair-items-items-item-img">
+                  <img class="mySlides" src="{{ block.settings.images | img_url: '800x' }}" alt="{{ block.settings.images.alt }}" style="width:100%;height: 100%">
+
+          
+          </div>
+          <div class="clean-repair-items-items-item-text"><a href="{{ block.settings.url }}">{{ block.settings.title }}</a></div>
+        </div>
+         {% endfor %}  
+      </div>
+    </div>
+  </div>{% schema %}
+   {
+  "name": "clean-repair",
+	"max_blocks": 4,
+  "settings": [
+    {
+      "id": "title",
+      "type": "richtext",
+      "label": "Title",
+	  "default": "<p>Title</p>"
+    },
+ {
+        "id": "images_left",
+        "type": "image_picker",
+        "label": "images"      
+}
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add Button",
+      "settings": [
+       {
+        "id": "images",
+        "type": "image_picker",
+        "label": "images"      
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Title",
+      "default": "Title"
+    },
+
+{
+      "id": "url",
+      "type": "text",
+      "label": "url direction",
+      "default": "https://www.khazairugcleaning.com/index.php/portfolio-item/rug-appraisal/"
+    }
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "slider home page",
+      "category": "index",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

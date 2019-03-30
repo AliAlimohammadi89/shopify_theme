@@ -1,0 +1,1214 @@
+
+
+
+  {{ 'tooltip.js' | asset_url | script_tag }}
+  {{ 'tooltip.css' | asset_url | stylesheet_tag }}
+
+
+ 
+
+ 
+
+
+{% include 'list_item' %}
+
+
+{% assign list_page_value = list_page_value | split :"," %}
+{% assign list_page_title = list_page_title | split :"," %}
+ 
+     
+ 
+
+{% comment %}
+{% for tag in collection.tags %}
+
+		<p>
+          
+          {% for tag1 in collection.tags %}
+
+		<p>
+	{{tag1}}
+</p>
+{% endfor %}          
+	{{tag}}
+ {% endfor %}
+{% endcomment %}
+<div class="list-page-all-all">
+  <div class="list-page-direction">
+      {% include 'breadcrumb' %}
+  </div>
+  <div class="list-page-all">
+    
+    <div class="filter-toggle">
+      <i class="fas fa-filter showFilter" onclick="showFilterMenu()"></i>
+      <i class="fas fa-times closeFilter" onclick="showFilterMenu()"></i>
+    </div>
+    <div class="filter-overlay"></div>
+     {% assign filterlistes = lilst_filterlist | split : ',' %}
+       {% assign filterlistes_value = lilst_filterlist_value | split : ',' %}
+     <div class="list-page-filter-all">
+      
+       {% for fliterlist in filterlistes_value %} 
+       <div class="list-page-filter-items    {{fliterlist | remove: ' ' | remove : '/'}}">
+        <div class="list-page-filter-items-header" data-id="id-40" onclick="toggleFilter('{{fliterlist | remove: ' ' | remove : '/'}}')">
+          <div class="list-page-filter-items-header-text">{{filterlistes[ forloop.index0 ]  }}</div>
+          <div class="list-page-filter-items-header-icon">
+            <i class="fas fa-angle-down toggleDown" id="{{fliterlist | remove: ' ' | remove : '/'}}_toggleDown"></i>
+            <i class="fas fa-angle-up toggleUp" id="{{fliterlist | remove: ' ' | remove : '/'}}_toggleUp"></i>
+          </div>
+        </div>
+                  {% assign  style = "" %}
+
+         {% if fliterlist != 'colorGroupName'%}
+         {% assign  style = "overflow:auto" %}
+         {%  endif  %}
+        <div class="list-page-filter-items-text" id="{{fliterlist | remove: ' ' | remove : '/'}}" style="max-height:300px ; {{style}} ">
+{% for tag in collection.tags %}
+             {% assign  tag_ar = tag | split:"_" %}
+ {% if tag_ar[0] == fliterlist %}
+          {% if fliterlist == 'colorGroupName'%}
+             <div class="list-page-filter-items-text-items">    
+                           <div class="tooltip"> 
+    {% if current_tags contains tag %}
+               <div class="list-page-filter-items-text-items-value active">
+                 {% assign  url_tag=tag_ar[1] |replace :"/","_" %}
+                                 {% assign url1="<img src='https://rmimages2.blob.core.windows.net/color/" | append : url_tag | append :".png'>" %}
+                 
+                 {{ url1 | link_to_remove_tag: tag }}
+                 
+                             </div>
+     {% else %}
+               <div class="list-page-filter-items-text-items-value">
+                 {% assign  url_tag=tag_ar[1] |replace :"/","_" %}
+                                 {% assign url1="<img src='https://rmimages2.blob.core.windows.net/color/" | append : url_tag | append :".png'> "%}
+                 {{ url1 | link_to_add_tag: tag }}</div>
+	{% endif %}
+          <div class="tooltip-text">
+                      {% for tag1 in collection.tags %}
+            			 {% assign  tag_ar1 = tag1 | split:"_" %}
+                          {% if tag_ar1[0] == tag_ar[1] %}
+                                       <div class="list-page-filter-items-text-items">    
+                                           {% comment%}
+            {% assign url= color_array[1] | replace: "-" , "," | remove : "("  | remove : ")" %}
+             {% assign hsv_arr1 = url  | split: "," %}
+             {% assign hsv = "(" | append : hsv_arr1[0] | append : ","    | append: hsv_arr1[1] | append : "%," |  append : hsv_arr1[2] | append :"% )" %}
+             
+            {% endcomment %}
+            
+                        {% assign url = tag_ar1[1] | replace: "-" , ","  %}
+
+                                               
+                                         {% if current_tags contains tag1 %}
+                                       	  {% assign img= "<div class='list-page-filter-items-text-items-value active color' style='background:rgb" | append: url | append: "'></div>" %}
+                                         {{ img | link_to_remove_tag: tag1 }}
+                                       
+                                         {% else %}
+                                        	 {% assign img= "<div class='list-page-filter-items-text-items-value color' style='background:rgb" | append: url | append: "'></div>" %}
+                                        	 {{ img | link_to_add_tag: tag1 }}
+                                        
+
+                                         {% endif %}
+             					  </div>         
+                 {% endif %}
+            		{% endfor  %}
+           </div>          
+        </div>         
+   </div>   
+          {% else %}
+             <div class="list-page-filter-items-text-items">          
+    {% if current_tags contains tag %}
+             
+         {% assign  check_box= '<div class="list-page-filter-items-text-items-box" ></div>' | append:tag_ar[1] %}
+               <div class="list-page-filter-items-text-items-value">{{  check_box | link_to_remove_tag: tag }} </div>
+     {% else %}
+         {% assign  check_box= ' <div class="list-page-filter-items-text-items-box" style="background-color: #fff;" ></div>' | append:tag_ar[1] %}
+
+     <div class="list-page-filter-items-text-items-value">{{ check_box | link_to_add_tag: tag }}      </div>
+	{% endif %}
+   </div>     
+          
+          {% endif %}
+     {% endif %}
+{% endfor %}
+        </div>
+      </div>
+       {% endfor %}
+    </div>
+    <div class="list-page-list-all">
+      <div class="filter-selected-all">
+        <div class="filter-selected-text"> {% if current_tags%}Filters: {% endif %}</div>
+        <div class="filter-selected-filters">
+                   
+		{% for tags1 in current_tags %}
+          {% assign  tag_name =  tags1 | split : "_"   %}
+            <div class="filter-selected-filters-filter">
+              
+              {% assign tagcolor = tag_name[1] | split : "-"  %}
+              {% if tagcolor[2] %}
+             	<div class="filter_color_tags" style="width: 20px;height: 20px;background-color: rgb{{ tag_name[1] | replace : "-", ","  }};border-radius: 50%;">
+              </div>
+             
+            	{% else  %}
+            <div>{{ tag_name[1] }}</div>
+                {% endif %}
+            <div class="filter-selected-filters-filter-close">
+              {{ 'x' | link_to_remove_tag: tags1 }} 
+              </div>
+          </div>
+{% endfor %}
+        </div>
+      </div>
+      {% paginate collection.products by 20 %}
+     
+            {% for product in collection.products    %}
+      <div class="list-page-list-items">
+        
+         {% if product.metafields.specifications.isNewArrival == '1' %}
+        
+         
+        	<div class="list-page-list-tag"> New</div>
+        {% endif %}
+        
+        
+        <div class="list-page-list-tag-price"> 
+        
+        
+         <span class="grid-item-label sale" style="color:red;">{% if product.compare_at_price > product.price %}{{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0'}}%{% endif %} OFF</span>
+
+        
+        
+        </div>
+        
+        
+        
+        <div class="list-page-list-items-img">
+          
+         {% assign image = product.metafields.images.all   %}
+		{% for tags1 in product.tags   %}
+           
+            {% for variant in product.variants | reverse   %}
+          		{% if variant.metafields.specifications.color_code == tags1 %}
+          
+          			
+          		{% assign image = variant.metafields.images.all   %}
+          		{% assign variant_id ='?variant='| append : variant.id  %}
+           		{% break  %}
+          		{% break %}
+          		{% endif %}
+            {% endfor %}
+       
+          {% endfor %}
+           <div class ="loading_dive" id="LO_{{ product.id }}"  >
+           <img src="{{ 'lo.gif' | asset_url }}" class="loading"  style="cursor: pointer;height: 50% !important; ">
+          </div>
+          
+          <a data-orurl="{{product.url}}"  href="{{product.url}}{{variant_id}}">
+           
+               <img class="mySlides" onload="loadImage({{ product.id }})"  id="{{ product.id }}" src="{% if image != "" %}{% assign images=image  | split: "," | reverse  %}{% assign image = images[0] | split: ".jpg" %}{{image}}_S.jpg  {%else%}
+                      
+                                                                                                      {{ product.featured_image | product_img_url: 'medium' }}{% endif %}
+" alt="{{ product.title | escape  }}" style="width:100%;height: calc(100% - 60px);cursor: pointer;">
+                 </a>
+        </div>
+        
+         <div style="display:none;">
+            <div id="{{product.id}}_info">
+                <img src="{{ "info1.png" | asset_url }}" />
+              
+               <div class ="row" style="width: 320px;">
+                  {% for list_page_v in  list_page_value    %}
+        		{% assign  list_page_t = list_page_title[forloop.index0] %} 
+                 
+          <ul class="ul_info">
+                <li class="li_info">
+                  {{list_page_t}}   
+            </li>
+              <li class="li_info_r">
+             : {{ product.metafields.specifications[list_page_v] }}
+            </li>
+          </ul>
+		{% endfor  %}
+        </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        <div class="list-page-list-items-color">   
+          <div class="list-page-filter-items-text-items_list">    
+           {% for tag in product.tags %}
+           {% assign tags_array = tag | split :"_"%}
+           {% if  tags_array[0] == 'colorGroupName'  %}
+           	 {% for tag1 in product.tags %}
+           {% assign color_array = tag1 | split :"_"%}
+           {% if  color_array[0] == tags_array[1] %}
+ 			 
+           
+            
+
+            
+           {% assign url = color_array[1] | replace: "-" , ","  %}
+            
+            
+            
+            
+            {% for variant in product.variants | reverce %}
+           		{% if variant.metafields.specifications.color_code == tag1 %}
+            	{% assign image_color_init = 1 %}
+            	
+             
+          		{% assign image = variant.metafields.images.all  | split : ".jpg," | reverse   %}          		 
+          		{% assign varyant_id = variant.id   %}  
+          		{% assign varyant_title = variant.title    %}  
+            
+                {% break %}
+          		{% endif %}
+            {% endfor %}
+          
+            
+            
+          
+            <a href="javascript:void(0)" title="{{ varyant_title  }}" class="chenge_image" data-variantid="{{varyant_id}}" data-productid={{product.id}} data-images="{{ image[0] | replace:  ".jpg" ,"_S.jpg" }} "  >
+               <div class=' list-page-filter-items-text-items-value_list active color_list' style='background:rgb{{url}}'></div> 
+              </a>
+
+               
+           {% endif %}
+              
+           
+            
+            
+          
+  {% endfor %}
+            
+             {% if   tags_array[0] == 'colorGroupName' %}
+
+             {% if image_color_init %}
+            		
+            {% else  %}
+            
+            
+            
+
+            
+            {% comment %}
+                        {% endcomment %}
+            
+            {% assign varyant_id = ""   %}  
+          		{% assign varyant_title = ""    %}  
+            
+            {% for variant in product.variants | reverce %}
+           
+           		{% if variant.metafields.specifications.colorGroupName == tags_array[1] %}
+           		{% assign image = variant.metafields.images.all  | split : ".jpg," | reverse   %}          		 
+          		{% assign varyant_id = variant.id   %}  
+          		{% assign varyant_title = variant.title    %}  
+                {% break %}
+          		{% endif %}
+            {% endfor %}  
+            
+          
+            
+             
+            
+            
+             <a href="javascript:void(0)" title="{{ varyant_title  }}" class="chenge_image" data-variantid="{{varyant_id}}" data-productid="{{product.id}}" data-images="{{ image[0] | replace:  ".jpg" ,"_S.jpg" }} "  >
+               <div class=' list-page-filter-items-text-items-value_list active color_list' style='background:url(https://rmimages2.blob.core.windows.net/color/{{tags_array[1] |replace : "/" ,"_"}}.png);background-size: 100%;'></div> 
+              </a>
+            
+             {% endif %}
+            {% endif %}
+            
+            
+             {% endif %}
+
+
+  {% endfor %}
+</div>     
+        </div>
+      <div class="list-page-list-items-name">{{product.title}}</div>
+       
+        
+        <div class="list-page-list-items-price">{%- if product.price_min  == product.price_max  -%}                
+                	 {{ product.price_min | money }}
+                {% else %}
+               		 {{ product.price_min | money }} - {{product.price_max | money }}
+                {% endif %}
+        </div>
+ 			{% if list_page_value.size > 2  %}
+           <button type="button"   onclick="tooltip.pop(this, '#{{product.id}}_info', {sticky:true, position:0, cssClass:'no-padding'})" class="btn btn-warning">Show Info</button>
+       		{% endif %}
+      </div>
+      		{% endfor %}
+        {% if paginate.pages > 1 %}
+      <div class="pagination" style="width: 100%;text-align: center;">
+        {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+      </div>
+    {% endif %}
+      {% endpaginate %}
+ 	 </div>
+ </div>
+</div>
+<style>
+  
+ .loading{
+  display: flex;
+
+ 
+height: 50% !important;
+
+float: left;
+
+margin: 20%;
+  }
+  
+  .loading_dive{
+    display:none;
+  
+    width: 100%;
+    position: absolute;
+    height: 88%;
+    background: white;
+  
+  }
+  #mcTooltipWrapper{
+  
+    margin-left: -155px !important;
+    width: 318px !important;
+  
+  
+  }
+  .no-padding{
+    width: 100% !important;
+
+  
+  
+  }
+  #mcTooltipInner {
+  
+  
+  width: 100% !important;
+  
+  }
+  #mcTooltip{
+    margin-left: 95px;
+    width: 100% !important;
+
+  
+  
+  }
+  
+  
+  .row .ul_info:nth-of-type(2n+1) {
+    background: #b4b8bc;
+}
+  .ul_info {
+   background: gainsboro;
+
+padding: 8px;
+
+padding: 9px;
+
+border-radius: 10px 0px 10px;
+
+margin: 5px;
+
+height: 15px;
+
+text-align: left;
+
+justify-content: left;
+
+display: flex;
+}
+  .row {
+    width: 100%;
+}
+  
+  .li_info {
+    float: left;
+    width: 30%;
+    overflow: hidden;
+    list-style: none;
+}
+  .li_info_r {
+    overflow: hidden;
+    list-style: none;
+}
+  .btn-warning:hover {
+    color: #fff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+  .btn-warning {
+    color: #000 !important;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+    
+
+    display: inline-block;
+    padding: 6px;
+    border-radius: 5px;
+    color: #aaa;
+    font-size: .875em;
+    margin-top: 1%;
+    
+/*     width: 31%;
+    height: 7%; */
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    white-space: nowrap;
+
+ 
+    
+    
+    
+    
+    
+    
+    
+}
+  .filter-selected-filters-filter-close a{
+  margin-bottom: 7px;
+
+margin-left: 3px;
+    color: white;
+cursor: pointer;
+    
+    
+  
+  } 
+  .filter-selected-all {
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+  }
+  .filter-selected-text {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+  .filter-selected-filters {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .filter-selected-filters-filter {
+    padding: 5px 10px;
+    background-color: #e1e1e1;
+    color: black;
+    border-radius: 5px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .filter-selected-filters-filter-close {
+    position: absolute;
+    right: -7px;
+    top: -7px;
+    width: 15px;
+    height: 10px;
+    padding-bottom: 5px;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .color{
+  
+     background: red;
+    border-radius: 71%;
+    /* border: 1px snow; */
+    width: 50px;
+    text-shadow: 1px 5px 7px;
+    height: 50px;
+ 
+  }
+  .list-page-filter-items-text-items-value a {
+    text-decoration: navajowhite;
+}
+  
+  
+   .list-page-filter-items-text-items-value_list a {
+    text-decoration: navajowhite;
+}
+  
+ html, body {
+      margin: 0;
+      height: auto;
+      font-family: Lato;
+    }
+  #container {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.btn {
+/*     display: inline-block;
+    padding: 10px;
+    border-radius: 5px; /*optional*/
+   /*   color: #aaa;
+   font-size: .875em; */
+  cursor: help;
+}
+
+.pagination {
+     padding: 20px;
+    margin-bottom: 20px;
+}
+
+.page {
+    display: inline-block;
+    padding: 0px 9px;
+    margin-right: 4px;
+    border-radius: 3px;
+    border: solid 1px #c0c0c0;
+    background: #e9e9e9;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+    font-size: .875em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #717171;
+    text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+}
+
+.page:hover, .page.gradient:hover {
+    background: #fefefe;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
+    background: -moz-linear-gradient(0% 0% 270deg,#FEFEFE, #f0f0f0);
+}
+
+.page.active {
+    border: none;
+    background: #616161;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+    color: #f0f0f0;
+    text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+}
+
+.page.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
+    background: -moz-linear-gradient(0% 0% 270deg,#f8f8f8, #e9e9e9);
+}
+
+.pagination.dark {
+    background: #414449;
+    color: #feffff;
+}
+
+.page.dark {
+    border: solid 1px #32373b;
+    background: #3e4347;
+    box-shadow: inset 0px 1px 1px rgba(255,255,255, .1), 0px 1px 3px rgba(0,0,0, .1);
+    color: #feffff;
+    text-shadow: 0px 1px 0px rgba(0,0,0, .5);
+}
+
+.page.dark:hover, .page.dark.gradient:hover {
+    background: #3d4f5d;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#547085), to(#3d4f5d));
+    background: -moz-linear-gradient(0% 0% 270deg,#547085, #3d4f5d);
+}
+
+.page.dark.active {
+    border: none;
+    background: #2f3237;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .1);
+}
+
+.page.dark.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#565b5f), to(#3e4347));
+    background: -moz-linear-gradient(0% 0% 270deg,#565b5f, #3e4347);
+}
+  
+  
+  
+    .list-page-all-all {
+      width: calc(100% - 100px);
+      display: flex;
+      flex-direction: column;
+      padding: 10px 50px;
+    }
+    .list-page-direction {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 17px;
+    }
+    .direction-icon {
+      display: flex;
+      align-items: center;
+    }
+    .list-page-direction span {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .list-page-all {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      position: relative;
+    }
+    .filter-toggle {
+      font-size: 23px;
+      display: none;
+      width: 30px;
+      height: 30px;
+      justify-content: center;
+      align-items: center;
+    }
+    .list-page-filter-all {
+      width: 200px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .list-page-filter-items {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 30px;
+    margin-bottom: 10px;
+    }
+    .list-page-filter-items-header {
+      width: 100%;
+      min-height: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px solid #deb335;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .list-page-filter-items-header-icon {
+      font-size: 27px;
+    }
+    .toggleDown {
+      display: none;
+    }
+    .list-page-filter-items-text {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0;
+    }
+  .colorGroupName .list-page-filter-items-text {
+      flex-direction: row !important;
+    flex-wrap: wrap;
+    }
+    .list-page-filter-items-text-items {
+    width: calc(100% - 30px);
+    display: flex;
+    align-items: center;
+    margin: 15px 2px;
+    }
+  .list_country .list-page-filter-items-text-items {
+    margin: 5px 0;
+  }
+  .colorGroupName .list-page-filter-items-text-items {
+      width: calc(33.33% - 10px);
+    margin: 5px;
+    }
+  
+  .imgdiv {
+      display: flex;
+		float: left;
+  }
+  
+  .list-page-filter-items-text-items   img {
+      width: 100%;
+    
+     
+    }
+  
+    .list-page-filter-items-text-items-box {
+      width: 15px;
+      height: 15px;
+      border: 1px solid #707070;
+      background-color: #e5bf44;
+      cursor: pointer;
+      margin-right: 15px;
+      float:left;
+    }
+    .list-page-filter-items-text-items-value {
+      font-size: 13px;
+      font-weight: bold;
+    }
+  .list-page-filter-items-text-items-value_list {
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .list-page-list-all {
+      width: calc(100% - 225px);
+      height: fit-content;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .list-page-list-items {
+      width: calc(25% - 30px);
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 15px 30px 15px;
+      position: relative;
+/*       overflow:auto; */
+      
+    }
+    .list-page-list-items-img {
+      width: 100%;
+      height: 85%;
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
+       background-size: 58%;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom:5px;
+
+      background-image:url("{{ 'lo.gif' | asset_url }}");
+     
+ 
+    }
+    .list-page-list-items-img img {
+      width: 100%;
+      height: 100% !important;
+      object-fit: contain;
+    }
+    .list-page-list-items-name {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 17px;
+      margin-top:5px;
+    }
+    .list-page-list-items-price {
+      width: 100%;
+      text-align: center;
+      font-size: 17px;
+      color: #8e580c;
+    }
+    .list-page-list-tag {
+      padding: 5px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: black;
+      color: white;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+   .list-page-list-tag-price {
+      padding: 5px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      color: white;
+      position: absolute;
+      top: 11px;
+      left: -13px;
+      border-radius: 5px;
+      font-size: 14px;
+      transform: rotate(-51deg);
+       box-shadow: 0px 0px 4px;
+    }
+    .filter-overlay {
+      position: fixed;
+      top: 115px;
+      left: -100%;
+      width: 100%;
+      height: calc(100vh - 115px);
+      background-color: black;
+      opacity: 0.6;
+      z-index: 9;
+      transition: all .5s;
+    }
+    @media only screen and (max-width: 1440px) {
+      .list-page-list-items {
+        height: 400px;
+      }
+    }
+    @media only screen and (max-width: 1024px) {
+      .list-page-list-items {
+        height: 350px;
+        width: calc(33.33% - 30px);
+      }
+    }
+    @media only screen and (max-width: 768px) {
+      .list-page-list-items {
+        height: 325px ;
+        width: calc(50% - 30px) ;
+/*        background: red; */
+      }
+      .header-bottom {
+        top: 0 !important;
+      }
+    }
+    @media only screen and (max-width: 425px) {
+      .list-page-direction {
+        display: none;
+      }
+      .filter-toggle {
+        display: flex;
+        position: sticky;
+        top: 15px;
+        z-index: 99;
+      }
+      .showFilter {
+        position: absolute;
+        top: -5px;
+        left: -25px;
+      }
+      .closeFilter {
+        display: none;
+        z-index: 9;
+        position: absolute;
+        right: -265px;
+        top: -15px;
+        color: white;
+      }
+      .list-page-filter-all {
+        background-color: #ededed;
+        padding: 0 15px;
+        position: absolute;
+        left: -280px;
+        top: -35px;
+        height: calc(100vh - 115px);
+        z-index: 9;
+        transition: all .5s;
+        overflow: auto;
+      }
+      .list-page-list-all {
+        width: 100%;
+      }
+      .list-page-list-items {
+        width: 100%;
+        height: 375px;
+      }
+    }
+
+
+</style>
+<script>
+  
+  
+  function loadImage(loid) {
+    
+   
+ 
+   $('#LO_'+loid ).css('display', 'none');
+	  
+ }
+  
+  
+  
+  $(function($){
+
+	function doProducts(collection, limit) {
+		collection = typeof collection !== 'undefined' ? collection : 'all';
+		limit = typeof limit !== 'undefined' ? limit : 250;
+		var url = 'http://rmi-test8.myshopify.com/collections/' + collection + '/products.json?limit=' + limit;
+		return url;
+	}	
+
+	var doFilter = function(data,min,max) {
+		min = typeof min !== 'undefined' ? min : 0;
+		max = typeof max !== 'undefined' ? max : 250;
+		var output = new Array();
+	    for (var i = 0; i < data.products.length; i++) {
+	        if (data.products[i].variants[0].price >= min && data.products[i].variants[0].price <= max) {
+	        	output.push(data.products[i]);
+	        }
+	    }
+	    return output;
+	}
+	$('form').on('submit',function(e) {
+		e.preventDefault();
+		var min = parseInt($(this).find('[name=min]').val());
+		var max = parseInt($(this).find('[name=max]').val());
+		var collection = $(this).find('[name=collection]').val();
+		var json = doProducts(collection);
+		var imgsrc = 'https://cdn.shopify.com/s/assets/admin/no-image-large-d7c282f81cbf208c9ee0f0f27cb214c7.gif';		
+		$('.products').find('li').remove();
+		$.ajax({
+	        type: 'GET',
+	        url: json,
+	        dataType: 'jsonp',
+	        success: function (data) {
+	        	var output = doFilter(data,min,max);
+	            for (var i = 0; i < output.length; i++) {
+	            	var item = output[i];
+	            	if (item.images.length > 0) {
+	            		var tempSrc = item.images[0].src;
+	            	} else {
+	            		var tempSrc = imgsrc;
+	            	}
+	            	$('.products').append('<li><a href="/collections/' + collection + '/products/' + item.handle + '"><img src="' + tempSrc + '" alt=""/> ' + item.title + '</a></li>');
+	            }
+	        }
+	    });
+	});
+});
+  $(document).ready(function(){
+  			$('.list-page-filter-items-text' ).css('display', 'none');
+              $('.toggleUp' ).css('display', 'none');
+              $('.toggleDown' ).css('display', 'flex');  
+  });
+   function htmlFlow() {
+        $('html').css({
+            'overflow': 'inherit',
+        })
+    }
+    function goScrollUp() {
+        $(function () {
+            const scroll_pos = (0);
+            $('html, body').animate({scrollTop: (scroll_pos)}, 'slow');
+        });
+    }
+
+  function toggleFilter(list_name) {
+      
+      //  alert(a);
+    
+    if ($("#"+list_name).css('display') === 'flex') {      
+          $("#"+list_name).slideUp();
+      $("#"+list_name).css('min-height', '30px');
+      $('#'+list_name+'_toggleUp' ).css('display', 'none');
+          $('#'+list_name+'_toggleDown' ).css('display', 'flex');
+      } else {
+        
+        
+          $('.toggleUp' ).css('display', 'none' );
+              $('.toggleDown' ).css('display','flex' );
+        
+        
+          $(".list-page-filter-items-text").slideUp();
+
+          $("#"+list_name).slideDown();
+        $("#"+list_name).css('min-height', '45px');
+         $('#'+list_name+'_toggleUp' ).css('display', 'flex');
+          $('#'+list_name+'_toggleDown' ).css('display', 'none');
+      }
+  }
+
+  function openMenuToggle() {
+      if ($('.header-bottom-menu').css('left') === '0px') {
+          $('.header-bottom-menu').css('left', '-250px');
+          $('.menu-overlay').css('left', '-100%');
+          $('.filter-toggle').css('z-index', '99');
+          if ($('.list-page-filter-all').css('left') === '-50px') {
+              $('html, body').css({
+                  'overflow-y': 'hidden',
+                  'height': '100%'
+              });
+          } else {
+              $('html, body').css({
+                  'overflow-y': 'auto',
+                  'overflow-x': 'hidden',
+                  'height': 'auto'
+              });
+          }
+      } else {
+          $('.header-bottom-menu').css('left', '0px');
+          $('.menu-overlay').css('left', '0px');
+          $('.filter-toggle').css('z-index', '9');
+          $('html, body').css({
+              'overflow-y': 'hidden',
+              'height': '100%'
+          });
+      }
+      htmlFlow();
+  }
+  $(".chenge_image").click(function(){
+    var id= $(this).data("productid");
+    var images= $(this).data("images");
+    // $("#"+id).attr("src","{-{ 'lo.gif' | asset_url  }}");
+    
+    
+    $("#LO_"+id).css('display', 'flex'); 
+                         
+       $("#"+id).attr("src",images);
+
+     // $("#"+id).attr("src",images);
+    
+    var url=   $("#"+id).parent().data("orurl");
+    url = url + "?variant=" + $(this).data("variantid")
+    
+    
+   $("#"+id).parent().attr("href",url)
+  });
+  
+  function showFilterMenu() {
+      goScrollUp();
+      if ($('.list-page-filter-all').css('left') === '-280px') {
+          $('.list-page-filter-all').css('left', '-50px');
+          $('.showFilter').css('display', 'none');
+          setTimeout(() => {
+              $('.closeFilter').css('display', 'flex');
+      }, 500);
+          $('.filter-overlay').css('left', '0px');
+          $('html, body').css({
+              'overflow-y': 'hidden',
+              'height': '100%'
+          });
+      } else {
+          $('.list-page-filter-all').css('left', '-280px');
+          setTimeout(() => {
+              $('.showFilter').css('display', 'flex');
+      }, 500);
+          $('.closeFilter').css('display', 'none');
+          $('.filter-overlay').css('left', '-100%');
+          $('html, body').css({
+              'overflow-y': 'auto',
+              'overflow-x': 'hidden',
+              'height': 'auto'
+          });
+      }
+      $('html').css({
+          'overflow': 'inherit',
+  })
+  }
+  htmlFlow();
+  goScrollUp();
+
+</script>
+<style> 
+.active {
+    opacity: 0.7;
+}
+/*Container*/
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  .container {
+    max-width: 768px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    max-width: 480px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.container::after, .container::before {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/*Tooltip*/
+section#tooltip p {
+  margin: 20px 0;
+}
+
+section#tooltip > div > div > p:nth-child(odd)::first-letter {
+  font-weight: normal;
+  float: left;
+  font-size: 4em;
+  line-height: .75;
+  letter-spacing: .15em;
+  margin-top: .2em;
+}
+
+
+
+/*Tooltip text*/
+.tooltip {
+  position: relative;
+  color: #e3e3e3;
+}
+
+.tooltip .tooltip-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
+  visibility: hidden;
+  max-width: 300px;
+  
+  
+  background-color: #e3e3e3;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 99999;
+  bottom: 125%;
+  left: 85%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: .3s;
+  transform: translate3d(0px, 20px, 0px);
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #e3e3e3 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translate3d(0px, 0px, 0px);
+}
+
+  
+  
+  .row{
+    width:100%;
+    
+  }
+ .ul{
+  
+  overflow: hidden;
+
+list-style: none;
+  
+  }
+  
+  
+  .li {
+  width: 30%;
+
+float: left;
+  
+  }
+
+</style>
+

@@ -1,0 +1,277 @@
+<div class="header-top">
+    <div class="header-top-menu">
+       
+      
+      <ul class="header_user">
+    {% if customer %}
+         <div class="header-top-menu-items">
+          <a href="/account">{{ customer.first_name | truncate:15 }}</a>
+        </div>
+         <div class="header-top-menu-items">
+          <a href="/account/logout">
+           Log out</a>
+        </div>
+    {% else %}
+         <div class="header-top-menu-items">
+          <a href="/account/login">
+           Log in</a></div>
+             <div class="header-top-menu-items"><a href="/account/register">
+               Create an account</a></div>
+    {% endif %}
+</ul>
+    </div>
+</div>
+<div class="header-bottom">
+    <div class="menu-overlay"></div>
+    <div class="menu-toggle-all" (click)="openMenuToggle()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="header-bottom-logo">
+       {% section 'images_header'%}
+    </div>
+    <div class="header-bottom-menu">
+        <div class="header-bottom-menu-items">          
+{% for link in linklists.main-menu.links %}
+            <div class="header-bottom-menu-items-item">
+                <div class="header-bottom-menu-items-item-item"><a href="{{ link.url| escape }}">{{ link.title | escape }}</a></div>
+                <div class="header-bottom-menu-items-item-sub-1">
+                  {% if linklists[link.handle].links.size > 0 %}
+                    {% for sublink in linklists.[link.handle].links %}
+                 	   <div>
+                         <a href="{{ sublink.url }}">{{ sublink.title | escape }}</a>
+                 		</div>
+                    {% endfor %}
+                  {% endif %} 
+                   
+                </div>
+            </div>
+           {% endfor %}
+
+        </div>
+    </div>
+  
+  
+  <form action="/search" method="get" id="form_search" class="input-group search-bar" role="search">
+ 
+   
+  
+  
+  
+   <div class="header-bottom-icon">
+        <div class="header-bottom-search">
+          
+<input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+           
+          
+          
+          <i class="fa fa-search" id="submit" ></i>
+        
+     
+     </div>
+        <div class="header-bottom-icon-cart">
+          <a href="/cart"><i class="fa fa-shopping-cart"></i></a>
+<!--             <div class="header-bottom-icon-cart-text">
+              <button type="submit" >
+              
+              Search
+    
+    </button>
+          </div> -->
+        </div>
+        <div class="header-bottom-icon-compare">
+            <i class="fa fa-exchange"></i>
+        </div>
+    </div>
+    </form>
+</div>
+
+ <style>
+
+         .header_user {
+			display: flex;
+         }
+        .header-bottom {
+            width:100%;
+            height:140px;
+            background-color:#EDEDED;
+            color:black;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            position: -webkit-sticky;
+            position: sticky;
+            top:0;
+            z-index: 9;
+        }
+        .header-bottom-logo {
+            /*width:200px;*/
+            padding-left:25px;
+        }
+        .header-bottom-logo img {
+            width:125px;
+            max-width:250px;
+        }
+        .header-bottom-menu {
+            width:calc(100% - 510px);
+            height: 100%;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .header-bottom-menu-items {
+            max-width:700px;
+            width:700px;
+            height:100%;
+            display:flex;
+            justify-content:space-around;
+            align-items:center;
+            position: relative;
+        }
+        .header-bottom-menu-items-item {
+            height:100%;
+            cursor:pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .header-bottom-menu-items-item-item {
+            height: 100%;
+            display: flex;
+            align-items: center;
+          color: white;
+          text-decoration: none;
+        }
+    .header-bottom-menu-items-item-item a {
+          color: black;
+          text-decoration: none;
+        }
+        .header-bottom-menu-items-item-sub-1 {
+            width: 175px;
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            bottom: -105px;
+            left: 0;
+            background-color: darkgrey;
+            color: white;
+            box-shadow: 2px 2px 5px -1px dimgrey;
+        }
+        .header-bottom-menu-items-item:hover .header-bottom-menu-items-item-sub-1 {
+            display: flex;
+        }
+        .header-bottom-menu-items-item-sub-1 div {
+            width: 100%;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+        }
+        .header-bottom-icon {
+            /*width:200px;*/
+            height:100%;
+            padding-right:25px;
+            display:flex;
+            justify-content:flex-end;
+            align-items:center
+        }
+        .header-bottom-search {
+            width: 200px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            color: grey;
+        }
+        .header-bottom-search input {
+            width: 100%;
+            height: 30px !important;
+            border: 1px solid grey;
+            background-color: white;
+            padding-left: 15px;
+            font-size: 13px;
+        }
+        .header-bottom-search i {
+            position: absolute;
+            right: 15px;
+            color: grey;
+            cursor: pointer;
+        }
+        .header-bottom-icon-cart {
+            position:relative;
+            width:65px;
+            height:65px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .header-bottom-icon-cart i {
+            font-size: 27px;
+            color: #deb335;
+            cursor: pointer;
+        }
+        .header-bottom-icon-cart-text {
+            width:20px;
+            height:20px;
+            border-radius:50%;
+            background-color:black;
+            color:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            position:absolute;
+            right:5px;
+            top:10px;
+        }
+        .header-bottom-icon-compare {
+            position:relative;
+            width:65px;
+            height:65px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .header-bottom-icon-compare i {
+            font-size: 27px;
+            color: #deb335;
+            cursor: pointer;
+        }
+        .header-top {
+            width:100%;
+            height:35px;
+            background-color:black;
+            color:white;
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+        }
+        .header-top-menu {
+            width:300px;
+            height:100%;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding-right:25px;
+        }
+        .header-top-menu-items {
+            cursor: pointer;
+          	margin-left: 15px;
+        }
+   .header-top-menu-items a {
+   		color: white;
+     	text-decoration: none;
+   }
+
+    </style>
+
+ 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       $("#submit").click(function() {
+           $("#form_search").submit();
+       });
+    });
+</script>
+
+ 

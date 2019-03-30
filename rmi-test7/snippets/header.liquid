@@ -1,0 +1,567 @@
+     
+
+
+
+<div class="header-top">
+    <div class="header-top-menu">
+       
+      
+      <ul class="header_user">
+    {% if customer %}
+         <div class="header-top-menu-items">
+          <a href="/account">{{ customer.first_name | truncate:15 }}</a>
+        </div>
+         <div class="header-top-menu-items">
+          <a href="/account/logout">
+           Log out</a>
+        </div>
+    {% else %}
+         <div class="header-top-menu-items">
+          <a href="/account/login">
+           Log in</a></div>
+             <div class="header-top-menu-items"><a href="/account/register">
+               Create an account</a></div>
+    {% endif %}
+</ul>
+    </div>
+</div>
+<div class="header-bottom">
+    <div class="menu-overlay"></div>
+    <div class="menu-toggle-all" onClick="openMenuToggle()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="header-bottom-logo">
+       {% section 'images_header'%}
+    </div>
+    <div class="header-bottom-menu">
+        <div class="header-bottom-menu-items">          
+{% for link in linklists.main-menu.links %}
+            <div class="header-bottom-menu-items-item">
+                <div class="header-bottom-menu-items-item-item"><a href="{{ link.url| escape }}">{{ link.title | escape }}</a></div>
+                <div class="header-bottom-menu-items-item-sub-1">
+                  {% if linklists[link.handle].links.size > 0 %}
+                    {% for sublink in linklists.[link.handle].links %}
+                 	   <div>
+                         <a href="{{ sublink.url }}">{{ sublink.title | escape }}</a>
+                 		</div>
+                    {% endfor %}
+                  {% endif %} 
+                   
+                </div>
+            </div>
+           {% endfor %}
+
+        </div>
+    </div>
+  
+  
+  <form action="/search" method="get" id="form_search" class="input-group search-bar" role="search">
+ 
+   
+  
+
+  
+   <div class="header-bottom-icon">
+        <div class="header-bottom-search">
+          
+<input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+           
+          
+          
+          <i class="fa fa-search" id="submit" ></i>
+        
+     
+     </div>
+        <div class="header-bottom-icon-cart">
+          <a href="/cart">
+            <i class="fa fa-shopping-cart">
+              
+              <div class="header-bottom-icon-cart-text"id="item_count">{{ cart.item_count }}</div>
+              
+                </i></a>
+<!--             <div class="header-bottom-icon-cart-text">
+              <button type="submit" >
+              
+              Search
+    
+    </button>
+          </div> -->
+        </div>
+<!--         <div class="header-bottom-icon-compare">
+            <i class="fa fa-exchange"></i>
+        </div> -->
+    </div>
+    </form>
+</div>
+
+ <style>
+
+  @media only screen and (max-width: 1440px) {
+    .one-of-the-kind-carousel, .one-of-the-kind-img, .weekly-deal-img, .weekly-deal-carousel, .clearance-all-carousel, .best-seller-carousel {
+        height: 700px;
+    }
+    .search-tabs, .clean-repair, .blog, .about-us-all {
+        height: 700px;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .header-bottom-search {
+/*         display: none; */
+      
+    }
+  .one-of-the-kind-carousel, .one-of-the-kind-img, .weekly-deal-img, .weekly-deal-carousel, .clearance-all-carousel, .best-seller-carousel {
+    height: 550px;
+  }
+    .weekly-deal-img-bottom-bottom-right {
+        height: 85px;
+    }
+  .black-line-all {
+    padding: 0 35px;
+  }
+  .search-tabs, .clean-repair, .blog, .about-us-all {
+    height: 550px;
+  }
+  .weekly-deal-img-bottom {
+    height: 125px;
+  }
+  .weekly-deal-img-bottom-bottom-right i {
+    font-size: 50px;
+  }
+  .weekly-deal-img-bottom-bottom-right-text {
+    font-size: 19px;
+  }
+  .search-tabs-left {
+    padding: 50px 75px 225px 75px;
+    font-size: 40px;
+  }
+  .clean-repair-items-header {
+    font-size: 32px;
+    padding-right: 25px;
+  }
+  .blog-items-items-item-text {
+    font-size: 15px;
+  }
+  .blog-items-items-item-text-grey {
+    font-size: 14px;
+  }
+  .footer-all-all {
+    padding: 0 50px 0 175px;
+  }
+  .footer-all-img {
+    left: 35px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .header-bottom {
+/*     background-color: #ff0000; */
+}
+    .header-bottom-menu-items-item-sub-1 {
+        left: 185px !important;
+        top: 0 !important;
+        bottom: unset !important;
+    }
+    .header-bottom-search {
+        display: flex;
+    }
+  .header-all {
+    height: 130px;
+  }
+  .header-bottom-logo {
+    padding-left: 85px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+  }
+  .header-bottom-logo img {
+    width: 90px;
+  }
+  .header-bottom {
+    height: 95px;
+    z-index: 99;
+    position: relative;
+      top: 0;
+  }
+  .main-slider-all {
+    height: 350px;
+  }
+  .header-bottom-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .header-bottom-menu {
+    position: absolute;
+    left: -250px;
+    top: 95px;
+    width: 185px;
+    z-index: 9;
+    height: calc(100vh - 130px);
+    background-color: #ecedec;
+    transition: all .5s;
+  }
+  .header-bottom-menu-items {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+  }
+  .header-bottom-menu-items-item {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    position: relative;
+  }
+  .menu-toggle-all {
+    display: flex;
+  }
+  .black-line-items-text-top {
+    font-size: 17px;
+  }
+  .black-line-items-text-bottom {
+    font-size: 11px;
+  }
+  .black-line-items-icon img {
+    width: 47px;
+  }
+    .one-of-the-kind-carousel, .one-of-the-kind-img, .weekly-deal-img, .weekly-deal-carousel, .clearance-all-carousel, .best-seller-carousel {
+        height: 450px;
+    }
+  .search-tabs, .clean-repair, .blog, .about-us-all {
+    height: 450px;
+  }
+  .one-of-the-kind-carousel-header {
+    font-size: 30px;
+  }
+  .one-of-the-kind-carousel-view, .clearance-all-carousel-view, .best-seller-carousel-view, .blog-carousel-view {
+    top: 0;
+  }
+  .js-flickity-carousel-name {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .js-flickity-carousel-price {
+    font-size: 19px;
+  }
+  .size {
+    overflow: hidden;
+  }
+  .weekly-deal-img-top {
+    font-size: 35px;
+  }
+  .weekly-deal-img-bottom {
+    height: 95px;
+  }
+  .weekly-deal-img-bottom-bottom-right {
+    height: 55px;
+  }
+  .weekly-deal-img-bottom-bottom-right i {
+    font-size: 37px;
+  }
+  .weekly-deal-img-bottom-bottom-right-text {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .weekly-deal-carousel-header, .clearance-all-carousel-header, .best-seller-carousel-header, .blog-items-header, .about-us-items-header {
+    font-size: 35px;
+  }
+  .search-tabs-left {
+    padding: 50px 75px 200px 75px;
+    font-size: 27px;
+  }
+  .clean-repair-items-header {
+    font-size: 25px;
+  }
+  .news-register-header-top {
+    font-size: 35px;
+  }
+  .news-register-header-bottom {
+    font-size: 19px;
+  }
+  .news-register-text {
+    font-size: 17px;
+  }
+  .black-line-all-bottom-all {
+    height: 60px;
+  }
+  .black-line-all-bottom {
+    width: 400px;
+  }
+  .black-line-all-bottom-text {
+    font-size: 35px;
+  }
+  .black-line-all-bottom i {
+    font-size: 35px;
+  }
+  .footer-all-img {
+    display: none;
+  }
+  .footer-all-all {
+    height: 235px;
+    padding: 25px 50px 5px 50px;
+  }
+  .footer-all {
+    padding: 0;
+  }
+  .footer-all-items-header {
+    margin-bottom: 15px;
+  }
+  .footer-all-items-text {
+    margin: 0 !important;
+  }
+  .footer-all-bottom {
+    color: white;
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 425px) {
+    .blog {
+        height: unset;
+    }
+    .blog-items-items {
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: unset;
+        height: unset;
+    }
+    .blog-items-items-item {
+        width: 75%;
+        height: 200px;
+    }
+    .header-bottom-search {
+        display: none;
+    }
+  .header-all {
+    height: 115px;
+  }
+  .header-top {
+    justify-content: center;
+    font-size: 13px;
+  }
+  .header-top-menu {
+    padding-right: 0;
+  }
+  .header-bottom {
+    height: 80px;
+  }
+  .main-slider-all {
+    height: 200px;
+  }
+  .header-bottom-menu {
+    height: calc(100vh - 115px);
+  }
+  .header-bottom-logo img {
+    width: 115px;
+  }
+  .header-bottom-icon-cart {
+    width: 50px;
+    height: 50px;
+  }
+  .header-bottom-icon-cart i {
+    font-size: 21px;
+  }
+  .header-bottom-icon-compare {
+    width: 50px;
+    height: 50px;
+  }
+  .header-bottom-icon-compare i {
+    font-size: 21px;
+  }
+  .menu-toggle-all {
+    font-size: 30px;
+  }
+  .header-bottom-icon {
+    width: 125px;
+  }
+  .header-bottom-icon-cart-text {
+    right: 0;
+    top: 0;
+  }
+  .header-bottom-menu {
+    top: 80px;
+  }
+  .menu-overlay {
+    top: 115px;
+    height: calc(100vh - 115px);
+  }
+  .black-line-all {
+    display: none;
+  }
+  .one-of-the-kind-img {
+    display: none;
+  }
+  .one-of-the-kind-carousel {
+    width: 100%;
+  }
+  .weekly-deal-img {
+    display: none;
+  }
+  .weekly-deal-carousel {
+    width: 100%;
+  }
+  .clean-repair-img {
+    display: none;
+  }
+  .clean-repair-items {
+    width: 100%;
+  }
+  .clearance-all {
+    flex-direction: column;
+    height: 900px;
+  }
+  .clearance-all-carousel {
+    width: 100%;
+    height: 450px;
+  }
+  .best-seller-carousel {
+    width: 100%;
+    height: 450px;
+  }
+  .weekly-deal-carousel-header {
+    text-align: center;
+  }
+  .search-tabs {
+    display: none;
+  }
+  .blog-img {
+    display: none;
+  }
+  .blog-items {
+    width: 100%;
+  }
+  .about-us-img {
+    display: none;
+  }
+  .about-us-items {
+    width: 100%;
+  }
+  .news-register-header-top {
+    font-size: 25px;
+  }
+  .news-register-header-bottom {
+    font-size: 13px;
+  }
+  .news-register-text {
+    font-size: 14px;
+    margin: 20px 0 10px 0;
+  }
+  .news-register-input {
+    width: 330px;
+    height: 40px;
+  }
+  .news-register-input-input input {
+    font-size: 17px;
+  }
+  .news-register-input-btn {
+    font-size: 17px;
+  }
+  .black-line-all-bottom-all {
+    height: 45px;
+  }
+  .black-line-all-bottom-text {
+    display: none;
+  }
+  .black-line-all-bottom {
+    width: 200px;
+  }
+  .black-line-all-bottom i {
+    font-size: 30px;
+  }
+  .footer-all-bottom {
+    font-size: 10px;
+    text-align: center;
+  }
+  .footer-all-items-header {
+    display: none;
+  }
+  .footer-all-all {
+    padding: 0;
+  }
+  .footer-all {
+    margin-top: 0;
+    padding: 15px;
+    flex-direction: column;
+      height: 200px;
+  }
+  .footer-all-items {
+    height: 60%;
+    width: 100% !important;
+  }
+  .footer-all-items-mobile {
+    margin-top: 5%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 20%;
+    justify-content: space-around !important;
+  }
+  .footer-all-items-text {
+    white-space: nowrap;
+    font-size: 13px;
+    justify-content: center;
+  }
+  .footer-all-items-mobile .footer-all-items-text {
+    justify-content: center;
+    width: 33.33%;
+  }
+}
+
+    </style>
+
+ 
+
+<script type="text/javascript">
+    $(document).ready(function() {
+       $("#submit").click(function() {
+           $("#form_search").submit();
+       });
+    });
+  
+  function htmlFlow() {
+        $('html').css({
+            'overflow': 'inherit',
+        })
+    }
+    function goScrollUp() {
+        $(function () {
+            const scroll_pos = (0);
+            $('html, body').animate({scrollTop: (scroll_pos)}, 'slow');
+        });
+    }
+
+function openMenuToggle() {
+    if ($('.header-bottom-menu').css('left') === '0px') {
+        $('.header-bottom-menu').css('left', '-255px');
+        $('.menu-overlay').css('left', '-100%');
+        $('.filter-toggle').css('z-index', '99');
+        if ($('.list-page-filter-all').css('left') === '-50px') {
+            $('html, body').css({
+                'overflow-y': 'hidden',
+                'height': '100%'
+            });
+        } else {
+            $('html, body').css({
+                'overflow-y': 'auto',
+                'overflow-x': 'hidden',
+                'height': 'auto'
+            });
+        }
+    } else {
+        $('.header-bottom-menu').css('left', '0px');
+        $('.menu-overlay').css('left', '0px');
+        $('.filter-toggle').css('z-index', '9');
+        $('html, body').css({
+            'overflow-y': 'hidden',
+            'height': '100%'
+        });
+    }
+    htmlFlow();
+    goScrollUp();
+}
+     
+ 
+</script>
+
+ 

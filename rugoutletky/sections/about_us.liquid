@@ -1,0 +1,39 @@
+
+
+<div class="about-us-all">
+    <div class="about-us-img">
+             <img src="{{section.settings.images | img_url :'1024x'}}"/>
+
+    </div>
+    <div class="about-us-items">
+      <div class="about-us-items-header">{{section.settings.title}}</div>
+      <div class="about-us-items-items">{{section.settings.body}}</div>
+    </div>
+  </div>
+
+{% schema %}
+   {
+  "name": "About Us",
+   "settings": [
+    {
+      "id": "title",
+      "type": "richtext",
+      "label": "Title",
+	  "default": "<p>Title</p>"
+    },
+ {
+        "id": "images",
+        "type": "image_picker",
+        "label": "images"      
+},
+          {
+      "id": "body",
+      "type": "richtext",
+      "label": "body"
+     }
+
+  ]
+  
+}
+
+{% endschema %}

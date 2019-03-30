@@ -1,0 +1,84 @@
+
+  <div class="blog">
+    <div class="blog-items">
+      <div class="blog-items-header">{{section.settings.title}}</div>
+      <div class="blog-items-items">
+        <div class="blog-carousel-view"><a href="{{section.settings.url}}" >View All</a></div>
+        
+        
+        
+        
+         {% assign url = section.settings.url | remove: "/blogs/"  %}
+    {% assign blog_url = url | split:'/' | first %}
+    {% for blog_handle in blog_url %}
+        {% for article in blogs[blog_handle].articles %}
+        <div class="blog-items-items-item">
+          <div class="blog-items-items-item-img">
+                                <img class="mySlides" src="{{ article | img_url: '800x'  }}" alt="{{ article.images.alt }}" style="width:100%;height: 100%">
+
+          
+          
+          </div>
+          <div class="blog-items-items-item-text-grey"> 
+          
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+
+          
+          </div>
+          <div class="blog-items-items-item-text"> <a href="{{ article.url }}">{{ article.title }}</a></div>
+        </div>
+       
+    {% endfor %}
+{% endfor %}    
+        
+      </div>
+    </div>
+    <div class="blog-img">
+      <img src="{{section.settings.images_left | img_url :'2048x'}}"/>
+    </div>
+  </div>
+
+
+
+ 
+
+
+
+
+{% schema %}
+   {
+  "name": "Blog",
+   "settings": [
+    {
+      "id": "title",
+      "type": "richtext",
+      "label": "Title",
+	  "default": "<p>Title</p>"
+    },
+ {
+        "id": "images_left",
+        "type": "image_picker",
+        "label": "images"      
+},
+          {
+      "id": "url",
+      "type": "url",
+      "label": "blog"
+     }
+
+  ]
+  
+}
+
+{% endschema %}
+
+{% stylesheet %}
+
+
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

@@ -1,0 +1,16 @@
+1111
+
+function myFunction( product_id , variant_id) {
+  
+  
+  
+  jQuery.ajax({
+    url:'/admin/products/'+product_id+'/variants/'+variant_id+'/metafields.json',
+  success:function(unparsed_json){
+ 
+    console.log('This just in from cart.accentuate.json:', unparsed_json)
+  }
+})
+     
+  
+}

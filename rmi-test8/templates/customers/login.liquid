@@ -1,0 +1,277 @@
+<!-- /templates/customers/login.liquid -->
+
+<div class="grid">
+
+  <div class="grid__item large--one-third push--large--one-third text-center">
+
+    {% comment %}
+      If a user has successfully requested a new password, the form.posted_successfully? variable
+      is set to true within the 'recover_customer_password' form only. Within that form you'll see
+      the variable 'resetPassword' set to true, which is used to initialize timber.resetPasswordSuccess().
+    {% endcomment %}
+    <div class="note form-success" id="ResetSuccess" style="display:none;">
+      {{ 'customer.recover_password.success' | t }}
+    </div>
+
+    <div id="CustomerLoginForm" class="form-vertical">
+      {% form 'customer_login' %}
+
+              {{ form.errors | default_errors }}
+
+      
+<div class="activated-all-all">
+    <div class="activated-all">
+        <div class="activated-header">{{ 'customer.login.title' | t }}</div>
+      {{ form.errors | default_errors }}
+         <div class="activated-email-all">
+            <div class="activated-email-text">{{ 'customer.login.email' | t }}</div>
+        <input type="email" name="customer[email]" id="CustomerEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.login.email' | t }}" autocorrect="off" autocapitalize="off" autofocus>
+        </div>
+      
+              {% if form.password_needed %}
+
+        <div class="activated-password-all">
+            <div class="activated-password-text">{{ 'customer.login.password' | t }}</div>
+          <input type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.login.password' | t }}">
+        </div>
+              {% endif %}
+
+      
+        <div class="activated-button" style="justify-content: flex-start;">
+          {% if form.password_needed %}
+          <div class="activated-button-btn-forgot"><a href="#recover"  id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a></div>
+        {% endif %}
+        </div>
+      <div class="activated-button">
+            <div class="activated-button-btn"><input type="submit"  style="font-weight: bold;font-size: 17px;cursor: pointer;border: none;background: none;"  class="btn btn--full" value="{{ 'customer.login.sign_in' | t }}">
+</div>
+        <div style="margin-left: 2%;" class="activated-button-btn"><a href="/">{{ 'customer.login.cancel' | t }}</a></div>
+        <div style="margin-left: 2%;" class="activated-button-btn">{{ 'layout.customer.create_account' | t | customer_register_link }}</div>
+        </div>
+    </div>
+</div>
+      
+      
+      
+      
+      
+ 
+ 
+<!--         <div style="margin-left: 2%;"><a class="activated-button-btn" href="/">{{ 'customer.login.cancel' | t }}</a></div>
+        <div style="margin-left: 2%;" class="activated-button-btn">{{ 'layout.customer.create_account' | t | customer_register_link }}</div> -->
+<!--         {% if form.password_needed %}
+          <div style="margin-left: 2%; width: 200px;" class="activated-button-btn"><a href="#recover"  id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a></div>
+        {% endif %} -->
+      {% endform %}
+    </div>
+    
+    <div id="RecoverPasswordForm" style="display: none;">
+      
+      
+      
+      
+      
+       {% if form.posted_successfully? %}
+            {% assign resetPassword = true %}
+          {% endif %}
+      <div class="activated-all-all">
+    <div class="activated-all">
+        <div class="activated-header">{{ 'customer.recover_password.title' | t }}</div>
+        <div class="activated-text">{{ 'customer.recover_password.subtext' | t }}</div>
+        <div class="activated-email-all">
+            <div class="activated-email-text">{{ 'customer.recover_password.email' | t }}</div>
+          <input type="email" value="" name="email" id="RecoverEmail" class="input-full" placeholder="{{ 'customer.recover_password.email' | t }}" autocorrect="off" autocapitalize="off">
+        </div>
+       
+        <div class="activated-button">
+            <div class="activated-button-btn">
+            <input type="submit" class="btn btn--full" style="width: 125px;height: 100%;background-color: #e5bf44; " value="{{ 'customer.recover_password.submit' | t }}">
+               
+              
+              
+              <button type="button" style="width: 125px;height: 100%;background-color: #e5bf44;  " id="HideRecoverPasswordLink" class="text-link">{{ 'customer.recover_password.cancel' | t }}</button> 
+        </div>
+    </div>
+</div>
+
+      
+
+       
+ 
+    </div>
+
+    {% comment %}
+      If accounts are set as optional, the following will be shown as an option
+      during checkout, not on the default /login page.
+    {% endcomment %}
+    {% if shop.checkout.guest_login %}
+      <hr>
+
+      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+      {% form 'guest_login' %}
+        <input type="submit"  style="width: 100%;height: 100%;background: none;border: none;" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+<style>
+
+  html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+        .activated-all-all {
+            width: 100%;
+            min-height: calc(100vh - 535px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+        }
+        .activated-all {
+            width: 450px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .activated-all form {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .activated-header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 29px;
+            margin-bottom: -20px;
+        }
+        .activated-text {
+            font-size: 15px;
+        }
+        .activated-email-all {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .activated-email-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+        .activated-email-all input {
+            width: calc(100% - 15px);
+            height: 30px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+          outline: none;
+        }
+        .activated-password-all {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .activated-password-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+        .activated-password-all input {
+            width: calc(100% - 15px);
+            height: 30px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+          outline: none;
+        }
+        .activated-button {
+            width: 100%;
+            display: flex;
+          	justify-content: space-between;
+        }
+        .activated-button-btn {
+            width: 165px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5bf44;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+        }
+  		.activated-button-btn-forgot {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            color: #e5bf44;
+            cursor: pointer;
+        }
+        .activated-button-btn-forgot a {
+          color: #e5bf44;
+        }
+        .activated-button-btn a {
+            text-decoration: none;
+    		color: black;
+        }
+        #RecoverPasswordForm .activated-button {
+          	  justify-content: center;
+        }
+  #RecoverPasswordForm .activated-button .activated-button-btn {
+    width: 275px;
+    background-color: transparent;
+  }
+  		#RecoverPasswordForm .activated-button .activated-button-btn input {          	
+              border: none;
+              font-weight: bold;
+              font-size: 16px !important;
+              cursor: pointer;
+        }
+  		#RecoverPasswordForm .activated-button .activated-button-btn button {          	
+              border: none;
+              font-weight: bold;
+              font-size: 16px;
+              cursor: pointer;
+          	  margin-left: 25px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .activated-all-all {
+                min-height: calc(100vh - 430px);
+            }
+        }
+        @media only screen and (max-width: 425px) {
+            .activated-all {
+                width: 300px;
+            }
+          .activated-button-btn {
+                width: 95px;
+                font-size: 12px;
+			}
+          .activated-button-btn input {
+            	font-size: 12px !important;
+          }
+        }
+</style>

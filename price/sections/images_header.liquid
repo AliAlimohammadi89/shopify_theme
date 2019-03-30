@@ -1,0 +1,23 @@
+
+
+<img src="{{ section.settings.images | img_url: '1024x' }}" alt="{{ section.settings.images.alt }}" />
+
+{% schema %}
+ {
+    "name": "images_header",
+    "settings": [
+      {
+        "id": "images",
+        "type": "image_picker",
+        "label": "images"      
+}
+      
+    ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

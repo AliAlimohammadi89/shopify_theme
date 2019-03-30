@@ -1,0 +1,411 @@
+<!-- /templates/cart.liquid -->
+{% comment %}
+  For info on test orders:
+    - General http://docs.shopify.com/manual/your-store/orders/test-orders
+    - Shopify Payments - http://docs.shopify.com/manual/more/shopify-payments/testing-shopify-payments
+
+{% endcomment %}
+{% if cart.item_count > 0 %}
+  <h1>{{ 'cart.general.title' | t }}</h1>
+  <form action="/cart" method="post" novalidate class="cart table-wrap">
+        
+    
+
+<div class="cart-all-all">
+    <div class="cart-all">
+        <div class="cart-header"> {{ 'cart.general.title' | t }} </div>
+        <div class="cart-table">
+            <table>
+                <thead class="cart__row cart__header-labels">
+        <th colspan="2" class="text-center">{{ 'cart.label.product' | t }}</th>
+        <th class="text-center">{{ 'cart.label.price' | t }}</th>
+        <th class="text-center">{{ 'cart.label.quantity' | t }}</th>
+        <th class="text-right">{{ 'cart.label.total' | t }}</th>
+        <th class="text-right"></th>
+      </thead>
+              
+              
+              
+              
+              
+              
+              
+              
+              
+      <tbody>
+        {% for item in cart.items %}
+          <tr class="cart__row table__section">
+            <td data-label="{{ 'customer.order.product' | t }}">
+              <a href="{{ item.url | within: collections.all }}" class="cart__image">
+                {% comment %}
+                  More image size options at:
+                    - http://docs.shopify.com/themes/filters/product-img-url
+                {% endcomment %}
+               
+                 <img class="mySlides" src="{% if item.variant.metafields.images.all %}
+         					 {% assign images = item.variant.metafields.images.all | split: "," | reverse  %}
+                                        
+                                          {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_T.jpg  
+                                         {%else%}
+                                            
+                                            {% if item.product.metafields.images.all %}
+                                             {% assign images = item.product.metafields.images.all | split: "," | reverse  %}
+                                        
+                                          {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_T.jpg  
+                                            {%else%}
+                                         {{ item.variant.featured_image | product_img_url: 'medium' }}
+                                            {%endif%}
+                                         {% endif %}
+                                         " alt="{{ item.variant.title | escape  }}">
+                
+                
+                
+                
+               </a>
+            </td>
+            <td>
+              <a href="{{ item.url }}" class="h4">
+                {{ item.product.title }}
+              </a>
+              {% unless item.variant.title contains 'Default' %}
+                <br>
+                <small>{{ item.variant.title }}</small>
+              {% endunless %}
+
+              {% if settings.cart_vendor_enable %}
+                <p>{{ item.vendor }}</p>
+              {% endif %}
+
+              {% comment %}
+                Optional, loop through custom product line items if available
+
+                For more info on line item properties, visit:
+                  - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+              {% endcomment %}
+              {% assign property_size = item.properties | size %}
+              {% if property_size > 0 %}
+                {% for p in item.properties %}
+                  {% unless p.last == blank %}
+                    {{ p.first }}:
+
+                    {% comment %}
+                      Check if there was an uploaded file associated
+                    {% endcomment %}
+                    {% if p.last contains '/uploads/' %}
+                      <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                    {% else %}
+                      {{ p.last }}
+                    {% endif %}
+
+                    <br>
+                  {% endunless %}
+                {% endfor %}
+              {% endif %}             
+            </td>
+            <td data-label="{{ 'cart.label.price' | t }}">
+              <span class="h3">
+                {{ item.price | money }}
+              </span>
+            </td>
+            <td data-label="{{ 'cart.label.quantity' | t }}">
+              <input type="number" name="updates[]" id="updates_{{ item.key }}" data-id="{{ item.key }}" value="{{ item.quantity }}" min="0">
+            </td>
+            <td data-label="{{ 'cart.label.total' | t }}" class="text-right">
+              {% if item.original_line_price != item.line_price %}
+                <span class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></span>
+              {% endif %}
+              <span class="h3">
+                {{ item.line_price | money }}
+              </span>
+              {% for discount in item.discounts %}
+                <span class="cart-item__discount">{{ discount.title }}</span>
+              {% endfor %}
+            </td>
+            <td> <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+					<i class="fa fa-remove" style="font-size:25px;color:red"></i>
+              </a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+              
+              
+              
+            </table>
+          
+          
+        </div>
+      
+       {% if settings.cart_notes_enable %}
+        <div class="grid__item two-thirds small--one-whole">
+          <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+          <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+        </div>
+      {% endif %}
+      
+        <div class="cart-total">
+            <div class="cart-total-item">Total Item: {{ cart.item_count }} {{ cart.item_count | pluralize: 'Item', 'Items' }}</div>
+            <div class="cart-total-price">{{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}</div>
+        </div>
+        <div class="cart-btn">
+          <div class="cart-btn-shopping"><a href="/collections/all" title="Continue shopping" style="background: none;color: white;border: none;font-size: 17px; text-decoration: none; cursor: pointer;">Continue shopping</a></div>
+            <div class="cart-btn-shopping"> <button type="submit" name="update" style="background: none;color: white;border: none;font-size: 17px; cursor: pointer;" class="btn--secondary update-cart">{{ 'cart.general.update' | t }}</button></div>
+            <div class="cart-btn-checkout"><button type="submit" name="checkout" style="background: none; border: none;font-size: 17px; cursor: pointer;" class="btn">{{ 'cart.general.checkout' | t }}</button></div>
+        </div>
+    </div>
+</div>
+ 
+  
+    <div class="grid cart__row">
+      {% if settings.cart_notes_enable %}
+        <div class="grid__item two-thirds small--one-whole">
+          <label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+          <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+        </div>
+      {% endif %}
+     
+    </div>
+  </form>
+{% else %}
+  {% comment %}
+    The cart is empty
+  {% endcomment %}
+  <h2>{{ 'cart.general.title' | t }}</h2>
+  <p>{{ 'cart.general.empty' | t }}</p>
+  <p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+{% endif %}
+
+
+
+<style>
+  .create-button-btn .btn {
+
+    color: black;
+
+}
+  .wrapper.main-content{
+  min-height: calc(100vh - 554px);
+  }
+  .tab-detail-add-right-add {
+          width: 155px;
+          height: 45px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: black;
+          font-weight: bold;
+          font-size: 16px;
+          background-color: #e5bf44;
+          cursor: pointer;
+      }
+   .tab-detail-add-right-add {
+              width: 145px;
+              height: 35px;
+          }
+  html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+  
+  .js-qty__adjust {
+  
+    border-radius: 2px;
+width: 25px;
+border: 1px solid gray;
+  }
+  .js-qty__num{
+  border-radius: 2px;
+    height: 14px;
+        }
+          .cart-all-all {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 430px);
+        }
+        .cart-all {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .cart-header {
+            width: 100%;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .cart-table {
+            width: 100%;
+        }
+        .cart-table table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid lightgrey;
+        }
+        .cart-table table thead tr {
+            border-bottom: 1px solid lightgrey;
+            height: 50px;
+            font-size: 14px;
+            text-align: left;
+        }
+        .cart-table table thead tr th {
+            padding-left: 25px;
+        }
+        .cart-table table tbody tr {
+            border-bottom: 1px solid lightgrey;
+            height: 70px;
+            font-size: 14px;
+        }
+        .cart-table table tbody tr td {
+            padding-left: 25px;
+        }
+        .cart-table table tbody tr td input {
+            width: 20px;
+          margin: 0px 5px;
+padding: 5px;
+          border: 1px solid gray;
+        }
+        .cart-product {
+            height: 70px;
+            padding: 5px 0;
+            display: flex;
+        }
+        .cart-product-img {
+            width: 50px;
+            height: 100%;
+            margin-right: 10px;
+        }
+        .cart-product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .cart-product-items {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .cart-product-items-name {
+            color: black;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .cart-product-items-shape {
+            color: grey;
+            font-size: 14px;
+        }
+        .cart-product-items-del {
+            color: #4e75ed;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .cart-total {
+            width: calc(100% - 100px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+            border: 1px solid lightgrey;
+            margin: 15px 0;
+            padding: 0 50px;
+        }
+        .cart-total-item {
+            font-weight: bold;
+            font-size: 19px;
+        }
+        .cart-total-price {
+            font-weight: bold;
+            font-size: 19px;
+        }
+        .cart-btn {
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px;
+        }
+        .cart-btn-shopping btn {
+            width: 150px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: black;
+            margin-right: 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+  .cart-btn-shopping  {
+            width: 150px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: black;
+            margin-right: 25px;
+            font-size: 14px;
+            cursor: pointer;
+    padding: 0px 5px;
+        }
+        .cart-btn-checkout {
+            width: 110px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: #e5bf44;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 425px) {
+            .cart-total {
+                width: calc(100% - 20px);
+                padding: 0 10px;
+            }
+            .cart-table table thead tr th {
+                padding-left: 10px;
+            }
+            .cart-table table tbody tr td {
+                padding-left: 10px;
+            }
+            .cart-table table thead tr {
+                font-size: 13px;
+            }
+            .cart-table table tbody tr {
+                height: 90px;
+            }
+            .cart-product {
+                height: 90px;
+            }
+            .cart-product-img {
+                width: 65px;
+            }
+            .cart-product-items-name {
+                font-size: 12px;
+            }
+            .cart-product-items-shape {
+                font-size: 12px;
+            }
+            .cart-product-items-del {
+                font-size: 12px;
+            }
+            .cart-total-item {
+                font-size: 16px;
+            }
+            .cart-total-price {
+                font-size: 16px;
+            }
+        }
+
+</style>

@@ -1,0 +1,681 @@
+{% include 'section_seting'%}
+<div class="one-of-the-kind">
+
+    <!--sleder-->
+   
+{% for block in section.blocks %}  
+  {% if block.type == "collection_box" %}
+    
+   {% if block.settings.Theme == "1"  %}
+    <div class="one-of-the-kind-carousel">
+      <div class="one-of-the-kind-carousel-view"><a href="{{block.settings.url }}">View All</a></div>
+      <div class="one-of-the-kind-carousel-header">{{block.settings.title }}</div>
+      <div class="gallery flickity-mainSlider js-flickity-carousel" style="height: calc(100% - 100px);margin-top: 20px ;overflow: hidden;">
+        
+       {% if  block.settings.url  %}
+        
+     {% assign collection = block.settings.url | remove: "/collections/"   %}
+        {%else%}
+        
+        {%assign  collection = slider  %}
+        
+        {% endif %}
+        
+        
+          
+        
+    {%-  for product in collections[collection].products limit: block.settings.count_in_slider  -%}
+        
+             <div class="size" style="width: calc(50% - 20px);height: 100%;display: flex;flex-direction: column;align-items: center;margin: 0 10px;justify-content: space-between;">
+               <a href="{{product.url}}" style="height: calc(100% - 90px);">
+               <img class="mySlides" src="{% if product.metafields.images.all %}
+         					 {% assign images = product.metafields.images.all | split: "," | reverse  %}
+                                        
+                                          {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_S.jpg  
+                                         {%else%}
+                                         {{ product.featured_image | product_img_url: 'medium' }}
+                                         {% endif %}
+                                         " alt="{{ product.title | escape  }}" style="width:100%;height: calc(100% - 20px);">
+                 
+                 </a>
+              <div class="js-flickity-carousel-name">{{ product.title | escape  }}</div>
+              <div class="js-flickity-carousel-price">
+				{%- if product.price_min  == product.price_max  -%}                
+                	 {{ product.price_min | money }}
+                {% else %}
+               		 {{ product.price_min | money }} - {{product.price_max | money }}
+                {% endif %}
+                </div>
+            </div>        
+        
+        {% endfor %}
+          </div>
+    </div>
+  {% else %}
+  	  <!--slider_dark-->
+    <div class="best-seller-carousel">
+      <div class="best-seller-carousel-view" style="background-color: #deb335"><a href="{{block.settings.url }}">View All</a></div>
+      <div class="best-seller-carousel-header" style="color: white">{{block.settings.title }}</div>
+      <div class="gallery flickity-mainSlider js-flickity-carousel-best-seller" style="height: calc(100% - 100px);margin-top: 20px ;overflow: hidden;">
+     {% assign collection = block.settings.url | remove: "/collections/"   %}
+     {%-  for product in collections[collection].products limit: block.settings.count_in_slider  -%}
+
+        <div class="size" style="width: calc(50% - 20px);height: 100%;display: flex;flex-direction: column;align-items: center;margin: 0 10px;justify-content: space-between;">
+          <a href="{{product.url}}" style="height: calc(100% - 90px);">
+               <img class="mySlides" src="{% if product.metafields.images.all %}
+         					 {% assign images = product.metafields.images.all | split: "," | reverse  %}
+                                         {% assign image = images[0] | split: ".jpg" %}
+                                        	{{image}}_S.jpg  
+                                         {%else%}
+                                         {{ product.featured_image | product_img_url: 'medium' }}
+                                         {% endif %}
+                                         " alt="{{ product.title | escape  }}" style="width:100%;height: calc(100% - 25px);">
+                 
+                 </a>
+          
+          <div class="js-flickity-carousel-name" style="color: white;margin-bottom: 10px;">{{ product.title | escape  }}</div>
+ <div class="js-flickity-carousel-price">
+				{%- if product.price_min  == product.price_max  -%}                
+                	 {{ product.price_min | money }}
+                {% else %}
+               		 {{ product.price_min | money }} - {{product.price_max | money }}
+                {% endif %}
+                </div>
+        </div>
+      {% endfor %}
+
+      </div>
+    </div>
+    <!--slider-->
+   {% endif %}
+   
+   
+         {% elsif block.type == "weekly_Box" %} 
+
+        {% assign product = block.settings.url | remove: "/products/"   %}
+
+   
+   {% assign product1=all_products[product] %}
+   
+   
+
+   
+   		<div class="weekly-deal-img">
+      <img src="{{block.settings.promo-image | img_url : '800x' }}"/>
+      <div class="weekly-deal-img-top">{{block.settings.title}}</div>
+      <div class="weekly-deal-img-bottom">
+        <div class="weekly-deal-img-bottom-top">
+          <i class="fa fa-clock-o"></i>
+<!--           <span>15:35:10</span> -->
+        </div>
+        <div class="weekly-deal-img-bottom-bottom">
+          <div class="weekly-deal-img-bottom-bottom-left">
+            <div class="weekly-deal-img-bottom-bottom-left-name">{{product1.title}}</div>
+            <div class="weekly-deal-img-bottom-bottom-left-price">
+              {%- if product1.price_min  == product1.price_max  -%}                
+                	 {{ product1.price_min | money }}
+                {% else %}
+               		 {{ product1.price_min | money }} - {{product1.price_max | money }}
+<!--                             <del style="color: lightgrey;font-weight: normal;font-size: 19px;margin-right: 27px;padding-bottom: 5px;">$628.00</del>$528.00 -->
+                {% endif %}
+			</div>
+
+              
+              
+          </div>
+          <div class="weekly-deal-img-bottom-bottom-right">
+            <i class="fa fa-shopping-bag"></i>
+            <div class="weekly-deal-img-bottom-bottom-right-text"><a href="{{product1.url}}">SHOP NOW</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+   
+
+   
+      {% else %} 
+      
+    <div class="one-of-the-kind-img">
+        <img src="{{ block.settings.promo-image | img_url: '800x' }}" />
+    </div>
+   
+   
+  {% endif %}
+   
+
+{% endfor %}
+
+   
+        
+        
+      
+       
+        
+     
+  
+
+
+   
+  <!--</div>-->
+  <!--<div class="weekly-deal">-->
+    
+  <!--</div>-->
+  <!--<div class="clearance-all">-->
+
+  </div> 
+{% schema %}
+{
+    "name": " Main Items",
+    "max_blocks": 10,
+    "presets": [
+    {
+        "name": "Multy Blocks",
+        "category": "Custom Homepage Content"
+    }
+    ],
+    "blocks": [
+    {
+        "type": "collection_box",
+        "name": "Collection Box",
+        "settings": [
+        {
+            "id": "url",
+            "type": "url",
+            "label": "Title"
+			 
+        },
+        {
+            "id": "title",
+            "type": "textarea",
+            "label": "Tittle",
+            "default": "Title"
+        },
+		{
+            "type":      "range",
+            "id":        "count_in_slider",
+            "min":       2,
+            "max":        100,
+            "step":       1,
+            "unit":       "px",
+            "label":     "Count In Slider",
+            "default":   4
+},
+{
+   "type":      "radio",
+   "id":        "Theme",
+   "label":     "Theme",
+   "options": [
+     { "value": "0", "label": "Themes Dark" },
+     { "value": "1", "label": "Themes  Wheat" }
+   ],
+   "default":   "0",
+   "info":      "Text"
+}
+        ]
+    }
+,
+
+{
+        "type": "weekly_Box",
+        "name": "weekly Box",
+        "settings": [
+{
+            "id": "promo-image",
+            "type": "image_picker",
+            "label": "Image Product"
+         
+        },
+        {
+            "id": "url",
+            "type": "url",
+            "label": "Title"
+			 
+        },
+        {
+            "id": "title",
+            "type": "textarea",
+            "label": "Tittle",
+            "default": "Title"
+        }
+        ]
+    }
+,
+
+
+    {
+         
+        "type": "image-picker",
+        "name": "Image Product ",
+
+
+ 
+        "settings": [
+        {
+            "id": "promo-image",
+            "type": "image_picker",
+            "label": "Promo Image"
+         
+        }
+        ]
+    }
+    ]
+}
+{% endschema %}
+ 
+{% stylesheet %}
+
+
+
+
+@media only screen and (max-width: 768px) {
+  .header-bottom {
+    background-color: #ff0000;
+}
+    .header-bottom-menu-items-item-sub-1 {
+        left: 185px !important;
+        top: 0 !important;
+        bottom: unset !important;
+    }
+    .header-bottom-search {
+        display: flex;
+    }
+  .header-all {
+    height: 130px;
+  }
+  .header-bottom-logo {
+    padding-left: 50px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+  }
+  .header-bottom-logo img {
+    width: 155px;
+  }
+  .header-bottom {
+    height: 95px;
+    z-index: 99;
+    position: relative;
+      top: 0;
+  }
+  .main-slider-all {
+    height: 350px;
+  }
+  .header-bottom-icon {
+    position: absolute;
+    right: 0;
+  }
+  .header-bottom-menu {
+    position: absolute;
+    left: -250px;
+    top: 95px;
+    width: 185px;
+    z-index: 9;
+    height: calc(100vh - 130px);
+    background-color: #ecedec;
+    transition: all .5s;
+  }
+  .header-bottom-menu-items {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+  }
+  .header-bottom-menu-items-item {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    position: relative;
+  }
+  .menu-toggle-all {
+    display: flex;
+  }
+  .black-line-items-text-top {
+    font-size: 17px;
+  }
+  .black-line-items-text-bottom {
+    font-size: 11px;
+  }
+  .black-line-items-icon img {
+    width: 47px;
+  }
+    .one-of-the-kind-carousel, .one-of-the-kind-img, .weekly-deal-img, .weekly-deal-carousel, .clearance-all-carousel, .best-seller-carousel {
+        height: 450px;
+    }
+  .search-tabs, .clean-repair, .blog, .about-us-all {
+    height: 450px;
+  }
+  .one-of-the-kind-carousel-header {
+    font-size: 30px;
+  }
+  .one-of-the-kind-carousel-view, .clearance-all-carousel-view, .best-seller-carousel-view, .blog-carousel-view {
+    top: 0;
+  }
+  .js-flickity-carousel-name {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .js-flickity-carousel-price {
+    font-size: 19px;
+  }
+  .size {
+    overflow: hidden;
+  }
+  .weekly-deal-img-top {
+    font-size: 35px;
+  }
+  .weekly-deal-img-bottom {
+    height: 195px;
+  }
+  .weekly-deal-img-bottom-bottom-left-name {
+    font-size: 19px;
+}
+  .weekly-deal-img-bottom-bottom-left-price {
+    font-size: 21px;
+}
+  .weekly-deal-img-bottom-bottom-right {
+    height: 55px;
+  }
+  .weekly-deal-img-bottom-bottom-right i {
+    font-size: 37px;
+  }
+  .weekly-deal-img-bottom-bottom-right-text {
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  .weekly-deal-carousel-header, .clearance-all-carousel-header, .best-seller-carousel-header, .blog-items-header, .about-us-items-header {
+    font-size: 35px;
+  }
+  .search-tabs-left {
+    padding: 50px 75px 200px 75px;
+    font-size: 27px;
+  }
+  .clean-repair-items-header {
+    font-size: 25px;
+  }
+  .news-register-header-top {
+    font-size: 35px;
+  }
+  .news-register-header-bottom {
+    font-size: 19px;
+  }
+  .news-register-text {
+    font-size: 17px;
+  }
+  .black-line-all-bottom-all {
+    height: 60px;
+  }
+  .black-line-all-bottom {
+    width: 400px;
+  }
+  .black-line-all-bottom-text {
+    font-size: 35px;
+  }
+  .black-line-all-bottom i {
+    font-size: 35px;
+  }
+  .footer-all-img {
+    display: none;
+  }
+  .footer-all-all {
+    height: 235px;
+    padding: 25px 50px 5px 50px;
+  }
+  .footer-all {
+    padding: 0;
+  }
+  .footer-all-items-header {
+    margin-bottom: 15px;
+  }
+  .footer-all-items-text {
+    margin: 0 !important;
+  }
+  .footer-all-bottom {
+    color: white;
+    font-size: 12px;
+  }
+}
+
+
+
+.flickity-viewport{
+
+height: 100% !important;
+}
+{% endstylesheet %}
+ 
+{% javascript %}
+
+function khazaiSlider() {
+    setTimeout(() => {
+      new Flickity(document.querySelector('.js-flickity-main'), {
+        freeScroll: false,
+        contain: true,
+        percentPosition: false,
+        resize: false,
+        initialIndex: 2,
+        accessibility: false,
+        wrapAround: true,
+        cellAlign: 'center',
+        pageDots: false,
+        prevNextButtons: false,
+        autoPlay: 5000,
+      });
+    }, 100);
+  }
+  function setFlickity() {
+    var flkty = $('.js-flickity-main').flickity();
+    if (!flkty) {
+      flkty.flickity();
+    } else {
+      flkty.flickity('destroy');
+      setTimeout(() => {
+        flkty.flickity();
+      }, 300);
+      this.khazaiSlider();
+    }
+  }
+  function khazaiCarousels() {
+    setTimeout(() => {
+      new Flickity(document.querySelector('.js-flickity-carousel'), {
+        freeScroll: false,
+        contain: true,
+        percentPosition: false,
+        resize: false,
+        initialIndex: 2,
+        accessibility: false,
+        wrapAround: true,
+        cellAlign: 'left',
+        pageDots: true,
+        prevNextButtons: false,
+      });
+    }, 100);
+  }
+  function setFlickityCarousel() {
+    var flkty = $('.js-flickity-carousel').flickity();
+    if (!flkty) {
+      flkty.flickity();
+    } else {
+      flkty.flickity('destroy');
+      setTimeout(() => {
+        flkty.flickity();
+      }, 300);
+      this.khazaiCarousels();
+    }
+  }
+  function khazaiCarouselsClearance() {
+    setTimeout(() => {
+      new Flickity(document.querySelector('.js-flickity-carousel-clearance'), {
+        freeScroll: false,
+        contain: true,
+        percentPosition: false,
+        resize: false,
+        initialIndex: 2,
+        accessibility: false,
+        wrapAround: true,
+        cellAlign: 'left',
+        pageDots: true,
+        prevNextButtons: false,
+      });
+    }, 100);
+  }
+  function setFlickityCarouselClearance() {
+    var flkty = $('.js-flickity-carousel-clearance').flickity();
+    if (!flkty) {
+      flkty.flickity();
+    } else {
+      flkty.flickity('destroy');
+      setTimeout(() => {
+        flkty.flickity();
+      }, 300);
+      this.khazaiCarouselsClearance();
+    }
+  }
+  function khazaiCarouselsBest() {
+    setTimeout(() => {
+      new Flickity(document.querySelector('.js-flickity-carousel-best-seller'), {
+        freeScroll: false,
+        contain: true,
+        percentPosition: false,
+        resize: false,
+        initialIndex: 2,
+        accessibility: false,
+        wrapAround: true,
+        cellAlign: 'left',
+        pageDots: true,
+        prevNextButtons: false,
+      });
+    }, 100);
+  }
+  function setFlickityCarouselBest() {
+    var flkty = $('.js-flickity-carousel-best-seller').flickity();
+    if (!flkty) {
+      flkty.flickity();
+    } else {
+      flkty.flickity('destroy');
+      setTimeout(() => {
+        flkty.flickity();
+      }, 300);
+      this.khazaiCarouselsBest();
+    }
+  }
+  function khazaiCarouselsWeekly() {
+    setTimeout(() => {
+      new Flickity(document.querySelector('.js-flickity-weekly-carousel'), {
+        freeScroll: false,
+        contain: true,
+        percentPosition: false,
+        resize: false,
+        initialIndex: 2,
+        accessibility: false,
+        wrapAround: true,
+        cellAlign: 'left',
+        pageDots: true,
+        prevNextButtons: false,
+      });
+    }, 100);
+  }
+  function setFlickityCarouselWeekly() {
+    var flkty = $('.js-flickity-weekly-carousel').flickity();
+    if (!flkty) {
+      flkty.flickity();
+    } else {
+      flkty.flickity('destroy');
+      setTimeout(() => {
+        flkty.flickity();
+      }, 300);
+      this.khazaiCarouselsWeekly();
+    }
+  }
+  function colorShow() {
+    $('.search-tabs-right-1').css('display', 'flex');
+    $('.search-tabs-right-2').css('display', 'none');
+    $('.search-tabs-right-3').css('display', 'none');
+    setTimeout(() => {
+      $('.dot-1').css('opacity', '1');
+      $('.line-1-top').css('height', '100px');
+      setTimeout(() => {$('.line-1-bottom').css('width', '50vw'); }, 500);
+    }, 500);
+    setTimeout(() => {
+      $('.dot-2').css('opacity', '0');
+      $('.dot-3').css('opacity', '0');
+    }, 1000);
+    setTimeout(() => {
+      $('.line-2-top').css('height', '0px');
+      $('.line-3-top').css('height', '0px');
+    }, 500);
+    $('.line-2-bottom').css('width', '0vw');
+    $('.line-3-bottom').css('width', '0vw');
+  }
+  function sizeShow() {
+    $('.search-tabs-right-1').css('display', 'none');
+    $('.search-tabs-right-2').css('display', 'flex');
+    $('.search-tabs-right-3').css('display', 'none');
+    setTimeout(() => {
+      $('.dot-2').css('opacity', '1');
+      $('.line-2-top').css('height', '100px');
+      setTimeout(() => {$('.line-2-bottom').css('width', '50vw'); }, 500);
+    }, 500);
+    setTimeout(() => {
+      $('.dot-1').css('opacity', '0');
+      $('.dot-3').css('opacity', '0');
+    }, 1000);
+    setTimeout(() => {
+      $('.line-1-top').css('height', '0px');
+      $('.line-3-top').css('height', '0px');
+    }, 500);
+    $('.line-1-bottom').css('width', '0vw');
+    $('.line-3-bottom').css('width', '0vw');
+  }
+	function shapeShow() {
+    $('.search-tabs-right-1').css('display', 'none');
+    $('.search-tabs-right-2').css('display', 'none');
+    $('.search-tabs-right-3').css('display', 'flex');
+    setTimeout(() => {
+      $('.dot-3').css('opacity', '1');
+      $('.line-3-top').css('height', '100px');
+      setTimeout(() => {$('.line-3-bottom').css('width', '50vw'); }, 500);
+    }, 500);
+    setTimeout(() => {
+      $('.dot-1').css('opacity', '0');
+      $('.dot-2').css('opacity', '0');
+    }, 1000);
+    setTimeout(() => {
+      $('.line-1-top').css('height', '0px');
+      $('.line-2-top').css('height', '0px');
+    }, 500);
+    $('.line-1-bottom').css('width', '0vw');
+    $('.line-2-bottom').css('width', '0vw');
+  }
+
+  function openMenuToggle() {
+    if ($('.header-bottom-menu').css('left') === '0px') {
+      $('.header-bottom-menu').css('left', '-250px');
+      $('.menu-overlay').css('left', '-100%');
+      $('html, body').css({
+        'overflow-y': 'auto',
+        'overflow-x': 'hidden',
+        'height': 'auto'
+      });
+    } else {
+      $('.header-bottom-menu').css('left', '0px');
+      $('.menu-overlay').css('left', '0px');
+      $('html, body').css({
+        'overflow-y': 'hidden',
+        'height': '100%'
+      });
+    }
+}
+
+
+setFlickity();
+setFlickityCarousel();
+setFlickityCarouselWeekly();
+setFlickityCarouselClearance();
+setFlickityCarouselBest();
+{% endjavascript %}

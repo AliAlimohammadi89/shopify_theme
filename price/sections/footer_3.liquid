@@ -1,0 +1,63 @@
+ <div class="footer-all-items footer-all-items-mobile" style="width: 100%">
+            <div class="footer-all-items-header">{{ section.settings.text-title }}</div>
+    {% for block in section.blocks %}  
+            <div class="footer-all-items-text"><i class="fa fa-map-marker"></i><span>{{ block.settings.linktext }}</span></div>
+    {% endfor %}      
+     </div>
+
+
+ 
+   
+{% schema %}
+{
+  "name": "footer_section3",
+	"max_blocks": 7,
+  "settings": [
+    {
+      "id": "text-title",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add Button",
+      "settings": [
+        {
+          "id": "link",
+          "type": "url",
+       		"label": "Button link"
+        },
+        {
+          "id": "linktext",
+          "type": "text",
+          "label": "Button text",
+          "default": "Click here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Call to Action Blocks",
+      "category": "CTA button",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

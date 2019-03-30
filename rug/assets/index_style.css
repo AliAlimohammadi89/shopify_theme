@@ -1,0 +1,252 @@
+
+.app-header{
+	width: 100%;
+	height: 80px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 10px 16px -6px rgba(0,0,0,0.09);
+	background-color: white;
+	position: sticky;
+	z-index: 9;
+	top: 0;
+	
+		
+}
+.header-box{
+	width: 40%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	
+}
+.menu{
+	color: gray;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	}
+.header-box-menu {
+	width: 40%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;;
+	display: flex;
+}
+.main-image{
+/* 	height: calc(100vh - 153px); */
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	margin: 10px 10px;
+	}
+.title-on-main-img{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	
+	}
+.button-key{
+	margin-top: 20px;
+	border: none;
+/* 	background-color: transparent; */
+	padding: 10px 25px;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px 0px grey;
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
+}
+.half-banner{
+	height: 470px;
+	display: flex;
+	padding: 0px 10px 10px 10px;
+	
+}
+.left-half{
+	width: 50%;
+	height: 100%;
+	overflow: hidden;
+	justify-content: center;
+	align-content: center;
+	padding-right: 5px;
+	position: relative;
+	display: flex;
+	
+}
+.right-half{
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	overflow: hidden;
+	padding-left: 5px;
+	position: relative;
+}
+.button-key:hover{
+	background-color: #ce3d3d;
+	transition: 500ms;
+}
+
+.app-product-container{
+	height: 350px;
+	margin-top: 20px;
+  margin-bottom: 50px;
+	display: flex;
+	justify-content: center;
+	}
+.carousel-title{
+font-size: 25px;
+	text-align: center;
+	margin: 40px 0px;
+}
+.product-container{
+	width: 80%;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+.products{
+	width: 20%;
+	height: 100%;
+	cursor: pointer;
+	
+}
+.prd{
+	width: 100%;
+	height: calc(100% - 120px);
+	display: flex;
+	justify-content: center;
+	
+	overflow: hidden;
+}
+.product-title{
+	text-align: center;
+}
+.product-hover{
+	width: 100%;
+	height: 100%;
+	border: 1px solid #DADADA;
+	color: white;
+	font-family: lato;
+	font-size: 24px;
+	font-weight: 280;
+	justify-content: center;
+	align-items: center;
+	display: none;
+	position: relative;
+	bottom: 335px;
+}
+.products:hover .product-hover{
+	display:flex;
+	height: 115%;
+	transition: 1s;
+}
+.testimonial{
+	height:300px;
+	background-color:#00928B;
+	margin: 50px 10px 10px 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.testimonial-container{
+	width: 80%;
+	height: 80%;
+	display: flex;
+	justify-content: space-between;
+	
+}
+.testimonial-left{
+	width: 48%;
+	height: 100%;
+	color: white;
+	display: flex;
+	align-items: center;
+}
+.testi-img{
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 30px
+	
+}
+.testi-text{
+	text-align: justify;
+	width: 400px
+}
+.app-footer{
+	height: 250px;
+	display: flex;
+	justify-content: space-between;
+	background-color: #EBEBEB;
+	margin: 10px 10px 0px 10px;
+	align-items: center;
+}
+
+.logo-container{
+	width: 50%;
+	height: 25%;
+	
+}
+.app-newsletter{
+		
+}
+.news-letter-inp{
+	border:1px solid #BEBEBE;
+	height: 37px;
+	padding-left: 10px;
+	font-size: 11px;
+}
+.newsletter-box{
+	width: 212px;
+	height: 65px;
+	border: 1px solid #BEBEBE;
+	padding:25px ;
+	margin-top: 50px
+	
+}
+.input-button{
+	border: none;
+	height: 40px;
+	font-size: 15px;
+	font-weight: 500;
+	background-color: #00928B;
+	color: white;
+	margin-left: 10px;
+	padding: 10px;
+	box-shadow: 1px 1px 1px 1px lightgrey;
+	cursor: pointer;
+}
+.social-media{
+	width: 265px;
+	height: 25px;
+	margin-top: 20px;
+	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.header-icon{
+	width: 50%;
+	height: 35%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+	

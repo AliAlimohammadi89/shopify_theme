@@ -1,0 +1,216 @@
+<!-- /templates/customers/register.liquid -->
+
+
+
+
+<div class="grid">
+
+  <div class="grid__item large--one-third push--large--one-third text-center">
+
+    {% comment %}
+      If a user has successfully requested a new password, the form.posted_successfully? variable
+      is set to true within the 'recover_customer_password' form only. Within that form you'll see
+      the variable 'resetPassword' set to true, which is used to initialize timber.resetPasswordSuccess().
+    {% endcomment %}
+    <div class="note form-success" id="ResetSuccess" style="display:none;">
+      {{ 'customer.recover_password.success' | t }}
+    </div>
+
+  
+
+    {% comment %}
+      JS shows/hides this form in timber.loginForms()
+    {% endcomment %}
+    <div id="RecoverPasswordForm" style="display: none;">
+
+      <h2>{{ 'customer.recover_password.title' | t }}</h2>
+      <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+      <div class="form-vertical">
+        {% form 'recover_customer_password' %}
+
+          {{ form.errors | default_errors }}
+
+          {% comment %}
+            Assign variable to be used after timber.init() is run in theme.liquid
+          {% endcomment %}
+          {% if form.posted_successfully? %}
+            {% assign resetPassword = true %}
+          {% endif %}
+
+          <label for="RecoverEmail" class="hidden-label">{{ 'customer.recover_password.email' | t }}</label>
+          <input type="email" value="" name="email" id="RecoverEmail" class="input-full" placeholder="{{ 'customer.recover_password.email' | t }}" autocorrect="off" autocapitalize="off">
+
+          <p>
+            <input type="submit" class="btn btn--full" value="{{ 'customer.recover_password.submit' | t }}">
+          </p>
+          <button type="button" id="HideRecoverPasswordLink" class="text-link">{{ 'customer.recover_password.cancel' | t }}</button>
+        {% endform %}
+      </div>
+
+    </div>
+
+    {% comment %}
+      If accounts are set as optional, the following will be shown as an option
+      during checkout, not on the default /login page.
+    {% endcomment %}
+    {% if shop.checkout.guest_login %}
+      <hr>
+
+      <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+      {% form 'guest_login' %}
+        <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+      {% endform %}
+    {% endif %}
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<div class="activated-all-all">
+    <div class="activated-all">
+        <div class="activated-header" style="margin-bottom: 1%;">{{ 'customer.register.title' | t }}</div>
+         {% form 'create_customer' %}
+
+        {{ form.errors | default_errors }}
+
+        <div class="activated-email-all">
+            <div class="activated-email-text">{{ 'customer.register.first_name' | t }}</div>
+        <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+        </div>
+        <div class="activated-password-all">
+            <div class="activated-password-text">{{ 'customer.register.last_name' | t }}</div>
+        <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+        </div>
+      
+       <div class="activated-password-all">
+            <div class="activated-password-text">{{ 'customer.register.email' | t }}</div>
+        <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+        </div>
+      
+      
+       <div class="activated-password-all">
+            <div class="activated-password-text">{{ 'customer.register.password' | t }}</div>
+        <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+        </div>
+      
+      
+      
+      
+      
+        <div class="activated-button">
+            <div class="activated-button-btn">   <input type="submit" value="{{ 'customer.register.submit' | t }}" style="width: 100%;height: 100%;background: none;border: navajowhite;" class="btn btn--full" /></div>
+            <div class="activated-button-btn" style="margin-left:1%">  <a href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></div>
+
+         </div>
+    </div>
+            {% endform %}
+
+</div>
+
+
+<style>
+
+  html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+        .activated-all-all {
+            width: 100%;
+            min-height: calc(100vh - 535px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 25px 0;
+        }
+        .activated-all {
+            width: 450px;
+            height: 275px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .activated-header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 29px;
+            margin-bottom: -20px;
+        }
+        .activated-text {
+            font-size: 15px;
+        }
+        .activated-email-all {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .activated-email-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+        .activated-email-all input {
+            width: 100%;
+            height: 30px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+        }
+        .activated-password-all {
+            width: 100%;
+            height: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .activated-password-text {
+            width: 100%;
+            display: flex;
+            font-size: 15px;
+        }
+        .activated-password-all input {
+            width: 100%;
+            height: 30px !important;
+            background-color: white;
+            border: 1px solid dimgrey;
+            padding-left: 15px;
+        }
+        .activated-button {
+            width: 100%;
+            display: flex;
+        }
+        .activated-button-btn {
+            width: 165px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5bf44;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .activated-all-all {
+                min-height: calc(100vh - 430px);
+            }
+        }
+        @media only screen and (max-width: 425px) {
+            .activated-all {
+                width: 300px;
+            }
+        }
+</style>

@@ -1,0 +1,70 @@
+<div class="black-line-all-bottom-all">
+    <div class="black-line-all-bottom">
+      <div class="black-line-all-bottom-text">{{ section.settings.title }}</div>
+      {% for block in section.blocks %}
+      <a href="{{ block.settings.url}}">
+             {{ block.settings.icon}}
+        </a>
+         {% endfor %}
+      
+  </div>
+  </div>
+
+
+  
+ 
+  {% schema %}
+ {
+  "name": "Follow-Us",
+	"max_blocks": 8,
+	"settings":[{
+	 "id": "title",
+      "type": "text",
+      "label": "title",
+      "default": "Follow Us"
+
+}],  
+  "blocks": [
+    {
+      "type": "select",
+      "name": "Add Button",
+      "settings": [
+ 
+ {
+      "id": "url",
+      "type": "text",
+      "label": "Url",
+      "default": "#"
+    },
+	{
+      "id": "icon",
+      "type": "text",
+      "label": "icon",
+"default": "icon code"
+    }
+        
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Follow Us",
+      "category": "index",
+      "blocks": [
+        { 
+          "type": "select"
+        },
+        {
+          "type": "select"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
