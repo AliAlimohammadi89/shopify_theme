@@ -1,109 +1,409 @@
+<!-- /templates/search.liquid -->
 {% comment %}
 
-	The {{ content_for_header }} in theme.liquid will output the following stylesheet just for this page:
-		- <link rel="stylesheet" href="/global/search.css" type="text/css">
-
-	It has a few helpers in there, but this theme writes its own styles so there
-	are no dependencies or conflicts. You can ignore that file.
-
-	Return only products or pages in results:
-		- http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
-		- Or manually add type=product or type=page to the search URL as a parameter
+  To return only products or pages in results:
+    - http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
+    - Or manually add type=product or type=page to the search URL as a parameter
 
 {% endcomment %}
 
-
 {% comment %}
-	If you're only showing products with the method above, why not show them off in a grid instead?
-	Set grid_results to true and see your updated results page for the new layout.
+  Set grid_results to true and set search results as a grid instead of a list.
+  This works well when your search is only for products.
 {% endcomment %}
 {% assign grid_results = false %}
-<header class="page-header">
-	<div class="wrapper">
-		<div class="global-table">
-			<div class="global-row">
-				<div class="global-cell page-title">
-					<h2>Searching for "{{ search.terms }}"</h2>
-				</div>
-				<div class="global-cell page-breadcrumb">
-					{% include 'breadcrumb' %}
-				</div>
+
+{% comment %}
+  Check to enforce respond.js
+{% endcomment %}
+{% assign respond_js_secret_key = shop.domain | md5 %}
+{% unless search.terms == respond_js_secret_key %}
+
+{% comment %}
+  Avoid accessing search.results before the opening paginate tag.
+  If you do, the pagination of results will be broken.
+{% endcomment %}
+{% paginate search.results by 10 %}
+
+  <div class="grid">
+    <div class="grid__item large--two-thirds push--large--one-sixth">
+
+      {% if search.performed %}
+        {% if search.results_count == 0 %}
+          <h1 class="text-center">{{ 'general.search.no_results_html' | t: terms: search.terms }}</h1>
+        {% else %}
+          <h1 class="text-center">{{ 'general.search.results_for_html' | t: terms: search.terms }}</h1>
+        {% endif %}
+      {% else %}
+        <h1 class="text-center">{{ 'general.search.title' | t }}</h1>
+      {% endif %}
+      <div style="margin-left: 2%;">
+       {% include 'search-bar' %}
+ </div>
+      {% if search.performed %}
+
+        <hr class="hr--clear">
+
+           
+           
+            <div class="search-all-all">
+              
+				    <div class="search-all">
+        <div class="search-header">{{ 'general.search.title' | t }}</div>
+        <div class="search-items-all">
+          
+          
+          
+          {% for item in search.results %}
+            
+            {% assign on_sale = false %}
+            {% if item.compare_at_price > item.price %}
+              {% assign on_sale = true %}
+            {% endif %}         
+            {% assign sold_out = true %}
+            {% if item.available %}
+              {% assign sold_out = false %}
+            {% endif %}
+
+          
+          
+         
+                    <hr class="hr--clear"  >
+
+             
+            <div class="search-items">
+                <div class="search-items-info">
+                    <div class="search-items-info-img">
+                   <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+                   <img src ="{% if item.metafields.images.all %}{% assign images = item.metafields.images.all | split: "," | reverse  %}{% assign image = images[0] | split: ".jpg" %}{{image}}_S.jpg  {%else%}{{ item.featured_image | product_img_url: 'medium' }}{% endif %}"/>
+                  </a>
+ <!--                         <img src="carpet.jpg"> -->
+                    </div>
+                    <div class="search-items-info-text">
+                        <div class="search-items-info-text-title">{{ item.title | link_to: item.url }}</div>
+                        <div class="search-items-info-text-shape">
+                          
+                                   
+                          
+                          
+                          {% for product_option in item.options_with_values %}
+                           <div class="search-items-info-text-size">
+ 
+    {{ product_option.name }}: 
+    
+      {% for value in product_option.values %}
+                          
+      	
+          {{ value }}
+         {% if forloop.last == true %}
+     {% else %}
+        - 
+    {% endif %}
+       
+      {% endfor %}
+      </div>
+   
+ 
+{% endfor %}
+                          
+                          
+                          
+                          </div>
+                         <div class="search-items-info-text-price">
+                         {% if item.price %}
+                 
+                    {% if on_sale %}
+                      {% if item.price_varies %}
+                        {% assign sale_price = item.price | money %}
+                        {{ 'products.product.on_sale_from_html' | t: price: sale_price }}
+                      {% else %}
+                        <strong  style="width:100%" >{{ 'products.product.on_sale' | t }}</strong>
+                        <span itemprop="price">{{ item.price | money }}</span>
+                      {% endif %}
+                    {% else %}
+                      {% if item.price_varies %}
+                        {% assign price = item.price | money %}
+                        <span itemprop="price">{{ 'products.general.from_text_html' | t: price: price }}</span>
+                      {% else %}
+                        <span itemprop="price">{{ item.price | money }}</span>
+                      {% endif %}
+                    {% endif %}
+                    {% if sold_out %}
+                      <br>
+                          
+                          <li>{{ 'products.product.sold_out' | t }}
+                          
+                         <li>
+                    {% endif %}
+                    {% if on_sale %}
+                      <br><s style="color:red">{{ item.compare_at_price | money }}</s>
+                    {% endif %}
+                    
+                 
+                {% else %}
+                {% endif %}
+                      
+                      </div>
+                    </div>
+                </div>
+                <div class="search-items-text">
+                {{ item.content | strip_html | truncatewords: 50 }}
+                </div>
+            </div>
+       
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+              <!-- //grid search results-->
+          
+
+          {% endfor %}
+               
+        </div>
+    </div>
 			</div>
-		</div>
-	</div>
-</header>
-<div class="margin-top">
-	<div class="wrapper">
-		<div class="grid">
+         
 
-			<div class="grid-item large--one-whole">
+        {% if paginate.pages > 1 %}
+          <hr>
+          <div class="pagination" style="text-align: center;">
+            {{ paginate | default_pagination | replace: '&laquo; Previous', '&larr;' | replace: 'Next &raquo;', '&rarr;' }}
+          </div>
+        {% endif %}
 
-				{% if search.performed %}
+      {% endif %}
 
-					{% comment %}
-						Avoid accessing search.results before the opening paginate tag.
-						If you do, the pagination of results will be broken.
-					{% endcomment %}
-					{% paginate search.results by 10 %}
+    </div>
+  </div>
 
-						{% comment %}
-							We don't have any results to show. Feel free to show off featured products
-							or suggested searches here.
-						{% endcomment %}
-						{% if search.results_count == 0 %}
+{% endpaginate %}
 
-							<h2>Your search for "{{ search.terms }}" did not yield any results.</h2>
-							
-						{% else %}
-
-							<h2>Your search for "{{ search.terms }}" revealed the following:</h2>
-							
-							{% comment %}
-								Each result template, based on the grid_layout variable above
-							{% endcomment %}
-							<div class="search-results-list">
-							{% if grid_results == false %}
-
-								{% for item in search.results %}
-									{% include 'search-result' %}
-								{% endfor %}
-
-							{% else %}
-
-								<div class="grid-uniform">
-									{% for item in search.results %}
-										{% include 'search-result-grid' %}
-									{% endfor %}
-								</div>
-
-							{% endif %}
-							</div>
-						{% endif %}
-
-						{% if paginate.pages > 1 %}
-							<div class="text-center">
-								{% include 'pagination-custom' %}
-							</div>
-						{% endif %}
-
-					{% endpaginate %}
+{% else %}
+  {% include 'respond' %}
+  {% layout none %}
+{% endunless %}
 
 
-				{% else %}
-
-					{% comment %}
-						If search.performed is false, someone either accessed the page without
-						the q parameter, or it was blank.
-						Be sure to show a search form here, along with anything else you want to showcase.
-					{% endcomment %}
-
-						<h2>Please enter your keyword to search</h2>
-
-				{% endif %}
 
 
-			</div>
 
-		</div>
-	</div>
-</div>
+<style>
+  
+  
+  
+  
+  
+  
+ .search-items-all .search-items:nth-of-type(even) {
+  background: #d8d5d5;
+border-radius: 10px;
+margin: 0.5%;
+padding: 0.5%;
+}
+  
+.search-items-all .search-items:nth-of-type(odd) {
+ border-radius: 10px;
+  background: #e8ece7;
+margin: 0.5%;
+padding: 0.5%;
+}
+  
+  
+  
+  .btn {
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px; /*optional*/
+    color: #aaa;
+    font-size: .875em;
+}
+
+.pagination {
+     padding: 20px;
+    margin-bottom: 20px;
+}
+
+.page {
+    display: inline-block;
+    padding: 0px 9px;
+    margin-right: 4px;
+    border-radius: 3px;
+    border: solid 1px #c0c0c0;
+    background: #e9e9e9;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255, .8), 0px 1px 3px rgba(0,0,0, .1);
+    font-size: .875em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #717171;
+    text-shadow: 0px 1px 0px rgba(255,255,255, 1);
+}
+
+.page:hover, .page.gradient:hover {
+    background: #fefefe;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE), to(#f0f0f0));
+    background: -moz-linear-gradient(0% 0% 270deg,#FEFEFE, #f0f0f0);
+}
+
+.page.active {
+    border: none;
+    background: #616161;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .8);
+    color: #f0f0f0;
+    text-shadow: 0px 0px 3px rgba(0,0,0, .5);
+}
+
+.page.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8), to(#e9e9e9));
+    background: -moz-linear-gradient(0% 0% 270deg,#f8f8f8, #e9e9e9);
+}
+
+.pagination.dark {
+    background: #414449;
+    color: #feffff;
+}
+
+.page.dark {
+    border: solid 1px #32373b;
+    background: #3e4347;
+    box-shadow: inset 0px 1px 1px rgba(255,255,255, .1), 0px 1px 3px rgba(0,0,0, .1);
+    color: #feffff;
+    text-shadow: 0px 1px 0px rgba(0,0,0, .5);
+}
+
+.page.dark:hover, .page.dark.gradient:hover {
+    background: #3d4f5d;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#547085), to(#3d4f5d));
+    background: -moz-linear-gradient(0% 0% 270deg,#547085, #3d4f5d);
+}
+
+.page.dark.active {
+    border: none;
+    background: #2f3237;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0, .5), 0px 1px 0px rgba(255,255,255, .1);
+}
+
+.page.dark.gradient {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#565b5f), to(#3e4347));
+    background: -moz-linear-gradient(0% 0% 270deg,#565b5f, #3e4347);
+}
+  
+  
+  
+  
+  
+  
+    html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+        .search-all-all {
+            width: 100%;
+            min-height: calc(100vh - 535px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .search-all {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+        }
+        .search-header {
+            width: 100%;
+            display: flex;
+            margin: 25px 0;
+            font-size: 37px;
+        }
+        .search-items-all {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .search-items {
+            width: 100%;
+            height: 170px;
+            display: flex;
+            justify-content: space-between;
+            padding: 25px 0;
+        }
+        .search-items-info {
+/*             width: 225px; */
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-items-info-img {
+            width: 75px;
+            height: 100%;
+        }
+        .search-items-info-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .search-items-info-text {
+            width: 570px;
+            height: 85%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 1%;
+        }
+        .search-items-info-text-title {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .search-items-info-text-shape {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .search-items-info-text-size {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .search-items-info-text-price {
+            font-size: 17px;
+            font-weight: bold;
+        }
+        .search-items-text {
+            width: calc(100% - 250px);
+            height: 85%;
+            padding-top: 10px;
+            font-size: 15px;
+            overflow: auto;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .search-all-all {
+                min-height: calc(100vh - 430px);
+            }
+        }
+
+        @media only screen and (max-width: 425px) {
+            .search-all-all {
+                min-height: calc(100vh - 385px);
+            }
+            .search-header {
+                margin: 10px 0 0 0;
+                font-size: 29px;
+            }
+            .search-items {
+                padding: 15px 0;
+            }
+            .search-items-text {
+                display: none;
+            }
+        }
+
+</style>

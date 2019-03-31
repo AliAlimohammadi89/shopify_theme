@@ -1,0 +1,456 @@
+
+ 
+
+{%include "aa"%}
+{%include "list_item"%}
+{% assign display = 'fix' %}
+{% if product.type == 'rug'  or product.variants.size < 2 %}
+{% assign display = 'none' %}
+{% endif %}
+{{ 'test.js' | asset_url | script_tag }}
+{%assign images = product.metafields.images.all | split : "," | reverse  %}
+{% assign metafields = product.metafields.specifications %}
+ <div class="product-page">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="demo">
+          <ul id="lightSlider">
+
+              {%  for  image in images %}
+             <li data-thumb="{{ image | replace : '.jpg' , '_T.jpg' }}">
+              <img src="{{ image | replace : '.jpg' , '_S.jpg'}}" /> </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="product-info">
+          <h1>{{ product.title }}</h1>
+
+          <div class="price">
+                <p style="float: left;" id="ProductPrice">$ 2000.00</p> <del id="ComparePrice">$ 1900.00 </del>
+            </div>
+
+
+          <div class="row">
+
+
+                    <div class="col-md-6">
+                        <p class="title">Collection:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.collectionName}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="title">Design:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.designName}}</p>
+                    </div>
+                    <div class="col-md-6">
+                    	<p class="title">Country:</p>
+
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.originCountryName}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="title">vendor:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="data"> {{ product.metafields.specifications.vendorUniqueId}}</p>
+                    </div>
+
+
+            <div class="col-md-12">
+
+                <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+                  
+                  
+                  	 
+                   {% if product.options.size > 1 or product.options.first != 'Title' or product.options.first != 'Default Title' %}
+               {% assign hidden = 'hidden' %}
+              
+               {% endif %}
+             <div class="row {{ hidden }}">
+                  
+            <div class="col-md-12">
+             <div class="styled-select">
+
+ 
+               <select name="id" id="productSelect" class="product-single__variants">
+                 {% for variant in product.variants  %}
+                 {% if variant.available %}
+                 <option style="background: rgb{{ variant.id }};" {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                 {% else %}
+                 <option disabled="disabled">
+                   {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                 </option>
+                 {% endif %}
+                 {% endfor %}
+               </select>
+ 
+             </div>
+           </div>
+</div>
+
+          <hr/>
+          <p>Quantity</p>
+          <div class="col-md-6">
+            <div class="quantity">
+                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                <input type="number" id="number" value="1"  min="1"/>
+                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+            </div>
+
+          </div>
+                  <div class="col-md-6">
+              <button type="submit" name="add" id="AddToCart" class=" btn btn-addtc">
+                                  <i class="fas fa-shopping-cart"></i> <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+               </button>
+            </div>
+              </form>
+            </div>
+
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col-md-12">
+              <p class="product-desc">
+              {{ product.description }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
+</div>
+
+
+   <link rel='stylesheet' href='http://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
+   <script src='http://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+
+
+
+    <script type="text/javascript">
+
+        $('#lightSlider').lightSlider({
+            gallery: true,
+            item: 1,
+            loop:true,
+            slideMargin: 20,
+            thumbItem: 9,
+            autowidth:true
+        });
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+
+        function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById('number').value = value;
+        }
+
+    </script>
+
+
+<style>
+
+  #ProductPrice {
+
+    color: black;
+    margin-right: 10px;
+
+}
+
+
+
+  .product-page {
+    margin: 20px 0;
+    font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .product-info {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .product-info h1 {
+    margin-top: 0;
+    font-size: 3rem;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+.product-info .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+  .product-info .price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #e74c3c;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  .product-info .btn-addtc {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    background-color: #e74c3c;
+    opacity: 1;
+    width: 100%;
+    display: block;
+    width: 100%;
+    color: #fff;
+    border-radius: 20px;
+  }
+  .product-info .btn-addtc:hover {
+    opacity: .8;
+  }
+  .product-info .product-desc {
+    font-size: 18px;
+  }
+
+  #lightSlider ul {
+    list-style: none outside none;
+    padding-left: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+  #lightSlider li {
+    display: block;
+    float: left;
+    margin-right: 6px;
+    cursor: pointer;
+  }
+  #lightSlider img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .value-button {
+    background: #f5f5f5;
+    color: #8d8d8d;
+    position: relative;
+    cursor: pointer;
+    height: 47px;
+    line-height: 47px;
+    display: block;
+    font-size: 4rem;
+    width: 25%;
+    text-align: center;
+    float: left;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+
+  .value-button:hover {
+    cursor: pointer;
+  }
+
+  form #input-wrap {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .quantity #number {
+    border-width: 2px;
+    box-shadow: none;
+    background: #fafafa;
+    color: #8d8d8d;
+    border-top-color: #00000008;
+    border-bottom-color: #f5f5f5;
+    font-size: 2rem;
+    text-align: center;
+    padding: 5px 0px;
+    width: 35%;
+    height: 47px;
+    border-radius: 0;
+    -webkit-appearance: none;
+    display: inline;
+    float: left;
+    border-left: none;
+    border-right: none;
+  }
+  .quantity #number:focus {
+    outline: none;
+  }
+
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .styled-select{
+    margin-top: 20px;
+  }
+.styled-select .selector-wrapper select{
+width: 100%;
+background: #fff;
+padding: 6px;
+margin-bottom: 20px;
+}
+
+</style>
+
+
+
+
+
+
+<!-- ////////////////////////////////////// -->
+<div itemscope itemtype="http://schema.org/Product">
+    {{ 'focus.min.js' | asset_url | script_tag }}
+    {% assign current_variant = product.selected_or_first_available_variant %}
+  {% section 'related_product'%}
+
+</div>
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+<script>
+    var color_img = new Array();
+    var all_metafild = new Array();
+    var all_metafild1 = new Array();
+    var all_images = new Array();
+
+
+
+
+
+    var selectCallback = function(variant, selector) {
+
+
+
+        timber.productPage({
+
+            money_format: "{{ shop.money_format }}",
+            variant: variant,
+            selector: selector,
+        });
+
+
+
+
+
+
+
+
+        //jQuery(".Product_Information").html(variant.id);
+        var detalepage_filds_value = new Array();
+        var detalepage_filds_title = new Array();
+        var detalepage_filds_title_style = new Array();
+        var detalepage_filds_value_style = new Array();
+
+        {{detalepage_filds_value | replace: "*", "'"}}
+        {{detalepage_filds_title | replace: "*", "'"}}
+        {{detalepage_filds_title_style | replace: "*", "'"}}
+        {{detalepage_filds_value_style | replace: "*", "'"}}
+
+        // console.log(detalepage_filds_value);
+        var admin_Class = detalepage_filds_value['{{product.metafields.adminClassOwner_text.all}}'];
+        var admin_Class_title = detalepage_filds_title['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_title_style_a = detalepage_filds_title_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var detalepage_filds_value_style_a = detalepage_filds_value_style['{{product.metafields.adminClassOwner_text.all}}'];
+        var value_info = "<div class='row'>";
+
+        value_info = value_info + "</div>";
+
+        jQuery(".Product_Information").html(value_info);
+        jQuery("#detail-page-top-img-big").css({
+            "background-color": "{{ "lo.gif " | asset_url }}"
+        });
+        jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + all_images[variant.id][0] + ".jpg)");
+        var images_T = "";
+        jQuery.each(all_images[variant.id], function(index, value) {
+            images_T += " <div class='detail-page-top-img-small-img'><img class='img_T' src='" + value + "_T.jpg'/></div>";
+
+            // console.log(all_images);
+
+        });
+        jQuery('.detail-page-top-img-small').html(images_T);
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+
+
+
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+
+            //  jQuery("#detail-page-top-img-big").css({"background-image":url( all_images[variant.id][0]+"_S.jpg")});
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+
+
+
+
+
+        });
+
+    };
+    var color = jQuery(".color").attr("data-id");
+
+
+    jQuery(function($) {
+        new Shopify.OptionSelectors('productSelect', {
+            product: {{product | json}},
+            onVariantSelected: selectCallback,
+            enableHistoryState: true
+        });
+        // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+        {% if product.options.size == 1 and product.options.first != 'Title' %}
+        jQuery('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>'); {% endif %}
+
+        // Hide selectors if we only have 1 variant and its title contains 'Default'.
+        {%    if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+        jQuery('.selector-wrapper').hide(); {% endif %}
+    });
+    jQuery(document).ready(function() {
+        jQuery('#AddToCart').click(function() {
+            setTimeout(function() {
+                jQuery.getJSON('/cart.js', function(cart) {
+                    // now have access to Shopify cart object
+                    //alert('There are now ' + cart.item_count + ' items in the cart.');
+                    jQuery("#item_count").html(cart.item_count);
+                    // alert(cart.item_count);
+                });
+            }, 300)
+        });
+
+        jQuery('.img_T').click(function() {
+            var img_src_b = jQuery(this).attr('src');
+            var img_src_B1 = img_src_b.replace('_T.jpg', '');
+            jQuery("#detail-page-top-img-big").attr('src', img_src_B1 + ".jpg");
+            jQuery("#detail-page-top-img-big").css({
+                "background-color": "{{ "lo.gif " | asset_url }}"
+            });
+
+
+            jQuery('#detail-page-top-img-big').css('backgroundImage', "url(" + img_src_B1 + ".jpg)");
+        });
+
+
+
+    });
+</script>

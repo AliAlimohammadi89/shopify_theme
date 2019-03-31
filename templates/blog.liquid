@@ -1,124 +1,224 @@
+<!-- /templates/blog.liquid -->
 {% comment %}
 
-	Loop through a defined number of articles with the 'paginate' tag.
-	Don't forget to close the tag after your loop.
+  Loop through a defined number of articles with the 'paginate' tag.
+  Don't forget to close the tag after your loop.
 
 {% endcomment %}
-{% capture amount_post_per_page %} {{ settings.post_per_page }} {% endcapture %}
-{% paginate blog.articles by amount_post_per_page %}
+
+{% paginate blog.articles by 5 %}
+
+{% include 'breadcrumb' %}
 
 {% comment %}
-	This template is also used for listing out articles of a specific tag.
-	You can change layouts or styles by checking if current_tags is true.
+  This template is also used for listing out articles of a specific tag.
+  You can change layouts or styles by checking if current_tags is true.
 {% endcomment %}
-<header class="page-header">
-	<div class="wrapper">
-		<div class="global-table">
-			<div class="global-row">
-				<div class="global-cell page-title">
-					{% if current_tags %}
-					<h2>{{ blog.title | link_to: blog.url }} &raquo; {{ current_tags.first }}</h2>
-					{% else %}
-					<h2>{{ blog.title }}</h2>
-					{% endif %}
-				</div>
-				<div class="global-cell page-breadcrumb">
-					{% include 'breadcrumb' %}
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
-{% if settings.sidebar_blog %}
-	{% assign blog_grid_class = 'three-quarters' %}
-{% else %}
-	{% assign blog_grid_class = 'one-whole' %}
-{% endif %}
-{% if settings.sidebar_blog_position == 'left' %}
-	{% assign sidebar_blog_position_class = 'sidebar_left' %}
-{% else %}
-	{% assign sidebar_blog_position_class = 'sidebar_right' %}
-{% endif %}
-<div class="page margin-top blog">
-	<div class="wrapper">
-		<div class="grid">
+<div class="grid--rev">
 
-			<div class="grid-item large--{{ blog_grid_class }} {{ sidebar_blog_position_class }}">
+  <div class="grid__item large--three-quarters">
 
-			{% comment %}
-				Loop through each article in your blog. This is limited to what you set for pagination above.
+    {% if current_tags %}
+      <h1>{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}</h1>
+    {% else %}
+      <h1>{{ blog.title }}</h1>
+    {% endif %}
 
-				For more info on article liquid tags:
-				- http://docs.shopify.com/themes/liquid-variables/article
-			{% endcomment %}
+    {% comment %}
+      Loop through each article in your blog. This is limited to what you set for pagination above.
 
-			{% for article in blog.articles %}
-				<div class="post-row">
-					<div class="post-image">
-						<span class="time" pubdate datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-							<span class="post-day">{{ article.published_at | date: '%d' }}</span>
-							<span class="post-month">{{ article.published_at | date: '%B' }}</span>
-						</span>
-						<a href="{{ article.url }}">
-							{% assign my_image_url=article.content | escape %}
-							{% if my_image_url contains '&lt;img' %}
-								{% assign my_image_url = my_image_url | split: 'src=&quot;' %}
-								{% assign my_image_url = my_image_url[1] | split: '&quot;' %}
-								{% assign my_image_url = my_image_url[0] | remove: '//cdn' %}
-								{% assign my_image_url = my_image_url | remove: 'http:http://' %}
-								{% assign my_image_url = my_image_url | remove: 'https:' %}
-								<img src="{{ my_image_url | prepend: 'http://cdn' }}" alt="" />
-							{% endif %}
-							<span class="clearfix"></span>
-						</a>
-					</div>
-					<div class="post-info">
-						<h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
-						<div class="blog_author">
-							<span class="author">Posted by {{ article.author }}</span>
-							{% if blog.comments_enabled? %}
-							<div class="comment-count">
-								<a href="{{ article.url }}#comments">
-								<i class="fa fa-comments"></i>{{ article.comments_count }} {{ article.comments_count | pluralize: 'comment','comments' }}
-								</a>
-							</div>
-							{% endif %}
-						</div>
-
-						{% comment %}
-						Add a surrounding div with class 'rte' to anything that will come from the rich text editor.
-						Since this is just a listing page, you can either use the excerpt or truncate the full article.
-						{% endcomment %}
-						<div class="post-excerpt">
-						{% if article.excerpt.size > 0 %}
-							{{ article.excerpt }}
-						{% else %}
-							<p>{{ article.content | strip_html | truncatewords: 50 }}</p>
-						{% endif %}
-						</div>
-						<ul class="post-tags">
-							{% include 'tags-article' %}
-						</ul>
-
-						<a class="blog-read-more" href="{{ article.url }}">Read More</a>
-
-					</div>
-				</div>
-			{% endfor %}
-
-			{% if paginate.pages > 1 %}
-			<div class="text-center">
-				{% include 'pagination-custom' %}
-			</div>
-			{% endif %}
-
-			</div>
-
-			<div class="grid-item large--one-quarter {{ sidebar_blog_position_class }}">
-			{% include 'blog-sidebar' %}
-			</div>
-		</div>
-	</div>
-</div>
-
+      For more info on article liquid tags:
+        - http://docs.shopify.com/themes/liquid-variables/article
+    {% endcomment %}
+    
+    
+<div class="blog-all-all">
+    <div class="blog-all">
+        <div class="blog-header">{{article.title}}</div>
+        <div class="blog-items-all">
+    {% for article in blog.articles %}
+            <div class="blog-items">
+        <h2 class="h3"><a href="{{ article.url }}">{{ article.title }}</a></h2>
+        {% if article.image %}
+         <div class="blog-items-top">
+          <a href="{{ article.url }}">
+            {{ article | img_url: '1024x1024' | img_tag: article.title }}
+          </a>
+            </div>
+        {% endif %}
+                <div class="blog-items-title">{{ article.title }}</div>
+                <div class="blog-items-time">
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>
+              </div>
+                <div class="blog-items-text">{{ article.content | strip_html | truncatewords: 50 }}</div>
+                <div class="blog-items-read"><a href="{{ article.url }}">{{ 'blogs.article.read_more' | t }}  </a></div>
+            </div>
+          
+    {% endfor %}
+        </div>
+    </div>
+</div> 
+    </div>
+    {% if paginate.pages > 1 %}
+      <hr>
+      <div class="pagination">
+        {{ paginate | default_pagination }}
+      </div>
+    {% endif %}
+  </div>
 {% endpaginate %}
+
+<style> 
+
+
+        html, body {
+            margin: 0;
+            height: auto;
+            font-family: Lato;
+        }
+
+        .about-us-all-all {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-us-all {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-us-header {
+            font-size: 43px;
+            margin: 25px 0 50px 0;
+        }
+
+        .about-us-text-header {
+            font-weight: bold;
+            font-size: 23px;
+            width: 85%;
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .about-us-text-header-img {
+            font-weight: bold;
+            font-size: 23px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 15px 0 50px 0;
+        }
+
+        .about-us-text-text {
+            font-size: 17px;
+            width: 85%;
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .about-us-img-top {
+            width: 100%;
+            height: 550px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .about-us-img-top img {
+            width: 48%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-us-img-center {
+            width: 100%;
+            height: 450px;
+            margin-bottom: 50px;
+        }
+
+        .about-us-img-center img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-us-img-bottom {
+            width: 60%;
+            height: 450px;
+        }
+
+        .about-us-img-bottom img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        @media only screen and (max-width: 1024px){
+            .about-us-img-top {
+                height: 450px;
+            }
+            .about-us-img-center {
+                height: 400px;
+            }
+            .about-us-img-bottom {
+                height: 400px;
+            }
+        }
+        @media only screen and (max-width: 768px){
+            .about-us-img-top {
+                height: 350px;
+            }
+            .about-us-img-center {
+                height: 300px;
+            }
+            .about-us-img-bottom {
+                height: 300px;
+            }
+            .about-us-text-header-img {
+                font-size: 19px;
+            }
+        }
+        @media only screen and (max-width: 425px){
+            .about-us-header {
+                font-size: 37px;
+                margin-bottom: 25px;
+            }
+
+            .about-us-text-header {
+                font-size: 19px;
+                margin-bottom: 15px;
+            }
+
+            .about-us-text-header-img {
+                font-size: 16px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .about-us-text-text {
+                font-size: 14px;
+            }
+
+            .about-us-img-top {
+                height: 200px;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 15px;
+            }
+
+            .about-us-img-center {
+                height: 150px;
+                margin-bottom: 15px;
+            }
+
+            .about-us-img-bottom {
+                height: 150px;
+            }
+
+        }
+
+
+</style>
+

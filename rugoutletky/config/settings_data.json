@@ -203,7 +203,7 @@
           "1544531919390": {
             "type": "collection_box",
             "settings": {
-              "url": "shopify:\/\/collections",
+              "url": "shopify:\/\/collections\/clothing",
               "title": "",
               "count_in_slider": 3,
               "Theme": "1"
@@ -218,7 +218,7 @@
           "1544532207275": {
             "type": "collection_box",
             "settings": {
-              "url": "shopify:\/\/collections\/all",
+              "url": "shopify:\/\/collections\/rug",
               "title": "All",
               "count_in_slider": 9,
               "Theme": "0"
@@ -295,7 +295,7 @@
           "1544540912549": {
             "type": "select",
             "settings": {
-              "images": "",
+              "images": "shopify:\/\/shop_images\/blogpic1_1_1.jpg",
               "title": "Rug Appraisal",
               "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/pet-stain-odor-removal\/"
             }
@@ -303,7 +303,7 @@
           "1544541264767": {
             "type": "select",
             "settings": {
-              "images": "",
+              "images": "shopify:\/\/shop_images\/2.png",
               "title": "Rug Cleaning",
               "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-cleaning-services\/"
             }
@@ -311,7 +311,7 @@
           "1544541313015": {
             "type": "select",
             "settings": {
-              "images": "",
+              "images": "shopify:\/\/shop_images\/5.jpg",
               "title": "Rug Storage",
               "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-repair\/"
             }
@@ -319,7 +319,7 @@
           "1544541612519": {
             "type": "select",
             "settings": {
-              "images": "",
+              "images": "shopify:\/\/shop_images\/6.png",
               "title": "Rug Padding",
               "url": "https:\/\/www.khazairugcleaning.com\/index.php\/portfolio-item\/rug-appraisal\/"
             }

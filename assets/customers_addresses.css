@@ -1,3 +1,8 @@
+  .create-button-btn .btn {
+
+    color: black;
+
+}
 
   html, body {
             margin: 0;
@@ -76,15 +81,24 @@
             margin-right: 25px;
             color: #e5bf44;
             cursor: pointer;
-            border-bottom: 1px solid #e5bf44;
-            padding-bottom: 1px;
+        }
+		.acc-address-main-actions-edit a {
+          text-decoration: none;
+          color: #e5bf44;
         }
         .acc-address-main-actions-delete {
             margin-right: 25px;
             color: red;
-            border-bottom: 1px solid red;
-            padding-bottom: 1px;
             cursor: pointer;
+        }
+		.acc-address-main-actions-delete a {
+          text-decoration: none;
+          color: red;
+        }
+        .bt-submit {
+          display: flex;
+          flex-direction: column;
+            width: 100%;
         }
         .acc-address-main-add {
             width: calc(33.33% - 105px);
@@ -117,6 +131,11 @@
             }
         }
         @media only screen and (max-width: 768px) {
+            .acc-address-main {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+  			}
             .acc-address-main-add {
                 width: calc(50% - 105px);
             }
@@ -125,6 +144,17 @@
             }
         }
         @media only screen and (max-width: 425px) {
+            .acc-address-main .create-email-all .create-email-text input {
+				margin: 0 5px !important;
+              padding-left: 0 !important;
+            }
+            .create-all-all {
+                 width: 100% !important;
+            }
+          	.create-all {
+                 width: 100% !important;
+              	 height: unset !important;
+            }
             .acc-address-main-add {
                 width: 96%;
                 height: 40px;
@@ -154,11 +184,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 25px 0;
+/*             margin: 25px 0; */
+        }
+		.acc-address-main-address h4 {
+          	margin-top: 0;
         }
         .create-all {
             width: 450px;
-            height: 400px;
+            height: 800px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -176,14 +209,30 @@
              display: flex;
             flex-direction: column;
             justify-content: space-between;
+          margin-top: 5px;
         }
         .create-email-text {
             width: 100%;
             display: flex;
             font-size: 15px;
         }
+		.create-email-text label {
+          display: flex;
+    		align-items: center;
+        }
+		.create-email-text label input {
+          width: 15px;
+          height: 15px !important;
+          border: none;
+          box-shadow: none;
+          cursor: pointer;
+        }
+		.create-email-all select {
+          height: 35px;
+    		width: 100%;
+        }
         .create-email-all input {
-            width: 100%;
+            width: calc(100% - 15px);
             height: 35px !important;
             background-color: white;
             border: 1px solid dimgrey;
@@ -202,7 +251,7 @@
             font-size: 15px;
         }
         .create-password-all input {
-            width: 100%;
+            width: calc(100% - 15px);
             height: 35px !important;
             background-color: white;
             border: 1px solid dimgrey;
@@ -214,30 +263,15 @@
         }
         .create-button-btn {
             width: 145px;
-
-height: 35px;
-
-display: flex;
-
-justify-content: center;
-
-align-items: center;
-
-background-color: #e5bf44;
-
-color: black;
-
-cursor: pointer;
-
-font-weight: bold;
-
-margin-left: 44%;
-
-border-radius: 9px;
-
-border: 1px darkblue double;
-
-padding: 8px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e5bf44;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 8px;
         }
 
         @media only screen and (max-width: 768px) {

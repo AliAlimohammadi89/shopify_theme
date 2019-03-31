@@ -102,10 +102,12 @@
             align-items: center;
         }
         .acc-detail-main-address-bottom-btn {
-            color: #deb335;
-            border-bottom: 1px solid #deb335;
             padding-bottom: 1px;
             cursor: pointer;
+        }
+        .acc-detail-main-address-bottom-btn a {
+          text-decoration: none;
+          color: #deb335;
         }
         .acc-detail-main-address-header {
             font-weight: bold;

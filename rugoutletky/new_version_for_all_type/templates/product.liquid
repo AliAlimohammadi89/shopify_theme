@@ -1,7 +1,6 @@
 
 
-
-{% case product.type %}
+ {% case product.type %}
 {% when 'rug' %}
 {% include "product_page_of_Rug"%}
 
@@ -12,6 +11,10 @@
 {% when 'lighting' %}
 {% include "product_page_of_Lighting"%}
 
+{% when 'flooring' %}
+{% include "product_page_of_Flooring"%}
+{% when 'clothing' %}
+{% include "product_page_of_Clothing"%}
 {% else %}
 {% include "product_page_of_Lighting"%}
 {% endcase %}

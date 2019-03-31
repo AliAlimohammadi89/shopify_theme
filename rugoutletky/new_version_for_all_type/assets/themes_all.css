@@ -1,4 +1,7 @@
-
+.hidden{
+  
+  display :none;
+}
 .collapse.navbar-collapse {
     margin-top: 10px;
 }
